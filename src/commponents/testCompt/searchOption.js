@@ -12,7 +12,6 @@ const SearchOption = (props) => {
      */
     function handleClickOutside(event) {
       if (ref.current && !ref.current.contains(event.target)) {
-        console.log("Event Outside Click!!");
         if (display === true) {
           setDisplay(false);
         }
@@ -40,19 +39,26 @@ const SearchOption = (props) => {
   return (
     <React.Fragment>
       <Card className={props.cardClass}>
-        <Card.Body ref={ref}>
-          <Card.Title onClick={toggleDisplay}>{props.title}</Card.Title>
-          <Card.Text onClick={toggleDisplay}>
+        <Card.Body ref={ref} className="no-margin-padding">
+          <Card.Title className="com-title" onClick={toggleDisplay}>
+            {props.title}
+          </Card.Title>
+          <Card.Text onClick={toggleDisplay} className="text-content">
             {selectedItem && (
               <React.Fragment>
                 <Col>
-                  <h3>{selectedItem.name}</h3>
-                  <span>{selectedItem.code}</span>
+                  <p>
+                    <span className="seacrh-content">{selectedItem.name}</span>
+                    <br />
+                    <span className="seacrh-content-code">
+                      &nbsp;{selectedItem.code}
+                    </span>
+                  </p>
                 </Col>
               </React.Fragment>
             )}
           </Card.Text>
-          {display && props.children}
+          <div className="search-text-area">{display && props.children}</div>
         </Card.Body>
       </Card>
     </React.Fragment>

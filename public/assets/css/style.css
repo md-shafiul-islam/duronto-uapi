@@ -50,17 +50,25 @@ body {
 
 .react-autosuggest__container {
   position: relative;
+  z-index: 60;
 }
 
 .react-autosuggest__input {
-  width: 240px;
-  height: 30px;
-  padding: 10px 20px;
+  width: 100%;
+  height: 40px;
+  padding: 10px 10px 10px 35px;
   font-family: Helvetica, sans-serif;
   font-weight: 300;
   font-size: 16px;
-  border: 1px solid #aaa;
+  border: 1px solid rgb(237, 251, 255);
   border-radius: 4px;
+
+  background-image: url("../images/search-location.png");
+  background-position: left;
+  background-repeat: no-repeat;
+  background-size: 25px 25px;
+  background-origin: border-box;
+  background-position-x: 0.3em;
 }
 
 .react-autosuggest__input:focus {
@@ -133,6 +141,8 @@ body {
   color: #120000;
 }
 
+.card-hover {
+}
 .card-hover:hover {
   cursor: pointer;
   background-color: #eaf5ff;
@@ -179,33 +189,45 @@ body {
 }
 
 .traveler-card-body {
-  height: 80px;
+  height: 60px;
+  padding: 0px 5px !important;
 }
 
 .traveler {
   position: absolute;
 }
 
+.mp-0 {
+  margin: 0px !important;
+  padding: 0px !important;
+}
+
 .traveler .traveler-card {
-  _width: 450px;
+  width: 187%;
   margin: 0px;
   padding: 10px 5px;
   position: relative !important;
   background-color: #fff;
-  z-index: 50;
-
-  top: -115px !important;
+  left: -290px;
+  top: -65px !important;
   box-shadow: 0 10px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
   box-sizing: border-box;
   border: #ffffff solid 2px;
   border-radius: 5px;
   display: block;
+  z-index: 50;
 }
 
-.traveler .card .card-title {
-  cursor: pointer;
+.tb-pad-0 {
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+  margin: 0px;
+}
 
-  padding: 15px 10px 5px 10px;
+.traveler .card .card-title,
+.com-title {
+  cursor: pointer;
+  width: 100%;
 }
 
 .date-picker-card-parent {
@@ -214,14 +236,14 @@ body {
 
 .date-picker-card {
   margin: 0px;
-
+  width: 124%;
   height: 450px;
   padding: 10px 5px;
   position: relative !important;
   background-color: #fff;
   z-index: 50;
 
-  top: -115px !important;
+  top: -70px !important;
   box-shadow: 0 10px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
   box-sizing: border-box;
   border: #ffffff solid 2px;
@@ -233,4 +255,128 @@ body {
   padding: 0px !important;
 }
 
+.date-title {
+  padding: 10px;
+}
+
+.date-card-body {
+  margin: 0px;
+  padding: 0px 10px !important;
+  height: 60px;
+}
+
+.no-margin-padding {
+  margin: 0px !important;
+  padding: 0px !important;
+}
+
+.no-margin-padding p {
+  margin: 0px;
+  padding: 0px;
+}
+
+.com-title {
+  cursor: pointer;
+  width: 100%;
+  margin: 0px !important;
+  padding: 5px 15px;
+  font-size: 15px !important;
+}
+
+.search-bstyle {
+  font-size: 18px;
+  font-weight: bolder;
+}
+
+.search-nstyle {
+  font-size: 18px;
+  color: #292525;
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.air-search {
+  height: 120px;
+}
+
+.search-text-area {
+  position: relative;
+}
+
+.icon-trans {
+  font-size: 1.2em;
+  transition: all 0.4s ease;
+}
+
+.seacrh-content {
+  font-family: "Roboto", sans-serif;
+  font-size: 18px;
+  color: #292525;
+  font-weight: bold;
+}
+
+.seacrh-content-code {
+  font-family: "Roboto", sans-serif;
+  font-size: 14px;
+  color: #5e5b5b;
+  font-weight: bold;
+}
+
+.seacrh-content-normal {
+  font-family: "Roboto", sans-serif;
+  font-size: 14px;
+  color: #333333;
+  font-weight: 400;
+}
+
 /***    Range List End ****************/
+
+.text-content {
+  height: 60px;
+}
+
+.singel-date {
+  width: 360px;
+  box-shadow: 0 10px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
+  box-sizing: border-box;
+  border: #ffffff solid 2px;
+  border-radius: 5px;
+  z-index: 55;
+}
+
+.cont-center {
+  text-align: center;
+}
+
+.ptop {
+  padding: 25px 0px;
+  font-size: 16px;
+}
+
+.ptop a {
+  margin: 0px 10px;
+}
+
+.text-disable {
+  color: rgb(80, 78, 78);
+  font-size: 13px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.radio-bg {
+  margin: 10px;
+  height: 35px;
+  padding-top: 0px;
+  padding-right: 10px;
+  padding-left: 20px;
+  border-radius: 2em;
+}
+
+.radio-bg .PrivateSwitchBase-root-1 {
+  padding: 6px;
+}
+
+.r-active {
+  background: #818181;
+}

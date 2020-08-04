@@ -10,6 +10,8 @@ import TravellersAndClass from "./commponents/testCompt/travellersAndClass";
 import { Col, Row, Container } from "react-bootstrap";
 import UseRangDatePicker from "./commponents/testCompt/useRangDatePicker";
 import DatePickerRange from "./commponents/testCompt/datePickerRange";
+import AirSearchForm from "./commponents/testCompt/AirSearchForm";
+import SingleDatePicker from "./commponents/testCompt/SingleDatePicker";
 
 const airPort = [
   { name: "Aalborg", code: "AAL" },
@@ -27,11 +29,12 @@ const airPort = [
 
 class App extends Component {
   state = {
-    selectedItem: null,
+    selectedItemFrom: null,
     adult: null,
     child: null,
     infants: null,
     cabinClass: null,
+    selectedItemTo: null,
   };
 
   setStartDate = (stDate) => {
@@ -53,24 +56,47 @@ class App extends Component {
         {/*<SearchLowFareAir />}        
         <SendRequestAirSearch />*/}
 
-        <Container fluid>
-          <Row>
-            <Col md={3}>
-              <SearchOption
-                title="From"
-                populateItem={this.state.selectedItem}
-                cardClass="card-hover"
-              >
-                <AutoCompleteSearch
-                  pHolder="Air Port"
-                  options={airPort}
-                  getSelectedItem={(value) => {
-                    this.setState({ selectedItem: value });
-                  }}
-                />
-              </SearchOption>
+        <Container>
+          <Row className="air-search">
+            <Col md={6} className="no-margin-padding">
+              <Row className="no-margin-padding">
+                <Col md={6} className="no-margin-padding">
+                  <SearchOption
+                    title="From"
+                    populateItem={this.state.selectedItemFrom}
+                    cardClass="card-hover"
+                  >
+                    <AutoCompleteSearch
+                      pHolder="From"
+                      options={airPort}
+                      getSelectedItem={(value) => {
+                        this.setState({ selectedItemFrom: value });
+                      }}
+                      fName="from"
+                      fId="from"
+                    />
+                  </SearchOption>
+                </Col>
+                <Col md={6} className="no-margin-padding">
+                  <SearchOption
+                    title="To"
+                    populateItem={this.state.selectedItemTo}
+                    cardClass="card-hover"
+                  >
+                    <AutoCompleteSearch
+                      pHolder="To"
+                      options={airPort}
+                      getSelectedItem={(value) => {
+                        this.setState({ selectedItemTo: value });
+                      }}
+                      fName="to"
+                      fId="to"
+                    />
+                  </SearchOption>
+                </Col>
+              </Row>
             </Col>
-            <Col md={4}>
+            <Col md={3} className="no-margin-padding">
               <DatePickerRange
                 getStartDate={(sdate) => {
                   this.setStartDate(sdate);
@@ -81,7 +107,7 @@ class App extends Component {
               />
             </Col>
 
-            <Col md={5}>
+            <Col md={3} className="no-margin-padding">
               <TravellersAndClass
                 getAllRangeData={(adults, child, infants, cabinClass) => {
                   this.setAllRangeData(adults, child, infants, cabinClass);
@@ -91,9 +117,16 @@ class App extends Component {
           </Row>
         </Container>
 
+        <Container fluid>
+          <AirSearchForm />
+        </Container>
+
         <Container>
-          <label>Date Range Pickre:</label>
-          <UseRangDatePicker />
+          <SingleDatePicker
+            getDate={(date) => {
+              console.log(date);
+            }}
+          />
         </Container>
       </Provider>
     );

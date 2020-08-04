@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Row, Col, Card, Button } from "react-bootstrap";
 import ComRange from "./comRange";
+import { ref } from "yup";
 
 const passRang = [
   { name: "0", value: 0 },
@@ -37,8 +38,9 @@ const TravellersAndClass = (props) => {
   const [adults, setAdults] = useState(undefined);
   const [cabinClass, setCabinClass] = useState(undefined);
   const [totalTraveler, setTotalTraveler] = useState(0);
+  const refDate = useRef(null);
 
-  const [display, setDisplay] = useState(false);
+  const [display, setDisplay] = useState(true);
 
   const getIntData = (item) => {
     let val =
@@ -84,22 +86,66 @@ const TravellersAndClass = (props) => {
     setCabinClass(item);
   };
 
+  useEffect(() => {
+    /**
+     * Alert if clicked on outside of element
+     */
+
+    console.log("Event add to Card");
+
+    function handleClickOutside(event) {
+      if (refDate.current && !refDate.current.contains(event.target)) {
+        console.log("Display Status: ", display);
+        if (display === true) {
+          setDisplay(false);
+        }
+      }
+    }
+
+    // Bind the event listener
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      // Unbind the event listener on clean up
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [refDate]);
+
+  useEffect(() => {
+    setDisplay(!display);
+    return;
+  }, []);
+
+  const setDataToApply = (e) => {
+    props.getAllRangeData(adults, child, infants, cabinClass);
+    setDisplay(!display);
+  };
+
   return (
     <React.Fragment>
-      <Row>
-        <Col md={12} className="traveler">
+      <Row className="mp-0">
+        <Col md={12} className="traveler mp-0" ref={refDate}>
           <Card>
             <Card.Title
+              className="com-title"
               onClick={(e) => {
                 setDisplay(!display);
               }}
             >
-              Travellers & CLASS
+              Travellers & CLASS{"  "}&nbsp;
+              <i
+                class="fas fa-angle-down icon-trans"
+                style={{
+                  transform: `${display ? "rotateZ(-180deg)" : ""}`,
+                }}
+              ></i>
             </Card.Title>
-            <Card.Body>
+            <Card.Body className="tb-pad-0">
               <Row>
                 <Col md={12} className="traveler-card-body">
-                  <p>{totalTraveler} Travellers</p>
+                  <p>
+                    <span className="search-bstyle">{totalTraveler}</span>{" "}
+                    <span className="search-nstyle"> Travellers</span>
+                  </p>
                   <p className="travellerClass">
                     {cabinClass ? cabinClass.name : ""}
                   </p>
@@ -107,84 +153,81 @@ const TravellersAndClass = (props) => {
               </Row>
             </Card.Body>
           </Card>
-          <Card
-            className="traveler-card"
-            style={{ visibility: display ? "visible" : "hidden" }}
-          >
-            <Card.Body>
-              <Row>
-                <Col md={12}>
-                  <Row>
-                    <Col md={9}>
-                      <ComRange
-                        items={passRang}
-                        populateItem={0}
-                        keyFix="adt"
-                        ulClass="rang-list"
-                        itemClass="item"
-                        headerClass=""
-                        headerText="ADULTS (12y +)"
-                        getData={(item) => setAdultsData(item)}
-                      />
-                    </Col>
-                    <Col md={3}></Col>
-                  </Row>
+          {display && (
+            <Card className="traveler-card">
+              <Card.Body>
+                <Row>
+                  <Col md={12}>
+                    <Row>
+                      <Col md={9}>
+                        <ComRange
+                          items={passRang}
+                          populateItem={0}
+                          keyFix="adt"
+                          ulClass="rang-list"
+                          itemClass="item"
+                          headerClass=""
+                          headerText="ADULTS (12y +)"
+                          getData={(item) => setAdultsData(item)}
+                        />
+                      </Col>
+                      <Col md={3}></Col>
+                    </Row>
 
-                  <Row>
-                    <Col md={6}>
-                      <ComRange
-                        items={passChRang}
-                        populateItem={0}
-                        keyFix="chi"
-                        ulClass="rang-list"
-                        itemClass="item"
-                        headerText="CHILDREN (2y - 12y )"
-                        getData={(item) => setChildData(item)}
-                      />
-                    </Col>
-                    <Col md={6}>
-                      <ComRange
-                        items={passChRang}
-                        populateItem={0}
-                        keyFix="inf"
-                        ulClass="rang-list"
-                        itemClass="item"
-                        headerText="INFANTS (below 2y)"
-                        getData={(item) => setInfantsData(item)}
-                      />
-                    </Col>
-                  </Row>
+                    <Row>
+                      <Col md={6}>
+                        <ComRange
+                          items={passChRang}
+                          populateItem={0}
+                          keyFix="chi"
+                          ulClass="rang-list"
+                          itemClass="item"
+                          headerText="CHILDREN (2y - 12y )"
+                          getData={(item) => setChildData(item)}
+                        />
+                      </Col>
+                      <Col md={6}>
+                        <ComRange
+                          items={passChRang}
+                          populateItem={0}
+                          keyFix="inf"
+                          ulClass="rang-list"
+                          itemClass="item"
+                          headerText="INFANTS (below 2y)"
+                          getData={(item) => setInfantsData(item)}
+                        />
+                      </Col>
+                    </Row>
 
-                  <Row>
-                    <Col md={12}>
-                      <ComRange
-                        items={passClassRange}
-                        populateItem={0}
-                        keyFix="inf"
-                        ulClass="rang-list"
-                        itemClass="item"
-                        headerText="CHOOSE TRAVEL CLASS"
-                        getData={(item) => setClassData(item)}
-                      />
-                    </Col>
-                  </Row>
-                </Col>
-              </Row>
+                    <Row>
+                      <Col md={12}>
+                        <ComRange
+                          items={passClassRange}
+                          populateItem={0}
+                          keyFix="inf"
+                          ulClass="rang-list"
+                          itemClass="item"
+                          headerText="CHOOSE TRAVEL CLASS"
+                          getData={(item) => setClassData(item)}
+                        />
+                      </Col>
+                    </Row>
+                  </Col>
+                </Row>
 
-              <Row>
-                <Col>
-                  <Button
-                    variant="primary"
-                    onClick={(e) =>
-                      props.getAllRangeData(adults, child, infants, cabinClass)
-                    }
-                  >
-                    Apply
-                  </Button>
-                </Col>
-              </Row>
-            </Card.Body>
-          </Card>
+                <Row>
+                  <Col>
+                    <Button
+                      variant="primary"
+                      onClick={(e) => setDataToApply(e)}
+                    >
+                      Apply <i className="fas fa-check"></i>
+                    </Button>
+                  </Col>
+                </Row>
+              </Card.Body>
+            </Card>
+          )}
         </Col>
       </Row>
     </React.Fragment>
