@@ -1,17 +1,12 @@
 import React, { Component } from "react";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import "./App.css";
 import { Provider } from "react-redux";
 import store from "./store";
-import AutoCompleteSearch from "./commponents/testCompt/autoCompleteSearch";
-import SearchOption from "./commponents/testCompt/searchOption";
-import ComRange from "./commponents/testCompt/comRange";
 
-import TravellersAndClass from "./commponents/testCompt/travellersAndClass";
 import { Col, Row, Container } from "react-bootstrap";
-import UseRangDatePicker from "./commponents/testCompt/useRangDatePicker";
-import DatePickerRange from "./commponents/testCompt/datePickerRange";
 import AirSearchForm from "./commponents/testCompt/AirSearchForm";
-import SingleDatePicker from "./commponents/testCompt/SingleDatePicker";
+import AirSearchResult from "./commponents/airSearch/SearchResults/AirSearchResult";
 
 const airPort = [
   { name: "Aalborg", code: "AAL" },
@@ -54,7 +49,10 @@ class App extends Component {
     return (
       <Provider store={store}>
         <Container fluid>
-          <AirSearchForm />
+          <Router>
+            <AirSearchForm />
+            <Route exact="/air/search" component={AirSearchResult} />
+          </Router>
         </Container>
       </Provider>
     );

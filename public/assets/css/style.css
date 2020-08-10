@@ -384,3 +384,65 @@ body {
 .r-active {
   background: #818181;
 }
+
+.flight-name {
+  font-family: "Lato-Medium", Arial, Helvetica, sans-serif;
+  color: #000;
+  font-size: 14px;
+  width: 100%;
+  display: inline-block;
+}
+
+.flight-no {
+  font-family: "Lato-Medium", Arial, Helvetica, sans-serif;
+  color: rgb(82, 82, 82);
+  font-size: 14px;
+  display: inline-block;
+}
+
+.short-title-area {
+  width: 60%;
+}
+
+.time {
+  color: #000;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 20px;
+  position: relative;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.air-city {
+  color: rgb(58, 58, 58);
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.duration {
+  width: 150px;
+  text-align: center;
+  padding-right: 50px;
+  font-size: 16px;
+}
+
+.air-time {
+  border-bottom: 1px solid #000;
+}
+
+.fly-type {
+}
+
+.air-price {
+  font-size: 24px;
+  font-weight: bold;
+  line-height: 28px;
+  text-align: right;
+}
+
+.provider-icon {
+  width: 80px;
+  height: 80px;
+  font-size: 1.5em;
+}
