@@ -53,80 +53,8 @@ class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        {/*<SearchLowFareAir />}        
-        <SendRequestAirSearch />*/}
-
-        <Container>
-          <Row className="air-search">
-            <Col md={6} className="no-margin-padding">
-              <Row className="no-margin-padding">
-                <Col md={6} className="no-margin-padding">
-                  <SearchOption
-                    title="From"
-                    populateItem={this.state.selectedItemFrom}
-                    cardClass="card-hover"
-                  >
-                    <AutoCompleteSearch
-                      pHolder="From"
-                      options={airPort}
-                      getSelectedItem={(value) => {
-                        this.setState({ selectedItemFrom: value });
-                      }}
-                      fName="from"
-                      fId="from"
-                    />
-                  </SearchOption>
-                </Col>
-                <Col md={6} className="no-margin-padding">
-                  <SearchOption
-                    title="To"
-                    populateItem={this.state.selectedItemTo}
-                    cardClass="card-hover"
-                  >
-                    <AutoCompleteSearch
-                      pHolder="To"
-                      options={airPort}
-                      getSelectedItem={(value) => {
-                        this.setState({ selectedItemTo: value });
-                      }}
-                      fName="to"
-                      fId="to"
-                    />
-                  </SearchOption>
-                </Col>
-              </Row>
-            </Col>
-            <Col md={3} className="no-margin-padding">
-              <DatePickerRange
-                getStartDate={(sdate) => {
-                  this.setStartDate(sdate);
-                }}
-                getEndDate={(enDate) => {
-                  this.setEndDate(enDate);
-                }}
-              />
-            </Col>
-
-            <Col md={3} className="no-margin-padding">
-              <TravellersAndClass
-                getAllRangeData={(adults, child, infants, cabinClass) => {
-                  this.setAllRangeData(adults, child, infants, cabinClass);
-                }}
-              />
-            </Col>
-          </Row>
-        </Container>
-
         <Container fluid>
           <AirSearchForm />
-        </Container>
-
-        <Container>
-          <SingleDatePicker
-            getDate={(date) => {
-              console.log(date);
-            }}
-          />
         </Container>
       </Provider>
     );

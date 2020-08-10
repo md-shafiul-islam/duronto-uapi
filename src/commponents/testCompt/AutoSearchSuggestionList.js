@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import SearchOption from "./searchOption";
 import AutoCompleteSearch from "./autoCompleteSearch";
 
@@ -8,6 +8,11 @@ import AutoCompleteSearch from "./autoCompleteSearch";
  */
 const AutoSearchSuggestionList = (props) => {
   const [selectedItem, setSelectedItem] = useState(undefined);
+
+  useEffect(() => {
+    setSelectedItem(props.preSetItem);
+  }, []);
+
   return (
     <React.Fragment>
       <SearchOption

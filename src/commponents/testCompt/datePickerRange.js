@@ -40,11 +40,28 @@ const DatePickerRange = (props) => {
   const [changeFocus, setChangeFocus] = useState([0, 0]);
   const [returnStatus, setReturnStatus] = useState(false);
   const [retDisplay, setRetDisplay] = useState(true);
+  const [depDate, setDepDate] = useState(new Date());
+
+  useEffect(() => {
+    let dDate =
+      props.preSetDepDate !== undefined ? props.preSetDepDate : new Date();
+    setDepDate(dDate);
+  }, []);
+
+  useEffect(() => {
+    let dDate =
+      props.preSetDepDate !== undefined ? props.preSetDepDate : new Date();
+    setDepDate(dDate);
+  }, [props.preSetDepDate]);
 
   const [state, setState] = useState([
     {
-      startDate: new Date(),
-      endDate: addDays(new Date(), 5),
+      startDate:
+        props.preSetDepDate !== undefined ? props.preSetDepDate : depDate,
+      endDate: addDays(
+        props.preSetDepDate !== undefined ? props.preSetDepDate : depDate,
+        5
+      ),
       key: "selection",
     },
   ]);
@@ -86,8 +103,6 @@ const DatePickerRange = (props) => {
   const changeHandeller = (item) => {
     setState([item.selection]);
 
-    console.log("Date State Item: ", state);
-
     let selected = item.selection;
 
     let stDate =
@@ -110,14 +125,6 @@ const DatePickerRange = (props) => {
       setDisplay(false);
     }
 
-    console.log(
-      "Change Fire Item ",
-      item.selection.endDate,
-      " Prev Date: ",
-      enDate
-    );
-
-    console.log("Focus ", changeFocus);
     if (item.selection.endDate && returnStatus) {
       setRetDisplay(false);
     }
@@ -128,8 +135,6 @@ const DatePickerRange = (props) => {
   };
 
   const toggoleDateRange = (e, status) => {
-    console.log("Status: ", status);
-
     setFocusStatus(status);
     setReturnStatus(true);
     setRetDisplay(!retDisplay);
@@ -152,12 +157,80 @@ const DatePickerRange = (props) => {
   };
 
   const getStringMonth = (month, lenght) => {
-    let stMonth = months[month].toString().substring(0, lenght);
-    return `${stMonth}'`;
+    console.log("Month: ", month);
+    if (month !== undefined && month !== "" && month !== null) {
+      let stMonth =
+        months[month] && months[month].toString().substring(0, lenght);
+
+      if (
+        stMonth !== undefined &&
+        stMonth !== null &&
+        stMonth !== "" &&
+        stMonth !== "NaN" &&
+        stMonth !== "Na"
+      ) {
+        return stMonth;
+      }
+    }
+
+    return "";
   };
 
   const getStringYear = (year, lenght) => {
-    return year.toString().substring(0, lenght);
+    if (year === undefined || year === "" || year === null) {
+      return "";
+    }
+    let stYear = year.toString().substring(0, lenght);
+
+    if (
+      stYear !== undefined &&
+      stYear !== null &&
+      stYear !== "" &&
+      stYear !== "NaN" &&
+      stYear !== "Na"
+    ) {
+      return stYear;
+    }
+    return "";
+  };
+
+  const getDayByDate = (vDate) => {
+    if (vDate !== undefined && vDate !== null && "" !== vDate) {
+      let stringDay = days[state[0].endDate.getDay()];
+
+      if (
+        stringDay !== null &&
+        stringDay !== "" &&
+        stringDay !== undefined &&
+        stringDay !== "NaN" &&
+        stringDay !== "Na"
+      ) {
+        return stringDay;
+      }
+    }
+
+    return "";
+  };
+
+  const getDateByState = (dateVal) => {
+    if (dateVal !== undefined && dateVal !== null && dateVal !== "") {
+      let strDate = dateVal.getDate();
+
+      if (
+        strDate === null ||
+        strDate === "" ||
+        strDate !== undefined ||
+        strDate !== "NaN" ||
+        strDate !== "Na"
+      ) {
+        console.log("Get Date: ", strDate);
+        return "";
+      } else {
+        return strDate;
+      }
+    }
+
+    return " ";
   };
 
   return (
@@ -233,23 +306,38 @@ const DatePickerRange = (props) => {
                   ) : (
                     <React.Fragment>
                       <p>
-                        {state && state[0].endDate && (
-                          <React.Fragment>
-                            <span className="search-bstyle">
-                              {state[0].endDate.getDate()}
-                            </span>
-                            <span className="search-nstyle">
-                              &nbsp;
-                              {getStringMonth(state[0].endDate.getMonth(), 3)}
-                              {getStringYear(state[0].endDate.getFullYear(), 2)}
-                            </span>
-                          </React.Fragment>
-                        )}
+                        {state &&
+                          (state[0] !== undefined ? (
+                            state[0].endDate !== undefined ? (
+                              <React.Fragment>
+                                <span className="search-bstyle">
+                                  {getDateByState(state[0].endDate)}
+                                </span>
+                                <span className="search-nstyle">
+                                  &nbsp;
+                                  {getStringMonth(
+                                    state[0].endDate &&
+                                      state[0].endDate.getMonth(),
+                                    3
+                                  )}
+                                  {getStringYear(
+                                    state[0].endDate &&
+                                      state[0].endDate.getFullYear(),
+                                    2
+                                  )}
+                                </span>
+                              </React.Fragment>
+                            ) : (
+                              ""
+                            )
+                          ) : (
+                            ""
+                          ))}
                       </p>
                       <p>
-                        {state &&
-                          state[0].endDate &&
-                          `${days[state[0].endDate.getDay()]}`}
+                        {state && state[0] === undefined
+                          ? getDayByDate(state[0].endDate)
+                          : ""}
                       </p>
                     </React.Fragment>
                   )}

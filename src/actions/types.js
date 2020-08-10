@@ -8,16 +8,14 @@ export const GET_CATEGORY = "GET_CATEGORY";
 export const DELET_CATEGORY = "DELET_CATEGORY";
 
 export const REQUEST_HEADER = {
-    "Content-Type": "application/json",
-    "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Headers": "Origin, Content-Type, Accept",
-
+  "Content-Type": "application/json",
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Headers": "Origin, Content-Type, Accept",
 };
 
 export const REQUEST_HEADER_GET = {
-    "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Headers": "Origin, Content-Type, Accept",
-
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Headers": "Origin, Content-Type, Accept",
 };
 
 export const SET_CURRENT_USER = "SET_CURRENT_USER";
@@ -31,7 +29,7 @@ export const SET_TOKEN = "SET_TOKEN";
 
 console.log(process.env.REACT_APP_API_URL);
 
-export const EXT_BASE_URL = `http://localhost:8090`; // `http://dto.durontotour.com`; // 
+export const EXT_BASE_URL = `http://localhost:8050`; // `http://dto.durontotour.com`; //
 export const BASE_URL = `${EXT_BASE_URL}/api`;
 
 export const GET_PACK_CATEGORIES = "GET_PACK_CATEGORIES";

@@ -29,6 +29,10 @@ const SearchOption = (props) => {
   useEffect(() => {
     setSelectedItem(props.populateItem);
     setDisplay(!display);
+  }, []);
+
+  useEffect(() => {
+    setSelectedItem(props.populateItem);
   }, [props.populateItem]);
 
   const toggleDisplay = () => {
