@@ -118,6 +118,8 @@ export const getOneWayAirSearchRequest = (requestData) => async (dispatch) => {
   }
 };
 
+export const getSearchResult = () => async (dispatch) => {};
+
 const getProperDate = (pValue) => {
   if (pValue !== undefined && pValue !== null) {
     let cDate = pValue;

@@ -50,8 +50,12 @@ class App extends Component {
       <Provider store={store}>
         <Container fluid>
           <Router>
-            <AirSearchForm />
-            <Route exact="/air/search" component={AirSearchResult} />
+            <Route exact path="/air/search" component={AirSearchForm} />
+            <Route
+              exact
+              path="/air/search/result"
+              component={AirSearchResult}
+            />
           </Router>
         </Container>
       </Provider>

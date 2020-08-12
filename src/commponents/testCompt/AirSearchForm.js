@@ -14,6 +14,7 @@ import { addDays } from "date-fns";
 import { PropTypes } from "prop-types";
 import { connect } from "react-redux";
 import { getOneWayAirSearchRequest } from "../../actions/airSearchAction";
+import { Redirect } from "react-router-dom";
 
 const airPort = [
   { name: "Aalborg", code: "AAL" },
@@ -36,6 +37,7 @@ const airPort = [
 
 class AirSearchForm extends Component {
   state = {
+    redirectStatus: false,
     selectedItemFrom: {},
     selectedItemTo: {},
     oneWayInitValue: {
@@ -71,6 +73,7 @@ class AirSearchForm extends Component {
     console.log("Befor Submit one Search: ", queryData);
     this.props.getOneWayAirSearchRequest(queryData);
     console.log("After Submit one Search: ", queryData);
+    this.setState({ redirectStatus: true });
   };
 
   setStartDate = (sDate) => {
@@ -139,6 +142,10 @@ class AirSearchForm extends Component {
   };
 
   render() {
+    if (this.state.redirectStatus) {
+      return <Redirect to="/air/search/result" />;
+    }
+
     let {
       oneWayInitValue,
       roundInitValue,

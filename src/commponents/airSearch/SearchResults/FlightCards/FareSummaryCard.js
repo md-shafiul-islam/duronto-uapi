@@ -4,11 +4,12 @@ import { Card } from "react-bootstrap";
 const FareSummaryCard = (props) => {
   return (
     <React.Fragment>
-      <Card>
+      <Card className="slc-airs">
         <Card.Title>FARE SUMMARY</Card.Title>
         <Card.Body>
-          <div>
-            <p>
+          <div className="fare-summary">
+            <h6>Fare brackup</h6>
+            <p className="total">
               <span>TOTAL</span>
               <span>$1500</span>
             </p>

@@ -1,25 +1,22 @@
 import React, { Component } from "react";
-import { Col } from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
 import ShortInfCard from "./FlightCards/ShortInfCard";
 import SelectedAirDetails from "./SelectedAirDetails";
+import { connect } from "react-redux";
+import { PropTypes } from "prop-types";
+import { getSearchResult } from "../../../actions/airSearchAction";
 
 class AirSearchResult extends Component {
+  state = {};
   render() {
     return (
       <React.Fragment>
-        {/* Content Wrapper. Contains page content */}
-        <div className="content-wrapper">
-          {/* Content Header (Page header) */}
-          <div className="content-header">
-            <div className="container">{/* /.row */}</div>
+        <Row>
+          <Col md={3}></Col>
 
-            {/* /.container-fluid */}
-          </div>
-          {/* /.content-header */}
-          {/* Main content */}
-          <div className="content">
-            <div className="container">
-              <div className="row">
+          <Col md={9}>
+            <div className="content">
+              <Row>
                 <div className="col-lg-6">
                   {/** short card item Strat */}
                   <ShortInfCard oneWay={false} />
@@ -31,20 +28,31 @@ class AirSearchResult extends Component {
                   <ShortInfCard oneWay={false} />
                 </div>
                 {/* /.col-md-6 */}
-              </div>
+              </Row>
               {/* /.row */}
             </div>
-            {/* /.container-fluid */}
-          </div>
-          {/* /.content */}
-        </div>
+          </Col>
+        </Row>
 
-        <div>
-          <SelectedAirDetails />
-        </div>
+        <Row>
+          <Col md={12}>
+            <SelectedAirDetails />
+          </Col>
+        </Row>
       </React.Fragment>
     );
   }
 }
 
-export default AirSearchResult;
+AirSearchResult.prototypes = {
+  getSearchResult: PropTypes.func.isRequired,
+  errors: PropTypes.object.isRequired,
+  airSearchResponse: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  errors: state.errors,
+  airSearchResponse: state.airSearch,
+});
+
+export default connect(mapStateToProps, { getSearchResult })(AirSearchResult);

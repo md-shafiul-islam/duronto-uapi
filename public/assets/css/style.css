@@ -446,3 +446,236 @@ body {
   height: 80px;
   font-size: 1.5em;
 }
+
+/************** Air Flight Selected Cards Start *************/
+
+.slc-airs {
+  color: #000;
+  padding: 10px;
+}
+
+.slc-airs .card-title {
+  font-size: 1.25em;
+  padding-left: 1.25rem;
+}
+
+.slc-airs .card-body {
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+}
+
+.slc-airs .travel-inf {
+  height: 40px;
+  background-color: #17a2b8;
+  padding: 10px;
+  margin: 15px 0px;
+}
+
+.travel-inf .dep-inf,
+.travel-inf .fly-time {
+  width: 250px;
+  height: 30px;
+
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+}
+.travel-inf .dep-inf {
+  text-align: left;
+  float: left;
+}
+
+.travel-inf .fly-time {
+  text-align: right;
+  float: right;
+}
+
+.provider-inf-area {
+  background-color: transparent;
+  height: 80px;
+  width: 100%;
+  float: left;
+  margin-top: 10px;
+}
+
+.provider-inf-area .providre-icon {
+  width: 80px;
+  height: 80px;
+  float: left;
+}
+
+.provider-inf-area .providre-text {
+  height: 25px;
+  float: left;
+  text-align: left;
+  padding-top: 45px 0px 0px 15px;
+}
+
+.slc-airs .card-body .fly-details {
+  margin-top: 10px;
+}
+
+.fly-details .fly-dep-ret {
+  height: 120px;
+  font-size: 16px;
+}
+
+.fly-dep-ret span {
+  width: 100%;
+  display: block;
+}
+
+.fly-dep-ret .fly-time {
+  font-size: 1.75em;
+  font-weight: bold;
+  color: #292525;
+}
+
+.fly-dep-ret .fly-date {
+  font-size: 1em;
+  font-weight: bold;
+  color: #4e4d4d;
+}
+
+.fly-dep-ret .fly-location {
+  font-size: 0.8em;
+  font-weight: bold;
+  color: #5e5b5b;
+}
+
+.fly-details .in-air {
+  height: 120px;
+  font-size: 16px;
+}
+
+.in-air span {
+  border-bottom: 1px solid #000;
+  padding: 5px 10px;
+}
+
+.slc-airs .card-body .pas-details {
+  min-height: 100px;
+  margin: 10px 0px;
+}
+
+.pas-details {
+  background: transparent;
+}
+
+.p-title p:first-child {
+  height: 35px;
+  border-bottom: 0.5px solid #ddd;
+  font-size: 1em;
+  font-weight: bold;
+}
+
+.p-title p span {
+  width: 33%;
+  height: auto;
+  display: block;
+  float: left;
+}
+
+.slc-airs .fare-summary {
+  width: 100%;
+  min-height: 100px;
+  margin: 10px 0px;
+}
+
+.fare-summary .total {
+  font-size: 1em;
+  font-weight: bold;
+}
+
+.fare-summary p {
+  height: 30px;
+  padding: 10px 0px;
+}
+
+.fare-summary p span {
+  width: 35%;
+  height: auto;
+  display: block;
+  float: left;
+  border-bottom: 0.5px solid #ddd;
+}
+
+.fare-summary p span:last-child {
+  text-align: right;
+  padding-right: 10px;
+}
+
+.slc-airs .title-icon {
+  width: 80px;
+  height: 80px;
+  float: left;
+}
+
+.slc-airs .travel-dt-inf {
+  font-size: 1em;
+  font-weight: bold;
+}
+
+.slc-airs .charge-inf {
+  background: transparent;
+  border-bottom: 1px solid #ddd;
+  padding: 10px 0px;
+}
+
+.charge-inf .fp {
+  padding: 10px 0px;
+  height: 25px;
+  display: block;
+  float: left;
+}
+.charge-inf p span {
+  width: 50%;
+  height: auto;
+  display: block;
+  float: left;
+  font-size: 1em;
+  font-weight: bold;
+}
+
+.charge-inf p span small {
+  font-size: 0.75em;
+}
+
+.charge-details .charge-text {
+  font-size: 1em;
+  font-weight: 350;
+}
+
+.charge-text span {
+  width: 100%;
+  display: block;
+  float: left;
+  margin: 2px;
+}
+
+.charge-details .row {
+  border-bottom: 1px solid #ddd;
+  padding: 10px 0px;
+}
+
+.charge-details .row div:first-child {
+  border-right: 1px solid #ddd;
+}
+
+.airtab-container {
+  height: 350px;
+  overflow-y: auto;
+}
+
+.selected-air-model {
+  width: 750px !important;
+  max-width: none !important;
+}
+
+.selected-air-model .modal-content {
+  position: relative;
+  left: 200px;
+  top: 100px;
+}
+
+/***************** Air Flight Selected Cards Start ************/
