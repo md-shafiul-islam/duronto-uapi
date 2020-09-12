@@ -9,7 +9,7 @@ import Axios from "axios";
 
 export const getAirSearchRequest = (requestData) => async (dispatch) => {
   try {
-    let url = `${EXT_BASE_URL}/catalogofferings`;
+    let url = `${EXT_BASE_URL}/api/catalogofferings`;
 
     const res = await Axios.post(url, requestData, { headers: REQUEST_HEADER });
 
@@ -118,7 +118,30 @@ export const getOneWayAirSearchRequest = (requestData) => async (dispatch) => {
   }
 };
 
-export const getSearchResult = () => async (dispatch) => {};
+export const getSearchResult = (requestDate) => async (dispatch) => {
+  try {
+    let url = `${EXT_BASE_URL}/api/catalogofferings`;
+
+    const res = await Axios.post(url, JSON.stringify(requestDate, null, 2), {
+      headers: REQUEST_HEADER,
+    });
+
+    dispatch({
+      type: GET_AIR_SEARCH_RESPONSE,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: GET_ERRORS,
+      payload:
+        err !== undefined
+          ? err.res !== undefined
+            ? err.res.data
+            : "Error: Response  not Or Air not found  "
+          : "Error: Network Connection  ",
+    });
+  }
+};
 
 const getProperDate = (pValue) => {
   if (pValue !== undefined && pValue !== null) {

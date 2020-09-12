@@ -7,8 +7,8 @@ import SingleDatePicker from "./SingleDatePicker";
 import AutoSearchSuggestionList from "./AutoSearchSuggestionList";
 
 const OneWaySearchForm = (params) => {
-  const [lastDate, setLastDate] = useState(undefined);
-  const [oneWayDate, setOneWayDate] = useState(undefined);
+  const [lastDate, setLastDate] = useState(new Date());
+  const [oneWayDate, setOneWayDate] = useState(new Date());
   return (
     <React.Fragment>
       <Formik
@@ -75,7 +75,7 @@ const OneWaySearchForm = (params) => {
                                         );
 
                                         setLastDate(item);
-                                        setOneWayDate(item);
+
                                         params.getOneWayTripData(props.values);
                                       }}
                                     />

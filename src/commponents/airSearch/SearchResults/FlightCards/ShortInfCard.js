@@ -1,63 +1,114 @@
-import React from "react";
-import { Col, Row } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
+import { Col, Row, Card } from "react-bootstrap";
+import { el } from "date-fns/locale";
+import AirDetailsAccordian from "../AirDetailsAccordian";
+import SelectedTab from "../SelectedTab";
+import { getDate } from "date-fns";
 
 const ShortInfCard = (params) => {
+  const getPriceFormat = (price) => {
+    if (price === null && price === undefined) {
+      return "0.0";
+    } else {
+      let stPrice = price.substring(3);
+      let type = price.substring(0, 3);
+
+      return `${type}: ${stPrice}`;
+    }
+  };
+
+  const getDateFormat = (pDate) => {
+    if (pDate !== undefined) {
+      pDate = new Date(pDate);
+      if (
+        isNaN(pDate.getDate()) ||
+        isNaN(pDate.getMonth()) ||
+        isNaN(pDate.getFullYear())
+      ) {
+        return "";
+      } else {
+        let day =
+          pDate.getDate() < 10 ? `0${pDate.getDate()}` : pDate.getDate();
+        let mnt =
+          pDate.getMonth() < 9
+            ? `0${pDate.getMonth() + 1}`
+            : pDate.getMonth() + 1;
+
+        return `${day}/${mnt}/${pDate.getFullYear()}`;
+      }
+    }
+    return "";
+  };
+
   return (
-    <Col md={12}>
-      <Row className="info-box bg-info">
-        <Col md={12} className="item-inf-title">
-          <div className="short-title-area">
-            {!params.oneWay && (
-              <React.Fragment>
-                <span className="flight-name">
-                  US Air | <span className="flight-no">SG-154</span>
-                </span>
-              </React.Fragment>
-            )}
-          </div>
+    <Col
+      md={12}
+      key={`short-${params.elementKey}`}
+      className={`card-details ${
+        params.preSetOption.elmKey === params.elementKey ? "active" : ""
+      }`}
+    >
+      <Row>
+        <Col md={12} className="mp-0">
+          <Card className="air-option-item">
+            <Card.Body>
+              {console.log("Params SC ", params)}
+              {params.availableFlight.fareInfos &&
+                params.availableFlight.fareInfos.map((fareItem, fIdx) => {
+                  return (
+                    <React.Fragment key={`str-fly-${fIdx}`}>
+                      {fIdx >= 1 ? (
+                        <Row>
+                          <Col md={12}>
+                            <hr />
+                          </Col>
+                        </Row>
+                      ) : (
+                        ""
+                      )}
+                      <Row>
+                        {/** Image As BG */}
+                        <Col md={3}>
+                          {params.availableFlight &&
+                            params.availableFlight.airPricingInfo &&
+                            params.availableFlight.airPricingInfo
+                              .platingCarrier}
+                        </Col>
+
+                        <Col md={3}>
+                          <span className="fly-location">
+                            {fareItem.origin}
+                          </span>
+                          <span className="fly-location">
+                            {fareItem.destination}
+                          </span>
+                        </Col>
+                        <Col md={3}>
+                          {getDateFormat(fareItem.departureDate)}
+                        </Col>
+                        <Col md={3}>{fareItem.amount}</Col>
+                      </Row>
+                    </React.Fragment>
+                  );
+                })}
+            </Card.Body>
+          </Card>
         </Col>
-
-        <Col md={12} className="item-content">
-          <Row className="info-box-content">
-            {params.oneWay === true ? (
-              <React.Fragment>
-                <Col md={3} className="info-box-icon">
-                  <i className="far fa-bookmark" />
-                  <span className="flight-name">US Air</span>
-                  <span className="flight-no">SG-154</span>
-                </Col>
-              </React.Fragment>
-            ) : (
-              <React.Fragment>
-                <Col md={1} className="provider-icon">
-                  <p>
-                    <i className="far fa-bookmark" />
-                  </p>
-                </Col>
-              </React.Fragment>
-            )}
-
-            <Col md={2} className="info-box-text time">
-              <div className="time">01:45</div>
-              <p className="air-city">Mumbai</p>
-            </Col>
-            <Col md={3} className=" duration">
-              <div className="air-time">
-                <b>1</b>hr<b>15</b>mins
-              </div>
-              <p className="fly-type">Non-Stop</p>
-            </Col>
-            <Col md={2} className="info-box-text time">
-              <div className="time">01:45</div>
-              <p className="air-city">Dhili</p>
-            </Col>
-            <Col md={4} className="info-box-number air-price">
-              <p>$45645</p>
-            </Col>
-          </Row>
-        </Col>
-
-        {/* /.info-box-content */}
+      </Row>
+      <Row className="air-accordian">
+        <AirDetailsAccordian>
+          <SelectedTab
+            availavleFlight={params.availableFlight}
+            legs={params.legs}
+            brands={params.brands}
+            elmKey={params.elementKey}
+            getSelectedOption={(item, ids) => {
+              params.getSelectedFlyOption(item, ids);
+            }}
+            preSetOption={params.preSetOption}
+            removeFlyOptionAction={params.removeFlyOptionAction}
+          />
+        </AirDetailsAccordian>
       </Row>
       {/* /.info-box */}
     </Col>

@@ -1,20 +1,52 @@
-import React from "react";
+import React, { useState } from "react";
 import { Formik, Form, FieldArray } from "formik";
-import { Row, Col } from "react-bootstrap";
-import AutoCompleteSearch from "./autoCompleteSearch";
-import SearchOption from "./searchOption";
-import DatePickerRange from "./datePickerRange";
+import { Row, Col, Button } from "react-bootstrap";
 import TravellersAndClass from "./travellersAndClass";
 import AutoSearchSuggestionList from "./AutoSearchSuggestionList";
 import SingleDatePicker from "./SingleDatePicker";
+import { addDays } from "date-fns";
 
 const MultiCitySearchForm = (params) => {
+  const [pDate, setPDate] = useState(new Date());
+  const [nextDate, setNextDate] = useState(new Date());
+  const [lastDate, setLastDate] = useState(new Date());
+  const [newItem, setNewItem] = useState({
+    from: "",
+    to: "",
+    depTime: new Date(),
+  });
+
+  const getNextItem = (passDetails) => {
+    console.log("Passenger Details: ", passDetails);
+    let lastIdx = passDetails.length > 0 ? passDetails.length - 1 : 0;
+    let lastItem = passDetails[lastIdx];
+    let item = {
+      from: "",
+      to: "",
+      depTime: new Date(),
+    };
+
+    console.log("last Item ", lastItem);
+    let nDate = new Date(lastItem.depTime);
+    nDate = addDays(nDate, 1);
+
+    item.from = lastItem.to;
+    item.depTime = nDate;
+
+    console.log("Item Data: ", item);
+
+    if (item === undefined || item === null) {
+      return item;
+    }
+    setNewItem(item);
+    return item;
+  };
   return (
     <React.Fragment>
       <Formik
         initialValues={params.multyInitValue}
         onSubmit={(values, actions) => {
-          this.submitForm(values);
+          params.getSearchValueAndSubmit(values);
         }}
       >
         {(props) => (
@@ -28,11 +60,17 @@ const MultiCitySearchForm = (params) => {
                         {props.values.passDetails &&
                           props.values.passDetails.map((item, indx) => (
                             <Row className="air-search" key={`trip-${indx}`}>
-                              {console.log("Multy City: index", indx)}
+                              {console.log(
+                                "Multy City: index",
+                                indx,
+                                " And Item: ",
+                                item
+                              )}
                               <Col md={6} className="no-margin-padding">
                                 <Row className="no-margin-padding">
                                   <Col md={6} className="no-margin-padding">
                                     <AutoSearchSuggestionList
+                                      preSetItem={item.from}
                                       title="From"
                                       suggestions={params.sugList}
                                       name={`passDetails[${indx}].from`}
@@ -48,6 +86,7 @@ const MultiCitySearchForm = (params) => {
                                   <Col md={6} className="no-margin-padding">
                                     <AutoSearchSuggestionList
                                       title="TO"
+                                      preSetItem={item.to}
                                       suggestions={params.sugList}
                                       name={`passDetails[${indx}].to`}
                                       id={`passDetails[${indx}].to`}
@@ -63,14 +102,14 @@ const MultiCitySearchForm = (params) => {
                               </Col>
                               <Col md={2} className="no-margin-padding">
                                 <SingleDatePicker
-                                  preSetDate={params.setLastDate}
+                                  preSetDate={item.depTime}
                                   getDate={(item) => {
                                     props.setFieldValue(
-                                      `passDetails[${indx}].sdate`,
+                                      `passDetails[${indx}].depTime`,
                                       item
                                     );
 
-                                    this.setState({ lastDate: item });
+                                    setLastDate(item);
                                   }}
                                 />
                               </Col>
@@ -84,12 +123,12 @@ const MultiCitySearchForm = (params) => {
                                       infants,
                                       cabinClass
                                     ) => {
-                                      this.setAllRangeData(
+                                      /*this.setAllRangeData(
                                         adults,
                                         child,
                                         infants,
                                         cabinClass
-                                      );
+                                      );*/
 
                                       props.setFieldValue(
                                         `traveler.ADT`,
@@ -115,13 +154,13 @@ const MultiCitySearchForm = (params) => {
                                       <a
                                         className=" btn btn-block btn-outline-primary btn-xs"
                                         href="javascript:void(0);"
-                                        onClick={() =>
-                                          push({
-                                            from: "",
-                                            to: "",
-                                            depTime: "",
-                                          })
-                                        }
+                                        onClick={() => {
+                                          push(
+                                            getNextItem(
+                                              props.values.passDetails
+                                            )
+                                          );
+                                        }}
                                       >
                                         ADD ANOTHER CITY
                                       </a>
@@ -149,6 +188,14 @@ const MultiCitySearchForm = (params) => {
                 </Col>
               </Row>
             </React.Fragment>
+
+            <Row>
+              <Col md={{ span: 2, offset: 5 }}>
+                <Button type="submit" className="btn btn-block btn-primary">
+                  Search
+                </Button>
+              </Col>
+            </Row>
           </Form>
         )}
       </Formik>

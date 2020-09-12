@@ -13,7 +13,10 @@ import MultiCitySearchForm from "./MultiCitySearchForm";
 import { addDays } from "date-fns";
 import { PropTypes } from "prop-types";
 import { connect } from "react-redux";
-import { getOneWayAirSearchRequest } from "../../actions/airSearchAction";
+import {
+  getOneWayAirSearchRequest,
+  getAirSearchRequest,
+} from "../../actions/airSearchAction";
 import { Redirect } from "react-router-dom";
 
 const airPort = [
@@ -53,8 +56,8 @@ class AirSearchForm extends Component {
 
     multyInitValue: {
       passDetails: [
-        { from: "", to: "", depTime: "", returnTime: "" },
-        { from: "", to: "", depTime: "", returnTime: "" },
+        { from: "", to: "", depTime: new Date(), returnTime: "" },
+        { from: "", to: "", depTime: addDays(new Date(), 1), returnTime: "" },
       ],
       traveler: { ADT: 0, CHD: 0, INF: 0, cabClass: 0 },
       tripCat: null,
@@ -69,6 +72,10 @@ class AirSearchForm extends Component {
     preSetRoundTripDepTime: new Date(),
   };
 
+  setAllRangeData = (adults, child, infants, cabinClass) => {
+    console.log("Traveler: ", adults);
+  };
+
   searchOneWayTrip = (queryData) => {
     console.log("Befor Submit one Search: ", queryData);
     this.props.getOneWayAirSearchRequest(queryData);
@@ -76,20 +83,94 @@ class AirSearchForm extends Component {
     this.setState({ redirectStatus: true });
   };
 
-  setStartDate = (sDate) => {
-    console.log("Start Date Formike", sDate);
-  };
-
-  setEndDate = (eDate) => {
-    //this.setState((roundInitValue:{}));
-  };
-
-  setAllRangeData = (adults, child, infants, cabinClass) => {
-    console.log("Traveler: ", adults);
-  };
-
-  submitForm = (values) => {
+  setOneWayTripInf = (values) => {
     console.log(values);
+  };
+
+  submitRoundTripAction = (queryData) => {
+    console.log("Round Trip Data: ", queryData);
+
+    let passengerCriteria = [];
+
+    if (queryData !== undefined) {
+      const { traveler, passDetails } = queryData;
+
+      console.log("Traveler: ", traveler, " Pass Details: ", passDetails);
+      if (traveler.ADT !== undefined) {
+        passengerCriteria.push({ value: "ADT", number: traveler.ADT.value });
+      }
+      if (traveler.CHD !== undefined) {
+        passengerCriteria.push({ value: "CHD", number: traveler.CHD.value });
+      }
+      if (traveler.INF !== undefined) {
+        passengerCriteria.push({ value: "INF", number: traveler.INF.value });
+      }
+
+      let query = {
+        CatalogOfferingsRequestAir: {
+          offersPerPage: 5,
+          PassengerCriteria: passengerCriteria,
+          SearchCriteriaFlight: [
+            {
+              "@type": "SearchCriteriaFlight",
+              departureDate: this.getDateSearchFomat(passDetails[0].depTime),
+              From: {
+                value: passDetails[0].from.code,
+              },
+              To: {
+                value: passDetails[0].to.code,
+              },
+            },
+            {
+              "@type": "SearchCriteriaFlight",
+              departureDate: this.getDateSearchFomat(passDetails[0].returnTime),
+              From: {
+                value: passDetails[0].to.code,
+              },
+              To: {
+                value: passDetails[0].from.code,
+              },
+            },
+          ],
+
+          SearchModifiersAir: {},
+        },
+      };
+
+      if (query !== undefined) {
+        console.log("Air Search Befor Data Structer: ", query);
+        this.props.getAirSearchRequest(query);
+        this.setState({ redirectStatus: true });
+      }
+    }
+  };
+
+  multiCityQueryAction = (queryData) => {
+    console.log("Multi City Options: ", queryData);
+  };
+  getDateSearchFomat = (paramDate) => {
+    console.log("Date ", paramDate);
+
+    if (paramDate === undefined || paramDate === null) {
+      console.log("Date Not Set !!");
+      return "0000-00-00";
+    } else {
+      let day,
+        mnt,
+        year = "";
+
+      day =
+        paramDate.getDate() <= 9
+          ? `0${paramDate.getDate()}`
+          : `${paramDate.getDate()}`;
+      mnt =
+        paramDate.getMonth() < 9
+          ? `0${paramDate.getMonth() + 1}`
+          : `${paramDate.getMonth() + 1}`;
+      year = paramDate.getFullYear();
+
+      return `${year}-${mnt}-${day}`;
+    }
   };
 
   changeTripType = (e) => {
@@ -98,12 +179,6 @@ class AirSearchForm extends Component {
     if (e.target !== undefined && e.target !== null) {
       this.setState({ tripType: e.target.value });
     }
-  };
-
-  getCityItem = (name) => {};
-
-  setOneWayTripInf = (values) => {
-    console.log(values);
   };
 
   setDataToRoundTrip = (values) => {
@@ -234,6 +309,7 @@ class AirSearchForm extends Component {
             setAllRangeData={this.setAllRangeData}
             preSetRoundTripForm={preSetRoundTripForm}
             preSetRoundTripTo={preSetRoundTripTo}
+            getDataAndSubmit={this.submitRoundTripAction}
           />
         ) : (
           ""
@@ -245,6 +321,7 @@ class AirSearchForm extends Component {
             sugList={airPort}
             setLastDate={setLastDate}
             setAllRangeData={this.setAllRangeData}
+            getSearchValueAndSubmit={this.multiCityQueryAction}
           />
         ) : (
           ""
@@ -256,6 +333,10 @@ class AirSearchForm extends Component {
 
 AirSearchForm.prototypes = {
   getOneWayAirSearchRequest: PropTypes.func.isRequired,
+  getAirSearchRequest: PropTypes.func.isRequired,
 };
 
-export default connect(null, { getOneWayAirSearchRequest })(AirSearchForm);
+export default connect(null, {
+  getOneWayAirSearchRequest,
+  getAirSearchRequest,
+})(AirSearchForm);

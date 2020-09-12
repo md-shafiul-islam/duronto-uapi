@@ -11,6 +11,8 @@ const AutoSearchSuggestionList = (props) => {
 
   useEffect(() => {
     setSelectedItem(props.preSetItem);
+    props.getSelectedData(props.preSetItem);
+    console.log("Auto props: Pre Set Item: ", props, " : ", props.preSetItem);
   }, []);
 
   return (
@@ -26,6 +28,7 @@ const AutoSearchSuggestionList = (props) => {
           getSelectedItem={(value) => {
             props.getSelectedData(value);
             setSelectedItem(value);
+            console.log("Auto Selected Value: ", value);
           }}
           fName={props.name}
           fId={props.id}

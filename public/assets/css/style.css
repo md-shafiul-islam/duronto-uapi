@@ -431,9 +431,6 @@ body {
   border-bottom: 1px solid #000;
 }
 
-.fly-type {
-}
-
 .air-price {
   font-size: 24px;
   font-weight: bold;
@@ -545,7 +542,11 @@ body {
 
 .fly-details .in-air {
   height: 120px;
-  font-size: 16px;
+  font-size: 14px;
+  margin: 0px;
+  padding: 20px 0px !important;
+  text-align: center;
+  font-weight: 500;
 }
 
 .in-air span {
@@ -555,25 +556,28 @@ body {
 
 .slc-airs .card-body .pas-details {
   min-height: 100px;
-  margin: 10px 0px;
+  margin: 0px 0px;
 }
 
 .pas-details {
   background: transparent;
 }
 
-.p-title p:first-child {
-  height: 35px;
-  border-bottom: 0.5px solid #ddd;
-  font-size: 1em;
-  font-weight: bold;
-}
-
 .p-title p span {
-  width: 33%;
+  width: 40%;
   height: auto;
   display: block;
   float: left;
+  font-size: 0.75em;
+}
+
+.p-title p span:first-child {
+  width: 60%;
+}
+.p-title p:first-child {
+  height: 35px;
+  border-bottom: 0.5px solid #ddd;
+  font-weight: bold;
 }
 
 .slc-airs .fare-summary {
@@ -679,3 +683,390 @@ body {
 }
 
 /***************** Air Flight Selected Cards Start ************/
+.fly-location {
+  padding: 10px;
+}
+
+.fly-item {
+  box-shadow: 0 5px 6px 0 rgba(0, 0, 0, 0.2), 0 2px 6px 0 rgba(0, 0, 0, 0.19) !important;
+  box-sizing: border-box;
+  border-right: #da4a11 solid 5px;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px 0px;
+  cursor: pointer;
+  border-left: transparent solid 1px;
+  border-left: transparent solid 1px;
+  border-top: transparent solid 1px;
+  border-bottom: transparent solid 1px;
+}
+
+.fly-item.selected {
+  border-left: #da4a11 solid 5px;
+  border-top: #da4a11 solid 1px;
+  border-bottom: #da4a11 solid 1px;
+  border-right: #da4a11 solid 1px;
+}
+
+.fly-price-text {
+  font-size: 1em;
+  font-weight: bold;
+}
+
+.fly-price-text .currency-type,
+.fly-price-text .amount {
+  width: 100%;
+  float: left;
+  font-size: 1.5em;
+}
+
+.accordian-tab .tab-content {
+  margin-top: 11px;
+  margin-left: -10px;
+}
+
+.accordian-tab .nav-item.active {
+  z-index: 60;
+}
+
+/**************** Start Badge   *************************/
+
+.book-inf {
+  width: 160px;
+  display: block;
+  float: left;
+  margin-left: -5px;
+}
+
+.label {
+  border-radius: 0;
+  text-shadow: none;
+  font-size: 15px;
+  font-weight: normal;
+  padding: 5px 10px 5px;
+  background-color: #abbac3 !important;
+}
+.label[class*="span"][class*="arrow"] {
+  min-height: 0;
+}
+.badge {
+  text-shadow: none;
+  font-size: 12px;
+  padding: 1px 15px;
+  font-weight: normal;
+  line-height: 15px;
+  background-color: #abbac3 !important;
+}
+.label-transparent,
+.badge-transparent {
+  background-color: transparent !important;
+}
+.label-grey,
+.badge-grey {
+  background-color: #a0a0a0 !important;
+}
+.label-info,
+.badge-info {
+  background-color: #3a87ad !important;
+}
+.label-primary,
+.badge-primary {
+  background-color: #2283c5 !important;
+}
+.label-success,
+.badge-success {
+  background-color: #82af6f !important;
+}
+.label-important,
+.badge-important {
+  background-color: #d15b47 !important;
+}
+.label-inverse,
+.badge-inverse {
+  background-color: #333 !important;
+}
+.label-warning,
+.badge-warning {
+  background-color: #f89406 !important;
+}
+.label-pink,
+.badge-pink {
+  background-color: #d6487e !important;
+}
+.label-purple,
+.badge-purple {
+  background-color: #9585bf !important;
+}
+.label-yellow,
+.badge-yellow {
+  background-color: #fee188 !important;
+}
+.label-light,
+.badge-light {
+  background-color: #e7e7e7 !important;
+}
+.badge-yellow,
+.label-yellow {
+  color: #963 !important;
+  border-color: #fee188;
+}
+.badge-light,
+.label-light {
+  color: #888 !important;
+}
+
+.label.arrowed,
+.label.arrowed-in {
+  position: relative;
+  margin-left: 9px;
+}
+.label.arrowed:before,
+.label.arrowed-in:before {
+  display: inline-block;
+  content: "";
+  position: absolute;
+  left: -14px;
+  top: 0;
+  border: 15px solid transparent;
+  border-width: 15px 15px;
+  border-right-color: #abbac3;
+}
+.label.arrowed-in:before {
+  border-color: #abbac3;
+  border-left-color: transparent !important;
+  left: -20px;
+}
+.label.arrowed-right,
+.label.arrowed-in-right {
+  position: relative;
+  margin-right: 9px;
+}
+.label.arrowed-right:after,
+.label.arrowed-in-right:after {
+  display: inline-block;
+  content: "";
+  position: absolute;
+  right: -30px;
+  top: 0;
+  border: 15px solid transparent;
+  border-width: 15px 15px;
+  border-left-color: #abbac3;
+}
+.label.arrowed-in-right:after {
+  border-color: #abbac3;
+  border-right-color: transparent !important;
+  right: -20px;
+}
+.label-info.arrowed:before {
+  border-right-color: #3a87ad;
+}
+.label-info.arrowed-in:before {
+  border-color: #3a87ad;
+}
+.label-info.arrowed-right:after {
+  border-left-color: #3a87ad;
+}
+.label-info.arrowed-in-right:after {
+  border-color: #3a87ad;
+}
+.label-primary.arrowed:before {
+  border-right-color: #2283c5;
+}
+.label-primary.arrowed-in:before {
+  border-color: #2283c5;
+}
+.label-primary.arrowed-right:after {
+  border-left-color: #2283c5;
+}
+.label-primary.arrowed-in-right:after {
+  border-color: #2283c5;
+}
+.label-success.arrowed:before {
+  border-right-color: #82af6f;
+}
+.label-success.arrowed-in:before {
+  border-color: #82af6f;
+}
+.label-success.arrowed-right:after {
+  border-left-color: #82af6f;
+}
+.label-success.arrowed-in-right:after {
+  border-color: #82af6f;
+}
+.label-warning.arrowed:before {
+  border-right-color: #f89406;
+}
+.label-warning.arrowed-in:before {
+  border-color: #f89406;
+}
+.label-warning.arrowed-right:after {
+  border-left-color: #f89406;
+}
+.label-warning.arrowed-in-right:after {
+  border-color: #f89406;
+}
+.label-important.arrowed:before {
+  border-right-color: #d15b47;
+}
+.label-important.arrowed-in:before {
+  border-color: #d15b47;
+}
+.label-important.arrowed-right:after {
+  border-left-color: #d15b47;
+}
+.label-important.arrowed-in-right:after {
+  border-color: #d15b47;
+}
+.label-inverse.arrowed:before {
+  border-right-color: #333;
+}
+.label-inverse.arrowed-in:before {
+  border-color: #333;
+}
+.label-inverse.arrowed-right:after {
+  border-left-color: #333;
+}
+.label-inverse.arrowed-in-right:after {
+  border-color: #333;
+}
+.label-pink.arrowed:before {
+  border-right-color: #d6487e;
+}
+.label-pink.arrowed-in:before {
+  border-color: #d6487e;
+}
+.label-pink.arrowed-right:after {
+  border-left-color: #d6487e;
+}
+.label-pink.arrowed-in-right:after {
+  border-color: #d6487e;
+}
+.label-purple.arrowed:before {
+  border-right-color: #9585bf;
+}
+.label-purple.arrowed-in:before {
+  border-color: #9585bf;
+}
+.label-purple.arrowed-right:after {
+  border-left-color: #9585bf;
+}
+.label-purple.arrowed-in-right:after {
+  border-color: #9585bf;
+}
+.label-yellow.arrowed:before {
+  border-right-color: #fee188;
+}
+.label-yellow.arrowed-in:before {
+  border-color: #fee188;
+}
+.label-yellow.arrowed-right:after {
+  border-left-color: #fee188;
+}
+.label-yellow.arrowed-in-right:after {
+  border-color: #fee188;
+}
+.label-light.arrowed:before {
+  border-right-color: #e7e7e7;
+}
+.label-light.arrowed-in:before {
+  border-color: #e7e7e7;
+}
+.label-light.arrowed-right:after {
+  border-left-color: #e7e7e7;
+}
+.label-light.arrowed-in-right:after {
+  border-color: #e7e7e7;
+}
+.label-grey.arrowed:before {
+  border-right-color: #a0a0a0;
+}
+.label-grey.arrowed-in:before {
+  border-color: #a0a0a0;
+}
+.label-grey.arrowed-right:after {
+  border-left-color: #a0a0a0;
+}
+.label-grey.arrowed-in-right:after {
+  border-color: #a0a0a0;
+}
+.label-large {
+  font-size: 13px;
+  padding: 3px 8px 4px;
+}
+.label-large.arrowed,
+.label-large.arrowed-in {
+  margin-left: 12px;
+}
+.label-large.arrowed:before,
+.label-large.arrowed-in:before {
+  left: -16px;
+  border-width: 11px 8px;
+}
+.label-large.arrowed-in:before {
+  left: -12px;
+}
+.label-large.arrowed-right,
+.label-large.arrowed-in-right {
+  margin-right: 11px;
+}
+.label-large.arrowed-right:after,
+.label-large.arrowed-in-right:after {
+  right: -16px;
+  border-width: 11px 8px;
+}
+.label-large.arrowed-in-right:after {
+  right: -12px;
+}
+
+.label-inf.arrowed-in-right:after {
+  background-color: #117a8b !important;
+}
+
+.label-inf,
+.label-inf {
+  background-color: #117a8b !important;
+}
+.label-important.label-inf.arrowed-right:after {
+  border-left-color: #117a8b !important;
+}
+
+.book-inf span {
+  font-weight: 550;
+  color: #fff;
+}
+/**************** End Badge   *************************/
+
+.card-details {
+  margin: 10px 0;
+  box-sizing: border-box;
+  background: #117a8b;
+  box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.2), 0 1px 3px 0 rgba(0, 0, 0, 0.19) !important;
+  border-radius: 5px;
+}
+.card-details.active {
+  border: #117a8b solid 1px;
+}
+
+.air-accordian .accordion,
+.air-accordian .accordion .card,
+.air-accordian .accordion .card .card-header {
+  background: transparent !important;
+}
+
+.air-option-item.card {
+  margin-bottom: 0px;
+}
+
+.air-option-item .card-body {
+  margin: 0px;
+  border: none !important;
+}
+
+.air-option-item,
+.air-option-item.card {
+  padding-top: 5px;
+  background: #117a8b;
+}
+.accordian-tab.card-body {
+  background: #ffffff;
+}

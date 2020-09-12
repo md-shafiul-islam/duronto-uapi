@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Formik, Form, FieldArray } from "formik";
-import { Row, Col } from "react-bootstrap";
+import { Row, Col, Button } from "react-bootstrap";
 import DatePickerRange from "./datePickerRange";
 import TravellersAndClass from "./travellersAndClass";
 import AutoSearchSuggestionList from "./AutoSearchSuggestionList";
@@ -15,7 +15,7 @@ const RoundTripSearchForm = (params) => {
         enableReinitialize={true}
         initialValues={params.roundInitValue}
         onSubmit={(values, actions) => {
-          this.submitForm(values);
+          params.getDataAndSubmit(values);
         }}
       >
         {(props) => (
@@ -111,6 +111,13 @@ const RoundTripSearchForm = (params) => {
                       </React.Fragment>
                     )}
                   </FieldArray>
+                </Col>
+              </Row>
+              <Row>
+                <Col md={{ span: 2, offset: 5 }}>
+                  <Button type="submit" className="btn btn-block btn-primary">
+                    Search
+                  </Button>
                 </Col>
               </Row>
             </React.Fragment>

@@ -28,10 +28,15 @@ const months = [
 ];
 
 const SingleDatePicker = (props) => {
-  const [date, setDate] = useState(props.preSetDate);
+  const [date, setDate] = useState(new Date());
   const [display, setDisplay] = useState(true);
 
   const refDate = useRef(undefined);
+
+  useEffect(() => {
+    props.getDate(props.preSetDate);
+    setDate(props.preSetDate);
+  }, []);
 
   const getStringMonth = (month, lenght) => {
     let stMonth =
@@ -91,7 +96,9 @@ const SingleDatePicker = (props) => {
                   <p>
                     {date && (
                       <React.Fragment>
-                        <span className="search-bstyle">{date.getDate()}</span>
+                        <span className="search-bstyle">
+                          {date !== undefined ? date.getDate() : "0"}
+                        </span>
                         <span className="search-nstyle">
                           &nbsp;
                           {getStringMonth(date.getMonth(), 3)}
@@ -118,7 +125,6 @@ const SingleDatePicker = (props) => {
                       props.getDate(item);
                       toggoleDate();
                     }}
-                    //locale={locales[locale]}
                     date={date}
                   />
                 </Card.Body>
