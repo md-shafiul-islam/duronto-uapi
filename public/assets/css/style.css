@@ -1070,3 +1070,124 @@ body {
 .accordian-tab.card-body {
   background: #ffffff;
 }
+
+.fly-min,
+.fly-hour {
+  font-size: 1.5em;
+  font-weight: 600;
+  color: #292525;
+}
+
+.booking-card .price {
+  font-size: 1.25em;
+  font-weight: 600;
+  color: #292525;
+}
+
+/** Option Style Start ***********/
+
+.booking-card .card-body {
+  padding: 5px;
+}
+
+.booking-card .card-body > .row {
+  margin-left: -5px !important;
+  margin-right: -5px !important;
+}
+
+.booking-card .card-body .fly-inf-area {
+  padding: 10px 0px;
+}
+
+.fly-details-area {
+  margin-left: -5px !important;
+  margin-right: -5px !important;
+}
+
+.fly-details-area .fly-title {
+  border-top: 1px solid #b4e5fc;
+  padding: 0px;
+  display: block;
+  list-style: none;
+  width: 100%;
+  height: 30px;
+}
+
+.fly-details-btn {
+  width: 145px;
+  padding: 10px 10px 11px 10px;
+  float: right;
+  display: block;
+  cursor: pointer;
+}
+
+.fly-details-btn.expand {
+  border-top: 1px solid #b4e5fc;
+  border-left: 1px solid #b4e5fc;
+  border-right: 1px solid #b4e5fc;
+  border-bottom: none;
+  background-color: #ffffff;
+  z-index: 50;
+}
+
+.fly-details-area .fly-accrodian {
+  border-top: 1px solid #b4e5fc !important;
+  padding: 15px;
+  color: #444;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+}
+
+.fly-details-area .fly-accrodian.inactive {
+  display: none;
+}
+
+.fly-details-area .fly-accrodian.active {
+  display: block;
+}
+
+.lfp-0 {
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+}
+
+.pd-10 {
+  padding: 10px 0px;
+}
+
+.fly-date-time {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.layover {
+  height: 40px;
+  margin-top: 30px;
+}
+
+.layover .layover-overlay-conten {
+  background-color: #fff;
+}
+
+.layover .border-center {
+  border-bottom: 1px solid #aaa;
+}
+
+.layover .layover-content {
+  height: 40px;
+  margin-top: -20px;
+  border: 1px solid #aaa;
+  border-radius: 25px;
+  background-color: #fff;
+}
+
+.layover .layover-content p {
+  text-align: center;
+
+  line-height: 35px;
+}
+
+/** Option Style End ***********/

@@ -40,3 +40,28 @@ export const GET_DESIGNATIONS = "GET_DESIGNATIONS";
 export const GET_DESIGNATION = "GET_DESIGNATION";
 
 export const GET_AIR_SEARCH_RESPONSE = "GET_AIR_SEARCH_RESPONSE";
+
+export const GET_DAYES = [
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+];
+
+export const GET_MONTHS = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
