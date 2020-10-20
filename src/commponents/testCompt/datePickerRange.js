@@ -71,11 +71,8 @@ const DatePickerRange = (props) => {
      * Alert if clicked on outside of element
      */
 
-    console.log("Event add to Card");
-
     function handleClickOutside(event) {
       if (refDate.current && !refDate.current.contains(event.target)) {
-        console.log("Display Status: ", display);
         if (display === true) {
           setDisplay(false);
         }
@@ -142,8 +139,6 @@ const DatePickerRange = (props) => {
     if (status[1] === 1) {
       state[0].endDate = null;
     }
-
-    console.log("C Status Return Date: ", state);
   };
 
   const toggoleDateRangeDep = (e, status) => {
@@ -157,7 +152,6 @@ const DatePickerRange = (props) => {
   };
 
   const getStringMonth = (month, lenght) => {
-    console.log("Month: ", month);
     if (month !== undefined && month !== "" && month !== null) {
       let stMonth =
         months[month] && months[month].toString().substring(0, lenght);
@@ -223,7 +217,6 @@ const DatePickerRange = (props) => {
         strDate !== "NaN" ||
         strDate !== "Na"
       ) {
-        console.log("Get Date: ", strDate);
         return "";
       } else {
         return strDate;

@@ -1,4 +1,4 @@
-import { GET_AIR_SEARCH_RESPONSE } from "../actions/types";
+import { GET_AIR_SEARCH_RESPONSE, GET_SEARCH_QUERY } from "../actions/types";
 
 const initialState = {
   airSearchResponse: [],

@@ -15,12 +15,19 @@ const DetailBookingCard = (params) => {
 
     if (timeValue > 0) {
       let min,
-        hr = "";
+        hr = 0;
 
+      timeValue = Number(timeValue);
       hr = timeValue / 60;
-      hr = Math.round(hr);
+
+      hr = Math.floor(hr);
+
       hrMin = 60 * hr;
-      min = Number(timeValue) - hrMin;
+
+      timeValue = Number(timeValue);
+      hr = Number(hr);
+
+      min = Number(timeValue) - Number(hrMin);
 
       hr = hr < 10 ? `0${hr}` : hr;
       min = min < 10 ? `0${min}` : min;
@@ -49,7 +56,6 @@ const DetailBookingCard = (params) => {
   };
 
   const getTimeFormatHr = (timeValue) => {
-    console.log("Date Time Format HR: ", timeValue);
     if (timeValue != undefined) {
       let dateTime = new Date(timeValue);
       let hr = null;
@@ -60,12 +66,6 @@ const DetailBookingCard = (params) => {
             ? `0${dateTime.getHours()}`
             : `${dateTime.getHours()}`;
 
-        console.log(
-          "Date Time Format HR Befor Return: ",
-          hr,
-          " Date HR: ",
-          dateTime.getHours()
-        );
         return hr;
       }
     }
@@ -88,6 +88,33 @@ const DetailBookingCard = (params) => {
 
       return "00";
     }
+  };
+
+  const getBaggage = (infData) => {
+    if (infData) {
+      if (infData.baggageAllowance) {
+        if (infData.baggageAllowance.maxWeight) {
+          if (
+            infData.baggageAllowance.maxWeight.value === null &&
+            infData.baggageAllowance.maxWeight.unit === null
+          ) {
+            return <span>Not Available</span>;
+          } else {
+            return (
+              <React.Fragment>
+                <span className="baggage-value">
+                  {infData.baggageAllowance.maxWeight.value}
+                </span>
+                <span className="baggage-unit">
+                  {infData.baggageAllowance.maxWeight.unit}
+                </span>
+              </React.Fragment>
+            );
+          }
+        }
+      }
+    }
+    return <span>Not Available</span>;
   };
 
   return (
@@ -166,14 +193,15 @@ const DetailBookingCard = (params) => {
           </Row>
         </Col>
         <Col md={5}>
-          <p className="">
-            <span>BAGGAGE </span>
-            <span>Weight</span>
-          </p>
-          <p className="">
-            <span>BAGGAGE </span>
-            <span>Weight</span>
-          </p>
+          <Row>
+            <Col md={4}>BAGGAGE</Col>
+            <Col md={6}>CHECK-IN</Col>
+          </Row>
+
+          <Row>
+            <Col md={4}>ADULT:</Col>
+            <Col md={6}>{getBaggage(params.bookInf.fareInfos)}</Col>
+          </Row>
         </Col>
       </Row>
     </React.Fragment>

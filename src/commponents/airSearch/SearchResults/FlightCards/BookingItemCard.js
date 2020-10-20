@@ -5,9 +5,45 @@ import DetailBookingCard from "./DetailBookingCard";
 
 const BookingItemCard = (params) => {
   const [display, setDisplay] = useState(false);
+  const [totalTravelTime, setTotalTravelTime] = useState("");
 
+  useEffect(() => {
+    setTotalTravelTime(
+      getTotalFlyTime(
+        params.flyOption.flyDepartureTime,
+        params.flyOption.flyArrivalTime
+      )
+    );
+  }, []);
   const toggleDisplay = () => {
     setDisplay(!display);
+  };
+
+  const getTotalFlyTime = (prevDateTime, cDateTime) => {
+    //1000 milsec to sec
+    const preDate = new Date(prevDateTime);
+    const curDate = new Date(cDateTime);
+
+    let diffTime = Math.abs(curDate - preDate);
+
+    let hrs,
+      hMints = 0;
+    let mints = Number(Math.floor(diffTime / 60000));
+    let sec = ((diffTime % 60000) / 1000).toFixed(0);
+    hrs = Number(Math.floor(mints / 60));
+
+    if (hrs > 0) {
+      hMints = hrs * 60;
+    }
+
+    hMints = Number(hMints);
+    mints = Number(mints);
+
+    if (hMints > 0) {
+      mints = mints - hMints;
+    }
+
+    return `${hrs} hr ${mints} min`;
   };
 
   const getTimeFormatHr = (timeValue) => {
@@ -69,14 +105,24 @@ const BookingItemCard = (params) => {
     return (
       <React.Fragment>
         <div>
-          <span>{timeValue}</span>
+          <span>{totalTravelTime}</span>
         </div>
-        <div>
-          <span>{airStop}</span>
-          {params.flyOption.airStops &&
-            params.flyOption.airStops.map((stop, i) => {
-              return <span>{stop}</span>;
-            })}
+        <div className="line-area">
+          <ul className="route-air-line">
+            {params.flyOption.airStops &&
+              params.flyOption.airStops.map((item, idx) => {
+                return <li className="air-point">&nbsp;</li>;
+              })}
+          </ul>
+        </div>
+        <div className="line-airport">
+          <p>
+            {airStop > 0 ? airStop : "Non"} stop {airStop > 0 ? " via" : ""}{" "}
+            {params.flyOption.airStops &&
+              params.flyOption.airStops.map((stop, i) => {
+                return <span>{stop}</span>;
+              })}
+          </p>
         </div>
       </React.Fragment>
     );
@@ -193,6 +239,15 @@ const BookingItemCard = (params) => {
                   getTimeFormatMin={getTimeFormatMin}
                   carriers={params.flyOption.carriers}
                   flightNumbers={params.flyOption.flightNumbers}
+                  totalTravelTime={totalTravelTime}
+                  travelInf={{
+                    firstOrigin: params.flyOption.firstOrigin,
+                    lastDestination: params.flyOption.lastDestination,
+                  }}
+                  flyOption={params.flyOption}
+                  fareSummary={params.fareSummary}
+                  cancel={params.cancel}
+                  change={params.cancel}
                 />
               </div>
             </Col>

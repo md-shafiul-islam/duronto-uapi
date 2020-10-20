@@ -40,6 +40,7 @@ export const GET_DESIGNATIONS = "GET_DESIGNATIONS";
 export const GET_DESIGNATION = "GET_DESIGNATION";
 
 export const GET_AIR_SEARCH_RESPONSE = "GET_AIR_SEARCH_RESPONSE";
+export const GET_SEARCH_QUERY = "GET_SEARCH_QUERY";
 
 export const GET_DAYES = [
   "Sunday",

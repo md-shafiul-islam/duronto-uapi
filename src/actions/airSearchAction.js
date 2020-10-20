@@ -4,6 +4,7 @@ import {
   BASE_URL,
   REQUEST_HEADER,
   EXT_BASE_URL,
+  GET_SEARCH_QUERY,
 } from "./types";
 import Axios from "axios";
 
@@ -92,9 +93,6 @@ export const getOneWayAirSearchRequest = (requestData) => async (dispatch) => {
       },
     };
 
-    console.log("Before Send request LOG: ");
-    console.log("Before Send request: ", JSON.stringify(query, null, 2));
-
     let url = `${EXT_BASE_URL}/api/catalogofferings`;
 
     const res = await Axios.post(url, JSON.stringify(query, null, 2), {
@@ -118,11 +116,11 @@ export const getOneWayAirSearchRequest = (requestData) => async (dispatch) => {
   }
 };
 
-export const getSearchResult = (requestDate) => async (dispatch) => {
+export const getSearchResult = (requestData) => async (dispatch) => {
   try {
     let url = `${EXT_BASE_URL}/api/catalogofferings`;
 
-    const res = await Axios.post(url, JSON.stringify(requestDate, null, 2), {
+    const res = await Axios.post(url, JSON.stringify(requestData, null, 2), {
       headers: REQUEST_HEADER,
     });
 
@@ -172,4 +170,11 @@ const getProperDate = (pValue) => {
       return strDate;
     }
   }
+};
+
+export const setSearchQuery = (data) => async (dispatch) => {
+  dispatch({
+    type: GET_SEARCH_QUERY,
+    payload: data,
+  });
 };

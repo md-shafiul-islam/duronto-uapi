@@ -1,13 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Tabs, Tab, Nav, Row, Col } from "react-bootstrap";
 import FlyDetailsCard from "./FlightCards/FlyDetailsCard";
 import ChargeCardDetails from "./FlightCards/ChargeCardDetails";
 import FareSummaryCard from "./FlightCards/FareSummaryCard";
 import SelectedAirDetails from "./SelectedAirDetails";
 import DetailBookingCard from "./FlightCards/DetailBookingCard";
+import { GET_DAYES, GET_MONTHS } from "../../../actions/types";
 
 const SelectedTab = (props) => {
   const [key, setKey] = useState("flightDetails");
+  const [dateMonth, setDateMonth] = useState("");
 
   const selectedBookingOptionAction = (ids, item) => {
     props.getSelectedOption(item, ids);
@@ -15,13 +17,30 @@ const SelectedTab = (props) => {
 
   let prevArvTime = "";
 
+  useEffect(() => {
+    setDateMonth(getDayAndMonth(props.flyOption.flyDepartureTime));
+  }, []);
+
+  const getDayAndMonth = (dateTime) => {
+    let localDate = null;
+    let month,
+      dayOfMonth = 0;
+
+    if (dateTime === undefined) {
+      localDate = new Date();
+    } else {
+      localDate = new Date(dateTime);
+    }
+
+    month = GET_MONTHS[localDate.getMonth()].substring(0, 3);
+    dayOfMonth = localDate.getDate();
+    return `${dayOfMonth} ${month}`;
+  };
+
   const setLauoverInf = (prevDateTime, cDateTime) => {
-    console.log("P time: ", prevDateTime, " C Date: ", cDateTime);
     //1000 milsec to sec
     const preDate = new Date(prevDateTime);
     const curDate = new Date(cDateTime);
-
-    console.log("After P Hr: ", preDate, " C Hr: ", curDate);
 
     let diffTime = Math.abs(curDate - preDate);
 
@@ -66,6 +85,16 @@ const SelectedTab = (props) => {
         <Col sm={12}>
           <Tab.Content>
             <Tab.Pane eventKey="flightDetails">
+              <Row className="travel-locs">
+                <Col md={6} className="travel-title-inf">
+                  {props.travelInf.firstOrigin} To{" "}
+                  {props.travelInf.lastDestination}, {dateMonth}
+                </Col>
+                <Col md={6} className="travel-title-time">
+                  {props.totalTravelTime}
+                </Col>
+              </Row>
+
               {props.bookInfos &&
                 props.bookInfos.map((book, ibx) => {
                   let { fareInfos, segment } = book;
@@ -94,7 +123,7 @@ const SelectedTab = (props) => {
                                   className="layover-content "
                                 >
                                   <p>
-                                    Change of Planes | {timeDeff} layover in{" "}
+                                    Change of Planes | {timeDeff} Layover in{" "}
                                     {origin}
                                   </p>
                                 </Col>
@@ -106,14 +135,26 @@ const SelectedTab = (props) => {
                         ""
                       )}
 
-                      <DetailBookingCard bookInf={book} />
+                      <DetailBookingCard
+                        bookInf={book}
+                        totalTravelTime={props.totalTravelTime}
+                        travelLocs={props.travelInf}
+                      />
                     </React.Fragment>
                   );
                 })}
             </Tab.Pane>
-            <Tab.Pane eventKey="fareSummary"></Tab.Pane>
-            <Tab.Pane eventKey="cancellation"></Tab.Pane>
-            <Tab.Pane eventKey="dateChange"></Tab.Pane>
+
+            <Tab.Pane eventKey="fareSummary">
+              <FareSummaryCard fareSummary={props.fareSummary} />
+            </Tab.Pane>
+
+            <Tab.Pane eventKey="cancellation">
+              <ChargeCardDetails data={props.cancel} />
+            </Tab.Pane>
+            <Tab.Pane eventKey="dateChange">
+              <ChargeCardDetails data={props.cancel} />
+            </Tab.Pane>
           </Tab.Content>
         </Col>
       </Row>

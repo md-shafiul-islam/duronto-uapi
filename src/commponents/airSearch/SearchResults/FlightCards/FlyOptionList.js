@@ -9,7 +9,17 @@ const FlyOptionList = (params) => {
         params.availAbleFlight.flyOptions.map((flyOption, idx) => {
           return (
             <React.Fragment>
-              <BookingItemCard flyOption={flyOption} bkElm={`bok-key-${idx}`} />
+              <BookingItemCard
+                flyOption={flyOption}
+                bkElm={`bok-key-${idx}`}
+                fareSummary={{
+                  airTotalPrice: params.availAbleFlight.totalePrice,
+                  airBasePrice: params.availAbleFlight.appoxBasePrice,
+                  airTax: params.availAbleFlight.totalTax,
+                }}
+                cancel={params.availAbleFlight.cancel}
+                change={params.availAbleFlight.change}
+              />
             </React.Fragment>
           );
         })}
