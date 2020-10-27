@@ -1590,4 +1590,10 @@ body {
 ::-webkit-scrollbar-thumb:window-inactive {
   background: rgba(255, 0, 0, 0.4);
 }
+
+.multi-city-area {
+  border: 1px solid #abbac3;
+  border-radius: 5px;
+  padding: 5px 10px;
+}
 /****************** Options Round Trip End ****************/
