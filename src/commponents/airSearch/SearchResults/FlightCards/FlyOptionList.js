@@ -2,6 +2,8 @@ import React from "react";
 import BookingItemCard from "./BookingItemCard";
 
 const FlyOptionList = (params) => {
+
+  console.log(" params.availAbleFlight: ", params.availAbleFlight);
   return (
     <React.Fragment>
       {params.availAbleFlight &&
@@ -11,6 +13,7 @@ const FlyOptionList = (params) => {
             <React.Fragment>
               <BookingItemCard
                 flyOption={flyOption}
+                totalPrice={params.availAbleFlight.approxTotalPrice}
                 bkElm={`bok-key-${idx}`}
                 fareSummary={{
                   airTotalPrice: params.availAbleFlight.totalePrice,

@@ -93,6 +93,8 @@ export const getOneWayAirSearchRequest = (requestData) => async (dispatch) => {
       },
     };
 
+    console.log("Befor Send Query One Way: ", JSON.stringify(query, null, 2));
+
     let url = `${EXT_BASE_URL}/api/catalogofferings`;
 
     const res = await Axios.post(url, JSON.stringify(query, null, 2), {

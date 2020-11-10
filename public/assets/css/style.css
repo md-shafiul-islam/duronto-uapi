@@ -1597,3 +1597,67 @@ body {
   padding: 5px 10px;
 }
 /****************** Options Round Trip End ****************/
+
+/********** One Way Price **************/
+
+.price-info-ul{
+
+}
+
+.price-info-ul li:first-child{
+  list-style: none;
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 35px;
+  border-bottom: 1px solid #5e5b5b;
+  margin-bottom: 10px;
+  width: 100%;
+  text-transform: uppercase;
+}
+
+.active-price-view{
+  box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.2), 0 4px 8px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 5px;
+}
+.price-details-option{
+  
+}
+
+.price-details-option .fly-price-inf{}
+
+.price-details-option .fly-price-inf .one-way-price-tag-line{
+  margin: 25px 10px;
+  font-size: 16px;
+}
+
+.price-details-option .fly-price-inf .one-way-price-tag-line .one-way-price{
+  font-size: 1.25em;
+  font-weight: bold;
+  margin-top: 10px;
+
+}
+
+.price-info-ul,
+.price-upsell-ul,
+.penalty-ul {
+  font-size: 12px;
+  list-style: none;
+  margin-left: 5px;
+}
+
+.price-info-ul .far,
+.price-upsell-ul .far,
+.penalty-ul .far{
+
+  color: #01a1b9;
+}
+
+.price-info-ul li,
+.price-upsell-ul li,
+.penalty-ul li{
+
+  margin-left: 0px;
+}
+
+
+
