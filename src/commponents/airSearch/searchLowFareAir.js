@@ -129,7 +129,7 @@ class SearchLowFareAir extends Component {
                       >
                         {(props) => (
                           <Form>
-                            <pre>{JSON.stringify(props.values, null, 2)}</pre>
+                            
                             <Row>
                               <Col md={12}>
                                 <React.Fragment>

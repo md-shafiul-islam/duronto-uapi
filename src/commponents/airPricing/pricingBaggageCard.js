@@ -1,0 +1,91 @@
+import { getUnixTime } from "date-fns";
+import React from "react";
+import { Col, Row } from "react-bootstrap";
+
+const PricingBaggageCard = (params) => {
+
+    const getUnit = (unitParam)=>{
+        let unitData ="";
+        if(unitParam !== undefined){
+            unitData = unitParam.replace("K", " Kgs");
+            
+            return unitData;
+        }
+    }
+
+
+  const getCheckInBaggage = (bagInf) => {
+    console.log("Baggage CheckIn: ", bagInf);
+    let unit = "";
+    if(bagInf !== undefined){
+        let bag = bagInf[0];
+
+        if(bag !== undefined){
+            unit = bag.textInfo[0];
+            
+            if(unit !== undefined){
+                unit = unit.text;
+
+                unit = unit !== undefined ? unit[0] : null;
+
+                unit = unit !== null ? getUnit(unit) : 0;
+
+                return unit;
+            }
+        }
+    }
+  };
+
+  const getCabinBaggage = (baggCabin) => {
+    
+    console.log("Baggage CheckIn: ", baggCabin);
+    let unit = "";
+    if(baggCabin !== undefined){
+        let bag = baggCabin[0];
+
+        if(bag !== undefined){
+            unit = bag.textInfo[0];
+            
+            if(unit !== undefined){
+                unit = unit.text;
+
+                unit = unit !== undefined ? unit[0] : null;
+
+                unit = unit !== null ? getUnit(unit) : 0;
+
+                return unit;
+            }
+        }
+    }
+  };
+  return (
+    <React.Fragment>
+      <Col md={6} className="pricing-baggage-cnt">
+        <Row className="btitle">
+          <Col md={4}>Baggage:</Col>
+          <Col md={4}>Check in:</Col>
+          <Col md={4}>Cabin:</Col>
+        </Row>
+        {params.baggageAllowance &&
+          params.baggageAllowance.map((baggage, idx) => {
+            return (
+              <Row>
+                <Col md={4}>
+                  {baggage.key}
+                  {console.log("Each Baggage: ", baggage)}
+                </Col>
+                <Col md={4}>
+                  {getCheckInBaggage(baggage.value.baggageAllowanceInfo)}
+                </Col>
+                <Col md={4}>
+                  {getCabinBaggage(baggage.value.carryOnAllowanceInfo)}
+                </Col>
+              </Row>
+            );
+          })}
+      </Col>
+    </React.Fragment>
+  );
+};
+
+export default PricingBaggageCard;

@@ -1,23 +1,23 @@
-import { el } from "date-fns/locale";
 import React, { Component } from "react";
 import { Row, Col, Card, Button } from "react-bootstrap";
 import { PropTypes } from "prop-types";
 import { connect } from "react-redux";
 import SelectedTab from "../SelectedTab";
-import DetailBookingCard from "./DetailBookingCard";
-import { getPriceRequest } from "../../../../actions/priceAction";
+import { setPriceDetails } from "../../../../actions/priceAction";
 import { EXT_PRICE_URL, REQUEST_HEADER } from "../../../../actions/types";
 import Axios from "axios";
 import OneWayPriceCard from "./OneWayPriceCard";
+import { Redirect } from "react-router-dom";
 
 class BookingItemCard extends Component {
   state = {
     display: false,
-    priceDisplay:false,
-    dataLoadStatus:false,
+    priceDisplay: false,
+    dataLoadStatus: false,
     totalTravelTime: "",
     priceDetails: null,
-    priceStatus:false,
+    priceStatus: false,
+    bookingAction: false,
     priceInfo: {
       prosessPrice: {
         OfferSummary: {
@@ -14943,45 +14943,47 @@ class BookingItemCard extends Component {
     },
   };
 
-  
-  goBookingOption = (priceBooking)=>{
+  goBookingOption = (priceBooking) => {
     console.log("Price Before Book: ", priceBooking);
-  }
+    this.props.setPriceDetails(priceBooking);
 
-  tooglePriceView = ()=>{
-    let{priceDisplay} = this.state;
-    this.setState({priceDisplay:!priceDisplay});
-  }
+    this.setState({ bookingAction: true });
+  };
+
+  tooglePriceView = () => {
+    let { priceDisplay } = this.state;
+    this.setState({ priceDisplay: !priceDisplay });
+  };
 
   getPriceDetailsRequest = async (priceQuery) => {
-        
-    let url = `${EXT_PRICE_URL}/api/v_1_0/buildfromproducts`;
-   
-    if(!this.state.dataLoadStatus){
+    console.log("Price Request Query: ", priceQuery);
 
-      console.log(
-        "Befor Send Price Query: ",
-        JSON.stringify(priceQuery, null, 2)
-      );
+    let url = `${EXT_PRICE_URL}/api/v_1_0/buildfromproducts`;
+
+    if (!this.state.dataLoadStatus) {
       await Axios.post(url, priceQuery, {
         headers: REQUEST_HEADER,
-      }).then((res)=>{
-  
-        console.log("Price Response: ", res);
-  
-        this.setState({priceInfo:res.data});
-        this.setState({priceStatus:true});
-        this.setState({dataLoadStatus:true});
-  
-      }).catch((err)=>{
-        console.log("Error: ", err);
-      });
-    }else{
-      console.log("Data Price Is Loaded: ", this.state.priceInfo, " Status: ", this.state.dataLoadStatus);
+      })
+        .then((res) => {
+          console.log("Price Response: ", res);
+
+          this.setState({ priceInfo: res.data });
+          this.setState({ priceStatus: true });
+          this.setState({ dataLoadStatus: true });
+        })
+        .catch((err) => {
+          console.log("Error: ", err);
+        });
+    } else {
+      console.log(
+        "Data Price Is Loaded: ",
+        this.state.priceInfo,
+        " Status: ",
+        this.state.dataLoadStatus
+      );
     }
 
     //this.setState({priceInf:dataRes.data, priceStatus:true});
-    
   };
 
   getDateOnly = (dateAndTime) => {
@@ -14999,8 +15001,7 @@ class BookingItemCard extends Component {
   };
 
   componentDidMount() {
-
-    console.log("This.Props: ", this.props);
+    console.log("Comp did mount Book Item Card this.props: ", this.props);
 
     this.setState({
       totalTravelTime: this.getTotalFlyTime(
@@ -15017,6 +15018,7 @@ class BookingItemCard extends Component {
 
   getPriceDetails = (flyOption) => {
     console.log("Option Price Details: ", flyOption);
+    console.log("Book Item Card this.props: ", this.props);
 
     let { priceDetails } = this.state;
     let bookOptions = [];
@@ -15047,12 +15049,39 @@ class BookingItemCard extends Component {
             bookOptions.push(priceInf);
           }
         });
+      
+        console.log("Booking Item Card Props: ", this.props);
+      let pasengerProps =
+        this.props &&
+        this.props.searchQuery &&
+        this.props.searchQuery.sQuery &&
+        this.props.searchQuery.sQuery.searchQuery &&
+        this.props.searchQuery.sQuery.searchQuery.traveler;
+      let passengers = new Array();
+
+      if (pasengerProps !== undefined) {
+        if (pasengerProps.ADT.value > 0) {
+          passengers.push({ value: "ADT", number: 1 });
+        }
+
+        if (pasengerProps.CNN.value > 0) {
+          passengers.push({ value: "CNN", number: 1 });
+        }
+
+        if (pasengerProps.INF.value > 0) {
+          passengers.push({ value: "INF", number: 1 });
+        }
+    
+        
+      } else {
+        passengers.push({ value: "ADT", number: 1 });
+      }
 
       let priceQuery = {
         OfferQueryBuildFromProducts: {
           BuildFromProductsRequest: {
             "@type": "BuildFromProductsRequestAir",
-            PassengerCriteria: [{ value: "ADT", number: 1 }],
+            PassengerCriteria: passengers,
             ProductCriteriaAir: [
               {
                 "@type": "ProductCriteriaAir",
@@ -15063,8 +15092,8 @@ class BookingItemCard extends Component {
         },
       };
 
+      console.log("Befor Send Price Request: ", priceQuery);
       this.getPriceDetailsRequest(priceQuery);
-      //this.props.getPriceRequest(priceQuery);
     } else {
       console.log("Data Price Details: Else", priceDetails);
     }
@@ -15180,9 +15209,14 @@ class BookingItemCard extends Component {
   };
 
   render() {
+    let { priceStatus, bookingAction } = this.state;
 
-    if(this.state.priceStatus){
+    if (priceStatus) {
       console.log("After Load Price Details: ", this.state.priceInfo);
+    }
+
+    if (bookingAction) {
+      return <Redirect to="/air/pricing" />;
     }
     return (
       <React.Fragment>
@@ -15264,11 +15298,11 @@ class BookingItemCard extends Component {
                   </Col>
                 </Row>
               </Col>
-              
+
               <Col md={4}>
                 <Row>
                   <Col md={7}>
-                    <span className="price">                        
+                    <span className="price">
                       {this.getPrice(this.props.totalPrice)}
                     </span>
                   </Col>
@@ -15287,7 +15321,11 @@ class BookingItemCard extends Component {
               </Col>
             </Row>
 
-            <Row className={`fly-details-area ${this.state.priceDisplay === true ? " active-price-view" : " "}`}>
+            <Row
+              className={`fly-details-area ${
+                this.state.priceDisplay === true ? " active-price-view" : " "
+              }`}
+            >
               <Col md={12} className="lfp-0 ">
                 <ul
                   className={`fly-title`}
@@ -15327,11 +15365,19 @@ class BookingItemCard extends Component {
                 </div>
               </Col>
             </Row>
-            {console.log("Price Inf Befor Init Price Details: ", this.state.priceInfo.orgResponse)}
-            <Row className="one-way-price-details" style={{display: this.state.priceDisplay === true ? "block" : "none"}}>
-              <OneWayPriceCard 
-                priceInf={this.state.priceInfo.orgResponse} 
-                getSelectedFlight={(selectedData)=>{
+            {console.log(
+              "Price Inf Befor Init Price Details: ",
+              this.state.priceInfo.orgResponse
+            )}
+            <Row
+              className="one-way-price-details"
+              style={{
+                display: this.state.priceDisplay === true ? "block" : "none",
+              }}
+            >
+              <OneWayPriceCard
+                priceInf={this.state.priceInfo.orgResponse}
+                getSelectedFlight={(selectedData) => {
                   this.goBookingOption(selectedData);
                 }}
               />
@@ -15344,7 +15390,7 @@ class BookingItemCard extends Component {
 }
 
 BookingItemCard.prototypes = {
-  getPriceRequest: PropTypes.func.isRequired,
+  setPriceDetails: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired,
   airPriceResponse: PropTypes.object.isRequired,
   searchQuery: PropTypes.object.isRequired,
@@ -15356,4 +15402,4 @@ const mapStateToProps = (state) => ({
   searchQuery: state.searchQuery,
 });
 
-export default connect(mapStateToProps, { getPriceRequest })(BookingItemCard);
+export default connect(mapStateToProps, { setPriceDetails })(BookingItemCard);

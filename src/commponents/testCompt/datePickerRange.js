@@ -239,7 +239,7 @@ const DatePickerRange = (props) => {
                 >
                   DEPARTURE &nbsp;{" "}
                   <i
-                    class="fas fa-angle-down icon-trans"
+                    className="fas fa-angle-down icon-trans"
                     style={{
                       transform: `${display ? "rotateZ(-180deg)" : ""}`,
                     }}
@@ -282,7 +282,7 @@ const DatePickerRange = (props) => {
                 >
                   RETURN &nbsp;{" "}
                   <i
-                    class="fas fa-angle-down icon-trans"
+                    className="fas fa-angle-down icon-trans"
                     style={{
                       transform: `${retDisplay ? "rotateZ(-180deg)" : ""}`,
                     }}

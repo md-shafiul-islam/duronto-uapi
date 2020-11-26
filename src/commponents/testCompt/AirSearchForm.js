@@ -46,12 +46,12 @@ class AirSearchForm extends Component {
     selectedItemTo: {},
     oneWayInitValue: {
       passDetails: [{ from: "", to: "", depTime: "" }],
-      traveler: { ADT: 0, CHD: 0, INF: 0, cabClass: 0 },
+      traveler: { ADT: 0, CNN: 0, INF: 0, cabClass: 0 },
       tripCat: null,
     },
     roundInitValue: {
       passDetails: [{ from: "", to: "", depTime: "", returnTime: "" }],
-      traveler: { ADT: 0, CHD: 0, INF: 0, cabClass: 0 },
+      traveler: { ADT: 0, CNN: 0, INF: 0, cabClass: 0 },
       tripCat: null,
     },
 
@@ -60,7 +60,7 @@ class AirSearchForm extends Component {
         { from: "", to: "", depTime: new Date(), returnTime: "" },
         { from: "", to: "", depTime: addDays(new Date(), 1), returnTime: "" },
       ],
-      traveler: { ADT: 0, CHD: 0, INF: 0, cabClass: 0 },
+      traveler: { ADT: 0, CNN: 0, INF: 0, cabClass: 0 },
       tripCat: null,
     },
 
@@ -71,10 +71,6 @@ class AirSearchForm extends Component {
     preSetRoundTripForm: null,
     preSetRoundTripTo: null,
     preSetRoundTripDepTime: new Date(),
-  };
-
-  setAllRangeData = (adults, child, infants, cabinClass) => {
-    console.log("Traveler: ", adults);
   };
 
   searchOneWayTrip = (queryData) => {
@@ -96,14 +92,20 @@ class AirSearchForm extends Component {
   submitRoundTripAction = (queryData) => {
     let passengerCriteria = [];
 
+    if(queryData !== undefined){
+      let queryType = { searchQuery: queryData, type: 2 };
+
+      this.props.setSearchQuery(queryType);
+    }
+
     if (queryData !== undefined) {
       const { traveler, passDetails } = queryData;
 
       if (traveler.ADT !== undefined) {
         passengerCriteria.push({ value: "ADT", number: traveler.ADT.value });
       }
-      if (traveler.CHD !== undefined) {
-        passengerCriteria.push({ value: "CHD", number: traveler.CHD.value });
+      if (traveler.CNN !== undefined) {
+        passengerCriteria.push({ value: "CNN", number: traveler.CNN.value });
       }
       if (traveler.INF !== undefined) {
         passengerCriteria.push({ value: "INF", number: traveler.INF.value });
@@ -141,10 +143,7 @@ class AirSearchForm extends Component {
       };
 
       if (query !== undefined) {
-        let queryType = { searchQuery: query, type: 2 };
-
-        this.props.setSearchQuery(queryType);
-
+        
         this.props.getAirSearchRequest(query);
         this.setState({ redirectStatus: true });
       }
@@ -156,14 +155,20 @@ class AirSearchForm extends Component {
     let flights = [];
     let query = null;
 
+    if(queryData !== undefined){
+      let queryType = { searchQuery: queryData, type: 2 };
+
+      this.props.setSearchQuery(queryType);
+    }
+   
     if (queryData !== undefined) {
       const { traveler, passDetails } = queryData;
 
       if (traveler.ADT !== undefined) {
         passengerCriteria.push({ value: "ADT", number: traveler.ADT.value });
       }
-      if (traveler.CHD !== undefined) {
-        passengerCriteria.push({ value: "CHD", number: traveler.CHD.value });
+      if (traveler.CNN !== undefined) {
+        passengerCriteria.push({ value: "CNN", number: traveler.CNN.value });
       }
       if (traveler.INF !== undefined) {
         passengerCriteria.push({ value: "INF", number: traveler.INF.value });
@@ -195,9 +200,7 @@ class AirSearchForm extends Component {
         },
       };
     }
-    let queryType = { searchQuery: query, type: 3 };
-    console.log("Multi City Options: ", queryData, "Send Query: ", queryType);
-    this.props.setSearchQuery(queryType);
+    
     this.props.getAirSearchRequest(query);
     this.setState({ redirectStatus: true });
   };
@@ -259,7 +262,7 @@ class AirSearchForm extends Component {
                 ),
               },
             ],
-            traveler: { ADT: 0, CHD: 0, INF: 0, cabClass: 0 },
+            traveler: { ADT: 0, CNN: 0, INF: 0, cabClass: 0 },
             tripCat: null,
           },
         });

@@ -32,7 +32,7 @@ export const getAirSearchRequest = (requestData) => async (dispatch) => {
 };
 
 export const getOneWayAirSearchRequest = (requestData) => async (dispatch) => {
-  console.log("Before Befor Try: ");
+  
   try {
     console.log("Before Send request LOG: ");
     const { traveler, passDetails } = requestData;
@@ -46,8 +46,8 @@ export const getOneWayAirSearchRequest = (requestData) => async (dispatch) => {
       }
 
       if (traveler.ADT !== undefined) {
-        if (traveler.CHD.value > 0) {
-          pasengerList.push({ value: "CHD", number: traveler.CHD.value });
+        if (traveler.CNN.value > 0) {
+          pasengerList.push({ value: "CHD", number: traveler.CNN.value });
         }
       }
 
@@ -92,9 +92,7 @@ export const getOneWayAirSearchRequest = (requestData) => async (dispatch) => {
         SearchModifiersAir: {},
       },
     };
-
-    console.log("Befor Send Query One Way: ", JSON.stringify(query, null, 2));
-
+    console.log("One Way Try: ", query);
     let url = `${EXT_BASE_URL}/api/catalogofferings`;
 
     const res = await Axios.post(url, JSON.stringify(query, null, 2), {

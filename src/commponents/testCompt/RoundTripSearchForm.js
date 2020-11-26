@@ -94,7 +94,7 @@ const RoundTripSearchForm = (params) => {
                                     cabinClass
                                   ) => {
                                     props.setFieldValue(`traveler.ADT`, adults);
-                                    props.setFieldValue(`traveler.CHD`, child);
+                                    props.setFieldValue(`traveler.CNN`, child);
                                     props.setFieldValue(
                                       `traveler.INF`,
                                       infants

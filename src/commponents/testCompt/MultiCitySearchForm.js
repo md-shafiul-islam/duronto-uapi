@@ -17,7 +17,7 @@ const MultiCitySearchForm = (params) => {
   });
 
   const getNextItem = (passDetails) => {
-    console.log("Passenger Details: ", passDetails);
+    
     let lastIdx = passDetails.length > 0 ? passDetails.length - 1 : 0;
     let lastItem = passDetails[lastIdx];
     let item = {
@@ -26,14 +26,14 @@ const MultiCitySearchForm = (params) => {
       depTime: new Date(),
     };
 
-    console.log("last Item ", lastItem);
+    
     let nDate = new Date(lastItem.depTime);
     nDate = addDays(nDate, 1);
 
     item.from = lastItem.to;
     item.depTime = nDate;
 
-    console.log("Item Data: ", item);
+   
 
     if (item === undefined || item === null) {
       return item;
@@ -60,12 +60,7 @@ const MultiCitySearchForm = (params) => {
                         {props.values.passDetails &&
                           props.values.passDetails.map((item, indx) => (
                             <Row className="air-search" key={`trip-${indx}`}>
-                              {console.log(
-                                "Multy City: index",
-                                indx,
-                                " And Item: ",
-                                item
-                              )}
+                              
                               <Col md={6} className="no-margin-padding">
                                 <Row className="no-margin-padding">
                                   <Col md={6} className="no-margin-padding">
@@ -123,19 +118,14 @@ const MultiCitySearchForm = (params) => {
                                       infants,
                                       cabinClass
                                     ) => {
-                                      /*this.setAllRangeData(
-                                        adults,
-                                        child,
-                                        infants,
-                                        cabinClass
-                                      );*/
+                                      
 
                                       props.setFieldValue(
                                         `traveler.ADT`,
                                         adults
                                       );
                                       props.setFieldValue(
-                                        `traveler.CHD`,
+                                        `traveler.CNN`,
                                         child
                                       );
                                       props.setFieldValue(
@@ -171,7 +161,7 @@ const MultiCitySearchForm = (params) => {
                                           onClick={() => remove(indx)}
                                           className=" btn btn-block btn-outline-danger btn-xs"
                                         >
-                                          <i class="fas fa-backspace"></i>
+                                          <i className="fas fa-backspace"></i>
                                         </span>
                                       </Col>
                                     ) : (

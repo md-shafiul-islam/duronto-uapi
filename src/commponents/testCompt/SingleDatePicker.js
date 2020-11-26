@@ -86,7 +86,7 @@ const SingleDatePicker = (props) => {
                 <Card.Title className="com-title" onClick={toggoleDate}>
                   DEPARTURE &nbsp;{" "}
                   <i
-                    class="fas fa-angle-down icon-trans"
+                    className="fas fa-angle-down icon-trans"
                     style={{
                       transform: `${display ? "rotateZ(-180deg)" : ""}`,
                     }}

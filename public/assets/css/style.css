@@ -1600,11 +1600,10 @@ body {
 
 /********** One Way Price **************/
 
-.price-info-ul{
-
+.price-info-ul {
 }
 
-.price-info-ul li:first-child{
+.price-info-ul li:first-child {
   list-style: none;
   font-size: 16px;
   font-weight: bold;
@@ -1615,26 +1614,25 @@ body {
   text-transform: uppercase;
 }
 
-.active-price-view{
+.active-price-view {
   box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.2), 0 4px 8px 0 rgba(0, 0, 0, 0.19);
   border-radius: 5px;
 }
-.price-details-option{
-  
+.price-details-option {
 }
 
-.price-details-option .fly-price-inf{}
+.price-details-option .fly-price-inf {
+}
 
-.price-details-option .fly-price-inf .one-way-price-tag-line{
+.price-details-option .fly-price-inf .one-way-price-tag-line {
   margin: 25px 10px;
   font-size: 16px;
 }
 
-.price-details-option .fly-price-inf .one-way-price-tag-line .one-way-price{
+.price-details-option .fly-price-inf .one-way-price-tag-line .one-way-price {
   font-size: 1.25em;
   font-weight: bold;
   margin-top: 10px;
-
 }
 
 .price-info-ul,
@@ -1647,17 +1645,290 @@ body {
 
 .price-info-ul .far,
 .price-upsell-ul .far,
-.penalty-ul .far{
-
+.penalty-ul .far {
   color: #01a1b9;
 }
 
 .price-info-ul li,
 .price-upsell-ul li,
-.penalty-ul li{
-
+.penalty-ul li {
   margin-left: 0px;
 }
 
+.mrg-250 {
+  margin-top: 250px;
+}
+
+.price-inf-btn {
+  cursor: pointer;
+  position: relative;
+}
+
+.popup-inf {
+  list-style: none;
+  margin: 0px;
+  background-color: #01a1b9;
+  color: #fff;
+  width: 300px;
+  position: absolute;
+  bottom: 40px;
+  left: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  z-index: 50;
+}
+
+.popup-inf li {
+  margin: 0px;
+}
+
+.arrow-down {
+  position: absolute;
+  bottom: 35px;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 10px solid #01a1b9;
+}
+
+.travel-time-each {
+  text-align: center;
+  font-weight: 600;
+}
+
+.travel-time-each .tt-each {
+  border-bottom: 2px solid #818181;
+  padding: 10px 5px;
+}
+.txt-al-c {
+  text-align: center;
+}
+
+.one-way .f-date {
+  width: 100%;
+  height: 50px;
+}
+
+.pricing-baggage-cnt {
+  margin-top: 5px;
+  font-size: 0.8em;
+}
+
+.pricing-baggage-cnt .btitle {
+  text-transform: uppercase;
+  font-size: .85em;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.fly-label {
+  margin: 10px 0px;
+  height: 55px;
+  padding: 10px;
+  width: 100%;
+  background-color: rgb(58, 58, 58);
+  float: left;
+  display: block;
+  color: #fff;
+  font-size: 14px;
+}
+
+.fly-label .fly-type {
+  font-size: 1.25em;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-bottom: .25em;
+}
+
+.baggage-area {
+  border-top:1px solid rgba(0, 0, 0, 0.08);
+  margin-top: 20px;
+  padding-top: 10px;
+
+}
+
+.fly-label .fly-date {
+  font-size: 13px;
+  line-height: 10px;
+}
+
+.pricing .price-fly-inf {
+  padding: 10px;
+}
+
+.pricing .price-fly-inf .locations {
+  font-size: 18px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.pricing .price-fly-inf .fly-inf {
+  font-size: 13px;
+  font-weight: normal;
+  line-height: 10px;
+}
+
+.pricing .price-fly-inf .fly-inf {
+  margin-top: 10px;
+  font-weight: 600;
+}
+
+.pricing .icon-badge-inf {
+  margin: 15px 10px 0px;
+  font-size: 16px;
+}
+
+.pricing .icon-badge-inf .text {
+  padding: 10px;
+  float: left;
+  display: block;
+}
+
+.pricing .fare-info-icon {
+  font-size: 14px;
+  font-weight: normal;
+  height: 25px;
+  width: 25px;
+  border-radius: 50%;
+  border: 1px solid #292525;
+  display: block;
+  float: left;
+  padding: 3px 10px 3px 10px;
+  margin: 5px 0px;
+  cursor: pointer;
+}
+
+.price-fare-rule-tab{
+  margin-bottom: 10px;
+}
+
+.price-fare-rule-tab .nav-pills .nav-link.active{
+  background-color: #f1f8ff;
+  color: #120000;
+  border-bottom: 2px solid #008cff;
+  border-radius: opx !important;
+
+}
+
+.price-fare-rule-tab .nav-item{
+  position: relative;
+}
 
 
+.price-fare-rule-tab .nav-pills .nav-link.active .price-arrow-down{
+  position: absolute;
+  bottom: -4px;
+  left: 45%;
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid #008cff;
+}
+
+.penalty-row{
+  border-bottom: 1px solid #333333;
+  margin: 0px !important;
+}
+
+.penalty-title{
+  height: 40px;
+  margin: 15px 0px 0px 0px;
+  width: auto;
+  display: block;
+
+}
+
+.panelty-cnt{
+
+}
+
+.panelty-cnt .penalty-item{
+  width: 100%;
+  height: 30px;
+  padding: 5px;
+  float: left;
+  font-size: .75em;
+}
+
+.price-rule-model {
+  width: 750px !important;
+  max-width: none !important;
+}
+
+.price-rule-model .modal-header {
+  height: 50px !important;
+  padding: 5px 10px;
+}
+
+.price-rule-model .modal-header.modal-title .h4{
+  
+}
+
+.fare-sum-card{
+  border-radius: 10px !important;
+}
+
+.fare-sum-price > .list-area {
+  padding: 0px;
+}
+
+.fare-sum-price ul,
+.fare-sum-price ul li,
+.fare-sum-price ul li ul,
+.fare-sum-price ul li ul li {
+  list-style: none;
+  font-size: 1em;
+  font-weight: normal;
+}
+
+.far-title{
+  width: 100%;
+  margin: 0px !important;
+}
+
+.fare-sum-price .first-item{
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  padding: 10px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 1em;
+}
+
+
+.fare-sum-price .first-item ul{
+  margin-top: 10px;
+}
+
+.fare-sum-price ul li ul li {
+  cursor: text;
+}
+
+.fare-sum-price .first-item ul li{
+  
+  line-height: 24px;
+}
+
+.fare-amount {
+  font-weight: bold;
+  text-align: right;
+  width: 35%;
+  float: right;
+}
+
+.fare-total-amount{
+  font-weight: bold;
+  font-size: 1.25em;
+  padding: 5px 15px;
+}
+
+.fare-amount-label {
+  width: 65%;
+}
+
+.mgbt20{ /*margin layover*/
+  margin-top: 20px;
+
+}

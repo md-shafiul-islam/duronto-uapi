@@ -7,6 +7,8 @@ import store from "./store";
 import { Col, Row, Container } from "react-bootstrap";
 import AirSearchForm from "./commponents/testCompt/AirSearchForm";
 import AirSearchResult from "./commponents/airSearch/SearchResults/AirSearchResult";
+import OneWayPriceCard from "./commponents/airSearch/SearchResults/FlightCards/OneWayPriceCard";
+import PricingDetailsPage from "./commponents/airPricing/pricingDetailsPage";
 
 const airPort = [
   { name: "Aalborg", code: "AAL" },
@@ -56,6 +58,9 @@ class App extends Component {
               path="/air/search/result"
               component={AirSearchResult}
             />
+
+            <Route exact path="/air/pricing" component={PricingDetailsPage} />
+
           </Router>
         </Container>
       </Provider>

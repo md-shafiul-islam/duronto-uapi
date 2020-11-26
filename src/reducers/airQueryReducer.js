@@ -1,7 +1,7 @@
 import { GET_SEARCH_QUERY } from "../actions/types";
 
 const initialState = {
-  searchQuery: {},
+  sQuery: {},
 };
 
 export default function (state = initialState, action) {
@@ -9,7 +9,7 @@ export default function (state = initialState, action) {
     case GET_SEARCH_QUERY:
       return {
         ...state,
-        searchQuery: action.payload,
+        sQuery: action.payload,
       };
 
     default:

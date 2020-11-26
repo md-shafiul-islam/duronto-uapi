@@ -46,7 +46,7 @@ const TravellersAndClass = (props) => {
     let val =
       item !== undefined ? (item.value !== undefined ? item.value : 0) : 0;
 
-    console.log("Befor Return: ", val);
+   
     return val;
   };
 
@@ -58,26 +58,25 @@ const TravellersAndClass = (props) => {
     let adultData = getIntData(adults);
 
     total = adultData + infantsData + chData;
-
-    console.log("Total: ", total);
+    
     setTotalTraveler(total);
   };
 
   const setChildData = (item) => {
-    console.log("CH: ", item);
+    
     setChild(item);
 
     setTotalTravelerData(item, infants, adults);
   };
 
   const setInfantsData = (item) => {
-    console.log("Inf: ", item);
+   
     setInfants(item);
     setTotalTravelerData(child, item, adults);
   };
 
   const setAdultsData = (item) => {
-    console.log("Adt: ", item);
+   
     setAdults(item);
     setTotalTravelerData(child, infants, item);
   };
@@ -91,11 +90,11 @@ const TravellersAndClass = (props) => {
      * Alert if clicked on outside of element
      */
 
-    console.log("Event add to Card");
+    
 
     function handleClickOutside(event) {
       if (refDate.current && !refDate.current.contains(event.target)) {
-        console.log("Display Status: ", display);
+       
         if (display === true) {
           setDisplay(false);
         }
@@ -133,7 +132,7 @@ const TravellersAndClass = (props) => {
             >
               Travellers & CLASS{"  "}&nbsp;
               <i
-                class="fas fa-angle-down icon-trans"
+                className="fas fa-angle-down icon-trans"
                 style={{
                   transform: `${display ? "rotateZ(-180deg)" : ""}`,
                 }}

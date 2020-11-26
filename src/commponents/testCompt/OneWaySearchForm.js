@@ -108,15 +108,9 @@ const OneWaySearchForm = (params) => {
                                     infants,
                                     cabinClass
                                   ) => {
-                                    params.setAllRangeData(
-                                      adults,
-                                      child,
-                                      infants,
-                                      cabinClass
-                                    );
 
                                     props.setFieldValue(`traveler.ADT`, adults);
-                                    props.setFieldValue(`traveler.CHD`, child);
+                                    props.setFieldValue(`traveler.CNN`, child);
                                     props.setFieldValue(
                                       `traveler.INF`,
                                       infants
