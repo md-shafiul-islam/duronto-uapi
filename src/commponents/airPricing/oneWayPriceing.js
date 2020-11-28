@@ -43946,14 +43946,12 @@ class OneWayPriceing extends Component {
   };
 
   UNSAFE_componentWillReceiveProps(nextProps) {
-    console.log("Next Props: Run !!");
+    
     this.initStateUsingProps();
     
   }
   componentDidMount() {
     
-    console.log("Commponent Run !!");
-
     this.initStateUsingProps();
     
   }
@@ -43963,8 +43961,7 @@ class OneWayPriceing extends Component {
     let travelerQty = this.initQuery();
     if (this.props.priceSegment.selectedAir !== undefined) {
       if (this.props.priceSegment.selectedAir !== null) {
-
-        console.log(" IF s pass: ", this.props);
+        
         let {
           responseMessage,
           traceId,
@@ -43983,10 +43980,7 @@ class OneWayPriceing extends Component {
        
 
         if(airSolution !== undefined){
-          
-        console.log("Air airSolution Pricing: After IF", airSolution);
-          
-      
+             
           let slAirPriceInf = airSolution.airPricingInfo[0].fareInfo[0];
 
           lBrand = lBrand === null ? slAirPriceInf.brand : lBrand;
@@ -44019,7 +44013,7 @@ class OneWayPriceing extends Component {
 
         if(airItinerary !== undefined){
 
-          console.log("Air airItinerary Pricing: After IF", airSolution);
+          
           airItinerary.airSegment.map((segment, segIdx) => {
             
             if (segIdx > 0) {
@@ -44029,8 +44023,6 @@ class OneWayPriceing extends Component {
             totalTime = totalTime + segment.flightTime;
           });
         }
-
-        console.log("Befor set state value", );
         
         this.setState({
           baggageList: baggageLists,
@@ -44060,8 +44052,6 @@ class OneWayPriceing extends Component {
 
     if (queryData !== undefined) {
       let { passDetails, traveler } = queryData;
-
-      console.log("Traveler Set Qty: ", traveler);
 
       let travelerQty = new Array();
       if (traveler !== undefined) {
@@ -44095,7 +44085,7 @@ class OneWayPriceing extends Component {
     return (
       <React.Fragment>
         <Row>
-          <Col md={8} className="mrg-250">
+          <Col md={8}>
             <Card>
               <Card.Title>
                 <AirPricringItinerayTitle
@@ -44123,7 +44113,7 @@ class OneWayPriceing extends Component {
                       <React.Fragment>
                         {sIdx > 0 ? (
                           <React.Fragment>
-                            <PricingLayover timeDiff={deff} />
+                            <PricingLayover timeDiff={deff} layoverOrigin={segment.origin}/>
                             <Row className="mgbt20"></Row>
                           </React.Fragment>
                         ) : (

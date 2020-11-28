@@ -11,7 +11,7 @@ const PricingLayover = (params) => {
           <div className="rnd-layover-overlay-container"></div>
           <div className="rnd-layover-content">
             <p>
-              Change of Planes | {params.timeDiff} Layover in 
+              Change of Planes | {params.timeDiff} Layover in {params.layoverOrigin}
             </p>
           </div>
         </Col>
