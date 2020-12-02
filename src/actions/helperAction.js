@@ -130,3 +130,92 @@ export const helperGetFullDateFormat = (dateTime) => {
 export const helperIsNumberString = (stVal)=>{
   return /^\d+$/.test(stVal);
 }
+
+export const helperGetDateOnly = (dateAndTime) => {
+  if (dateAndTime !== undefined) {
+    let nDate = dateAndTime.split("T");
+    return nDate[0];
+  }
+};
+
+export const helperGetTimeOnly = (dateAndTime) => {
+  if (dateAndTime !== undefined) {
+    let nDate = dateAndTime.split("T");
+    return nDate[1];
+  }
+};
+
+export const helperGetPriceReqQuery = (flyOption, traveler) => {
+
+  console.log("Helper Price Query Options: ", flyOption);
+  console.log("Helper Price Query traveler: ", traveler);
+  
+  let bookOptions = [];
+
+  if (flyOption !== undefined) {
+    
+    flyOption.bookInfos &&
+      flyOption.bookInfos.map((itemBook, bIdx) => {
+        let { segment, cabinClass, bookingCode, fareInfos } = itemBook;
+
+        if (itemBook.segment !== undefined) {
+          let priceInf = {
+            "@type": "SpecificFlightCriteria",
+            carrier: segment.carrier,
+            flightNumber: segment.flightNumber,
+            departureDate: helperGetDateOnly(segment.departureTime),
+            departureTime: helperGetTimeOnly(segment.departureTime),
+            arrivalDate: helperGetDateOnly(segment.arrivalTime),
+            arrivalTime: helperGetTimeOnly(segment.arrivalTime),
+            from: segment.origin,
+            to: segment.destination,
+            cabin: cabinClass,
+            classOfService: bookingCode,
+            segmentSequence: bIdx,
+          };
+
+          bookOptions.push(priceInf);
+        }
+      });
+    
+      
+    let pasengerProps = undefined;// traveler;
+    let passengers = new Array();
+
+    if (pasengerProps !== undefined) {
+      if (pasengerProps.ADT.value > 0) {
+        passengers.push({ value: "ADT", number: 1 });
+      }
+
+      if (pasengerProps.CNN.value > 0) {
+        passengers.push({ value: "CNN", number: 1 });
+      }
+
+      if (pasengerProps.INF.value > 0) {
+        passengers.push({ value: "INF", number: 1 });
+      }
+  
+      
+    } else {
+      passengers.push({ value: "ADT", number: 1 });
+    }
+
+    let priceQuery = {
+      OfferQueryBuildFromProducts: {
+        BuildFromProductsRequest: {
+          "@type": "BuildFromProductsRequestAir",
+          PassengerCriteria: passengers,
+          ProductCriteriaAir: [
+            {
+              "@type": "ProductCriteriaAir",
+              SpecificFlightCriteria: bookOptions,
+            },
+          ],
+        },
+      },
+    };
+
+  
+    return priceQuery;
+  } 
+};

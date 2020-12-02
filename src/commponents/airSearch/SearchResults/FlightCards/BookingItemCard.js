@@ -14944,7 +14944,7 @@ class BookingItemCard extends Component {
   };
 
   goBookingOption = (priceBooking) => {
-    console.log("Price Before Book: ", priceBooking);
+    
     this.props.setPriceDetails(priceBooking);
 
     this.setState({ bookingAction: true });
@@ -14965,8 +14965,7 @@ class BookingItemCard extends Component {
         headers: REQUEST_HEADER,
       })
         .then((res) => {
-          console.log("Price Response: ", res);
-
+          
           this.setState({ priceInfo: res.data });
           this.setState({ priceStatus: true });
           this.setState({ dataLoadStatus: true });

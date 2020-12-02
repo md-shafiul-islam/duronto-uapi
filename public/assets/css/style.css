@@ -1932,3 +1932,122 @@ body {
   margin-top: 20px;
 
 }
+
+
+.selected-air-price-model{
+  width: 100% !important;
+}
+
+.selected-air-price-content{
+  width: 100% !important;
+}
+
+
+.price-dialog {
+  width: 100% !important;
+}
+
+.selected-air-price-model .price-dialog{
+  width: 90% !important;
+  max-width: none !important;
+}
+
+.price-dialog .modal-content{
+  width: 100%;
+}
+
+/************** Round trip Pricing Modal ************/ 
+
+.pricing-card{
+  padding-bottom: 5px;
+  margin-bottom: .25rem !important;
+  box-shadow: 0 0 1px rgba(0,0,0,.125), 0 1px 2px rgba(0,0,0,.2) !important;
+  border-radius: 10px !important;
+  white-space: normal;
+    
+}
+
+.pricing-icon{}
+
+.pricing-air-inf{
+
+}
+
+.pricing-faretype-title{
+  font-size: .7em;
+  font-weight: 700;
+  padding: 10px 0px;
+
+}
+
+.pricing-faretype-title p{
+  font-size: .7em;
+  font-weight: 700;
+  padding: 10px 0px;
+
+}
+
+.pricing-faretype-price{
+  font-size: .7em;
+  font-weight: 700;
+  padding: 10px 0px;
+  
+}
+
+.price-fare-tag{
+  font-size: small;
+  padding:0px 5px ;
+}
+
+.price-details-inf{
+  margin: 0px !important;
+  padding: 0px;
+  list-style: none;
+  font-weight: 600;
+  font-size: 0.75em;
+}
+
+.rnd-price-fare-inf{
+  padding: 2px;
+}
+
+.rnd-price-fare-inf .icon-color{
+ color: #01a1b9;
+
+}
+
+.price-details-inf:last-child{
+  padding-top: 5px;
+}
+
+.price-sl-btn{
+  cursor: pointer;
+  padding: 5px;
+}
+
+.price-fare-tag span{
+  padding: 0px 0px 0px 25px;
+}
+
+.price-details-inf-card{
+  padding-top: 0px !important;
+
+}
+
+.price-details-inf-title {
+  border: 1px  solid #ddd;
+  padding-bottom: 10px;
+  margin-bottom: 5px !important;
+}
+
+.pricing-items {
+  overflow-x: auto;
+  white-space: nowrap;
+  width: auto;
+}
+
+.pricing-items >  .hrz-item{
+  display: inline-block;
+  float: none;
+}
+

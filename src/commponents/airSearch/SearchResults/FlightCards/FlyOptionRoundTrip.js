@@ -1,93 +1,78 @@
-import { set } from "date-fns";
-import React, { useState, useEffect } from "react";
+import { tr } from 'date-fns/locale';
+import React, { Component } from 'react'
 import { Card, Col, Row } from "react-bootstrap";
+import { Redirect } from 'react-router-dom';
 import BookingCardRoundTripOptions from "./BookingCardRoundTripOptions";
 import StickyCard from "./StickyCard";
 
-const FlyOptionRoundTrip = (params) => {
-  const requestPrice = {
-    OfferQueryBuildFromProducts: {
-      BuildFromProductsRequest: {
-        "@type": "BuildFromProductsRequestAir",
-        PassengerCriteria: [
-          {
-            value: "ADT",
-            number: 1,
-          },
-        ],
-        ProductCriteriaAir: [
-          {
-            "@type": "ProductCriteriaAir",
-            SpecificFlightCriteria: [
-              {
-                "@type": "SpecificFlightCriteria",
-                carrier: "F9",
-                flightNumber: "403",
-                departureDate: "2018-09-22",
-                departureTime: "10:22:00.000-06:00",
-                arrivalDate: "2018-09-22",
-                arrivalTime: "11:57:00.000-07:00",
-                from: "DEN",
-                to: "LAX",
-                cabin: "Economy",
-                classOfService: "G",
-                segmentSequence: "0",
-              },
-            ],
-          },
-        ],
-      },
-    },
-  };
+ class FlyOptionRoundTrip extends Component{
+  
+  state = {
+    priceRedirect:false,
+  }
 
-  console.log(" FlyOption Ropund Trip: Params: ", params);
-  return (
-    <React.Fragment>
-      <Row>
-        <Col md={6}>
-          {params.availAbleFlights &&
-            params.availAbleFlights.map((flyItem, fIdx) => {
-              if (flyItem.airLeg.group === params.airLegs[0].group) {
-                return (
-                  <React.Fragment>
-                    <BookingCardRoundTripOptions
-                      preSelecteItem={params.preSelectFly.deptureFly}
-                      flyItem={flyItem}
-                      elmId={fIdx}
-                      getSelectedItem={(flyOption, opIdx, elmId) => {
-                        params.getDepSelectedFly(flyOption, opIdx, elmId);
-                      }}
-                    />
-                  </React.Fragment>
-                );
+  setSelectedAirPriceOptions = (returnOption, deptureOption)=>{
+
+    //this.setState({priceRedirect:true});
+  }
+  render (){
+
+    if(this.state.priceRedirect){
+      return <Redirect to="/air/pricing" />;
+    }
+    return (
+      <React.Fragment>
+        <Row>
+          <Col md={6}>
+            {this.props.availAbleFlights &&
+              this.props.availAbleFlights.map((flyItem, fIdx) => {
+                if (flyItem.airLeg.group === this.props.airLegs[0].group) {
+                  return (
+                    <React.Fragment>
+                      <BookingCardRoundTripOptions
+                        preSelecteItem={this.props.preSelectFly.deptureFly}
+                        flyItem={flyItem}
+                        elmId={fIdx}
+                        getSelectedItem={(flyOption, opIdx, elmId) => {
+                          this.props.getDepSelectedFly(flyOption, opIdx, elmId);
+                        }}
+                      />
+                    </React.Fragment>
+                  );
+                }
+              })}
+          </Col>
+          <Col md={6}>
+            {this.props.availAbleFlights &&
+              this.props.availAbleFlights.map((flyItem, fIdx) => {
+                if (flyItem.airLeg.group === this.props.airLegs[1].group) {
+                  return (
+                    <React.Fragment>
+                      <BookingCardRoundTripOptions
+                        preSelecteItem={this.props.preSelectFly.returnFly}
+                        flyItem={flyItem}
+                        elmId={fIdx}
+                        getSelectedItem={(flyOption, opIdx, elmId) => {
+                          this.props.getRetSelectedFly(flyOption, opIdx, elmId);
+                        }}
+                      />
+                    </React.Fragment>
+                  );
+                }
+              })}
+          </Col>
+          <Col md={12}>
+            <StickyCard 
+              flyOption={this.props.selectedOption} 
+              getSelectedOptionsPric={(resReturn, resDepReturn)=>{
+                this.setSelectedAirPriceOptions(resReturn, resDepReturn);
               }
-            })}
-        </Col>
-        <Col md={6}>
-          {params.availAbleFlights &&
-            params.availAbleFlights.map((flyItem, fIdx) => {
-              if (flyItem.airLeg.group === params.airLegs[1].group) {
-                return (
-                  <React.Fragment>
-                    <BookingCardRoundTripOptions
-                      preSelecteItem={params.preSelectFly.returnFly}
-                      flyItem={flyItem}
-                      elmId={fIdx}
-                      getSelectedItem={(flyOption, opIdx, elmId) => {
-                        params.getRetSelectedFly(flyOption, opIdx, elmId);
-                      }}
-                    />
-                  </React.Fragment>
-                );
-              }
-            })}
-        </Col>
-        <Col md={12}>
-          <StickyCard flyOption={params.selectedOption} />
-        </Col>
-      </Row>
-    </React.Fragment>
-  );
+            }/>
+          </Col>
+        </Row>
+      </React.Fragment>
+    );
+  }
 };
 
 export default FlyOptionRoundTrip;

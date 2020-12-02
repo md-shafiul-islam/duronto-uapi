@@ -1,4 +1,4 @@
-import { GET_SELECTED_AIR_PRICE } from "../actions/types";
+import { GET_SELECTED_AIR_PRICE, GET_SELECTED_AIR_ROUND_TRIP_PRICE } from "../actions/types";
 
 const initialState = {
     selectedAir: {},
@@ -11,6 +11,12 @@ const initialState = {
           ...state,
           selectedAir: action.payload,
         };
+      
+        case GET_SELECTED_AIR_ROUND_TRIP_PRICE:
+          return {
+            ...state,
+            selectedRoundTripAir: action.payload,
+          };
   
       default:
         return state;

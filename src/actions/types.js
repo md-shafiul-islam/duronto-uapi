@@ -47,6 +47,8 @@ export const GET_SEARCH_QUERY = "GET_SEARCH_QUERY";
 export const GET_AIR_PRICE_RESPONSE = "GET_AIR_PRICE_RESPONSE";
 export const GET_SELECTED_AIR_PRICE = "GET_SELECTED_AIR_PRICE";
 
+export const GET_SELECTED_AIR_ROUND_TRIP_PRICE = "GET_SELECTED_AIR_ROUND_TRIP_PRICE";
+
 export const GET_PASSENGER = [
   {key:"ADT", value:"Adult"},
   {key:"CHD", value:"Children"},

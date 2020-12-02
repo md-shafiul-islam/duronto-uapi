@@ -1,10 +1,94 @@
+import Axios from "axios";
 import { el } from "date-fns/locale";
 import React, { useState } from "react";
 import { Button, Card, Col, Row } from "react-bootstrap";
+import { helperGetPriceReqQuery } from "../../../../actions/helperAction";
+import { EXT_PRICE_URL, REQUEST_HEADER } from "../../../../actions/types";
+import RoundTripPriceOptionModal from "../../../Modals/roundTripPriceOptionModal";
 import RoundSelectedTab from "./RoundSelectedTab";
 
 const StickyCard = (params) => {
   const [displayDetails, setDisplayDetails] = useState(false);
+  const [stickyPrice, setStickyPrice] = useState({
+    depResp: null,
+    retResp: null,
+  });
+
+  const [displayModal, setDisplayModal] = useState(false);
+
+  const sendPricingRequest = async () => {
+    if (params.flyOption != undefined) {
+      if (params.flyOption) {
+
+        let url = `${EXT_PRICE_URL}/api/v_1_0/buildfromproducts`;
+        let resDepReturn = null;
+        let resReturn = null;
+        if (
+          params.flyOption.returnOption !== undefined &&
+          params.flyOption.departureOption !== undefined
+        ) {
+          if (
+            params.flyOption.returnOption.totalPrice &&
+            params.flyOption.departureOption.totalPrice !== undefined
+          ) {
+            if (params.flyOption.returnOption) {
+              let searchQuery = helperGetPriceReqQuery(
+                params.flyOption.returnOption,
+                "Return PrePopulate Query"
+              );
+              
+
+              await Axios.post(url, searchQuery, {
+                headers: REQUEST_HEADER,
+              })
+                .then((res) => {
+                  console.log("Axios Response Ret: ", res);
+
+                  resReturn = res.data;
+                })
+                .catch((err) => {
+                  console.log("Axios Error: ", err);
+                });
+                console.log("Ret Response: ", resReturn);
+            }
+
+            if (params.flyOption.departureOption) {
+              let depSearchQuery = helperGetPriceReqQuery(
+                params.flyOption.departureOption,
+                "Depture PrePopulate Query"
+              );
+              
+              
+              await Axios.post(url, depSearchQuery, {
+                headers: REQUEST_HEADER,
+              })
+                .then((res) => {
+                  console.log("Axios Response Dep: ", res);
+
+                  resDepReturn = res.data;
+                })
+                .catch((err) => {
+                  console.log("Axios Error: ", err);
+                });
+             
+
+              console.log("Depture Response: ", resDepReturn);
+            }
+
+            if(resReturn !== null && resDepReturn !== null){
+              setStickyPrice({depResp:resDepReturn, retResp:resReturn});
+
+              console.log("Depture!! :, ", JSON.stringify(resDepReturn, null, 2));
+              console.log("Return!! :, ", JSON.stringify(resReturn, null, 2));
+              setDisplayModal(true);
+            }
+
+
+          }
+        }
+      }
+    }
+  };
 
   const toggleDisplay = () => {
     const view = displayDetails;
@@ -232,7 +316,14 @@ const StickyCard = (params) => {
               </div>
             </Col>
             <Col md={5}>
-              <Button className="booking-btn">Book Now</Button>
+              <Button
+                className="booking-btn"
+                onClick={() => {
+                  sendPricingRequest();
+                }}
+              >
+                Book Now
+              </Button>
             </Col>
             <Col
               md={1}
@@ -262,6 +353,7 @@ const StickyCard = (params) => {
           <RoundSelectedTab flyOption={params.flyOption} />
         </Col>
       </Row>
+      <RoundTripPriceOptionModal display={displayModal} />
     </div>
   );
 };
