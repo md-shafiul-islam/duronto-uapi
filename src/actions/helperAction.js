@@ -127,6 +127,25 @@ export const helperGetFullDateFormat = (dateTime) => {
   return `${day}, ${localDate.getDate()} ${month} ${year}`;
 };
 
+export const helperGetFullDateFormatFYear = (dateTime) => {
+  let localDate = null;
+  let day,
+    month,
+    year = "";
+
+  if (dateTime === undefined) {
+    localDate = new Date();
+  } else {
+    localDate = new Date(dateTime);
+  }
+
+  day = GET_DAYES[localDate.getDay()].substring(0, 3);
+  month = GET_MONTHS[localDate.getMonth()].substring(0, 3);
+  year = localDate.getFullYear().toString();
+
+  return `${day}, ${localDate.getDate()} ${month} ${year}`;
+};
+
 export const helperIsNumberString = (stVal)=>{
   return /^\d+$/.test(stVal);
 }
