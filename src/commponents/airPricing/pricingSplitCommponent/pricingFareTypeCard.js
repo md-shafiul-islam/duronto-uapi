@@ -56,10 +56,11 @@ const PricingFareTypeCard = (params) => {
       if (slTitle !== "" && sltext !== "") {
         sltext = sltext.split("•");
 
-        if (sltext[0].toLowerCase().indexOf(slTitle.toLowerCase())) {
+        if (sltext[0].toLowerCase().indexOf(slTitle.toLowerCase()) || sltext[0].toLowerCase().indexOf("↵↵")) {
           sltext.shift();
+          
         }
-
+        
         setDetailsText(sltext);
       }
     }
@@ -79,7 +80,7 @@ const PricingFareTypeCard = (params) => {
     return pB.title;
   };
 
-  console.log("Card Item Params: ", params);
+  
   return (
     <Card className="pricing-card">
       <Card.Title className="price-details-inf-title">

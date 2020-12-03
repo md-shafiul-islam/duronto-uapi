@@ -6,6 +6,7 @@ import {
   EXT_BASE_URL,
   GET_SEARCH_QUERY,
   GET_AIRLINES,
+  GET_AIRPORTS,
 } from "./types";
 import Axios from "axios";
 
@@ -175,10 +176,8 @@ const getProperDate = (pValue) => {
 export const getAirLines = () => async (dispatch) => {
   try {
     let url = `${EXT_BASE_URL}/api/airline`;
-
-    
+  
     const res = await Axios.get(url, {headers:REQUEST_HEADER});
-
     
     dispatch({
       type: GET_AIRLINES,
@@ -196,6 +195,29 @@ export const getAirLines = () => async (dispatch) => {
     });
   }
 };
+
+export const getAirports = ()=>async (dispatch)=>{
+  try {
+    let url = `${EXT_BASE_URL}/api/airport`;
+    
+    const res = await Axios.get(url, {headers:REQUEST_HEADER});
+    
+    dispatch({
+      type: GET_AIRPORTS,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: GET_ERRORS,
+      payload:
+        err !== undefined
+          ? err.res !== undefined
+            ? err.res.data
+            : "Error: Response  not Or Air not found  "
+          : "Error: Network Connection  ",
+    });
+  }
+}
 
 export const setSearchQuery = (data) => async (dispatch) => {
   dispatch({

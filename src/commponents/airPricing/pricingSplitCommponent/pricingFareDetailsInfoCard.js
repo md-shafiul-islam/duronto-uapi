@@ -51,14 +51,20 @@ const PricingFareDetailsInfoCard = (params) => {
             detureSegmentsDetails.origin = depSegItem.origin;
             detureSegmentsDetails.deptureDate = depSegItem.departureTime;
             depAirlines.push(depSegItem.carrier);
-            depflightNos.push({name: depSegItem.carrier, num:depSegItem.flightNumber});
+            depflightNos.push({
+              name: depSegItem.carrier,
+              num: depSegItem.flightNumber,
+            });
             dLastIdx = dIdx;
           } else {
             if (dIdx === depLenght - 1) {
               detureSegmentsDetails.destination = depSegItem.destination;
               depLayovers.push(depSegItem.origin);
 
-              depflightNos.push({name: depSegItem.carrier, num:depSegItem.flightNumber});
+              depflightNos.push({
+                name: depSegItem.carrier,
+                num: depSegItem.flightNumber,
+              });
 
               if (depSegItem.carrier === depAirlines[dLastIdx]) {
               } else {
@@ -80,7 +86,10 @@ const PricingFareDetailsInfoCard = (params) => {
 
             detureSegmentsDetails.origin = depSegItem.origin;
             detureSegmentsDetails.destination = depSegItem.destination;
-            detureSegmentsDetails.flightNo = new Array({name: depSegItem.carrier, num:depSegItem.flightNumber});
+            detureSegmentsDetails.flightNo = new Array({
+              name: depSegItem.carrier,
+              num: depSegItem.flightNumber,
+            });
             detureSegmentsDetails.airLine = new Array(depSegItem.carrier);
             detureSegmentsDetails.layover = new Array();
           }
@@ -95,14 +104,20 @@ const PricingFareDetailsInfoCard = (params) => {
             returnSegmentsDetails.origin = retSegItem.origin;
             returnSegmentsDetails.deptureDate = retSegItem.departureTime;
             retAirlines.push(retSegItem.carrier);
-            retflightNos.push({name: retSegItem.carrier, num:retSegItem.flightNumber});
+            retflightNos.push({
+              name: retSegItem.carrier,
+              num: retSegItem.flightNumber,
+            });
             rLastIdx = rIdx;
           } else {
             if (rIdx === retLenght - 1) {
               returnSegmentsDetails.destination = retSegItem.destination;
               retLayovers.push(retSegItem.origin);
 
-              retflightNos.push({name: retSegItem.carrier, num:retSegItem.flightNumber});
+              retflightNos.push({
+                name: retSegItem.carrier,
+                num: retSegItem.flightNumber,
+              });
 
               if (retSegItem.carrier === retAirlines[rLastIdx]) {
               } else {
@@ -124,7 +139,10 @@ const PricingFareDetailsInfoCard = (params) => {
 
             returnSegmentsDetails.origin = retSegItem.origin;
             returnSegmentsDetails.destination = retSegItem.destination;
-            returnSegmentsDetails.flightNo = new Array({name: retSegItem.carrier, num:retSegItem.flightNumber});
+            returnSegmentsDetails.flightNo = new Array({
+              name: retSegItem.carrier,
+              num: retSegItem.flightNumber,
+            });
             returnSegmentsDetails.airLine = new Array(retSegItem.carrier);
             returnSegmentsDetails.layover = new Array();
           }
@@ -138,30 +156,38 @@ const PricingFareDetailsInfoCard = (params) => {
   return (
     <React.Fragment>
       <Card>
-      <Card.Body>
-        <Row>
-          <Col md={3}>
-            <PricingFlyDetails airSegment={depAirSegmentDe} />
-          </Col>
+        <Card.Body>
+          <Row>
+            <Col md={3}>
+              <PricingFlyDetails
+                airSegment={depAirSegmentDe}
+                airPorts={params.airPorts}
+                airLines={params.airLines}
+              />
+            </Col>
 
-          {/*** Pricing Details Mapp */}
-          <Col md={9}>
-            <div className="pricing-items">
-              {params.deptureOption[0].airPricingSolution &&
-                params.deptureOption[0].airPricingSolution.map(
-                  (depItem, dIdx) => {
-                    return (
-                      <Col md={5} key={`pcgc-dep-${dIdx}`} className="hrz-item">
-                        <PricingFareTypeCard airSolution={depItem}  />
-                      </Col>
-                    );
-                  }
-                )}
-            </div>
-          </Col>
-        </Row>
-      </Card.Body>
-    </Card>
+            {/*** Pricing Details Mapp */}
+            <Col md={9}>
+              <div className="pricing-items">
+                {params.deptureOption[0].airPricingSolution &&
+                  params.deptureOption[0].airPricingSolution.map(
+                    (depItem, dIdx) => {
+                      return (
+                        <Col
+                          md={5}
+                          key={`pcgc-dep-${dIdx}`}
+                          className="hrz-item"
+                        >
+                          <PricingFareTypeCard airSolution={depItem} />
+                        </Col>
+                      );
+                    }
+                  )}
+              </div>
+            </Col>
+          </Row>
+        </Card.Body>
+      </Card>
 
       <Card>
         <Card.Body>
@@ -177,7 +203,11 @@ const PricingFareDetailsInfoCard = (params) => {
                   params.returnOption[0].airPricingSolution.map(
                     (retnItem, rtIdx) => {
                       return (
-                        <Col md={5} key={`pcgc-ret-${rtIdx}`} className="hrz-item">
+                        <Col
+                          md={5}
+                          key={`pcgc-ret-${rtIdx}`}
+                          className="hrz-item"
+                        >
                           <PricingFareTypeCard airSolution={retnItem} />
                         </Col>
                       );
@@ -188,7 +218,6 @@ const PricingFareDetailsInfoCard = (params) => {
           </Row>
         </Card.Body>
       </Card>
-    
     </React.Fragment>
   );
 };

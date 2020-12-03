@@ -1,14 +1,19 @@
-import { GET_AIRLINES, GET_AIR_SEARCH_RESPONSE, GET_SEARCH_QUERY } from "../actions/types";
+import {
+  GET_AIRLINES,
+  GET_AIRPORTS,
+  GET_AIR_SEARCH_RESPONSE,
+  GET_SEARCH_QUERY,
+} from "../actions/types";
 
 const initialState = {
   airSearchResponse: [],
   searchData: {},
-  airLinesList:[],
+  airLinesList: [],
+  airPortsList: [],
 };
 
 export default function (state = initialState, action) {
-
-  //console.log("action.payload, ", action.payload);
+  
   switch (action.type) {
     case GET_AIR_SEARCH_RESPONSE:
       return {
@@ -20,6 +25,12 @@ export default function (state = initialState, action) {
       return {
         ...state,
         airLinesList: action.payload,
+      };
+
+    case GET_AIRPORTS:
+      return {
+        ...state,
+        airPortsList: action.payload,
       };
 
     default:

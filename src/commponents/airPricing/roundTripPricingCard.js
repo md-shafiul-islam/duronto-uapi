@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { PropTypes } from "prop-types";
+import { connect } from "react-redux";
 import PricingFareDetailsInfoCard from "./pricingSplitCommponent/pricingFareDetailsInfoCard";
 
 class RoundTripPricingCard extends Component {
@@ -25148,18 +25150,37 @@ class RoundTripPricingCard extends Component {
           returnOption={
             this.state.selectedAir.returnPriceOptions.orgResponse.airPriceResult
           }
-
-          depAirSegment={this.state.selectedAir.depturePriceOptions.orgResponse.airItinerary.airSegment}
-          retAirSegment={this.state.selectedAir.returnPriceOptions.orgResponse.airItinerary.airSegment}
-
+          depAirSegment={
+            this.state.selectedAir.depturePriceOptions.orgResponse.airItinerary
+              .airSegment
+          }
+          retAirSegment={
+            this.state.selectedAir.returnPriceOptions.orgResponse.airItinerary
+              .airSegment
+          }
           deptureOption={
             this.state.selectedAir.depturePriceOptions.orgResponse
               .airPriceResult
           }
+          airLines={this.props.airLines}
+          airPorts={this.props.airPorts}
         />
       </div>
     );
   }
 }
 
-export default RoundTripPricingCard;
+RoundTripPricingCard.prototypes = {
+  getAirLines: PropTypes.func.isRequired,
+  getAirports: PropTypes.func.isRequired,
+  airLines: PropTypes.object.isRequired,
+  airPorts: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  errors: state.errors,
+  airLines: state.airSearch.airLinesList,
+  airPorts: state.airSearch.airPortsList,
+});
+
+export default connect(mapStateToProps, null)(RoundTripPricingCard);
