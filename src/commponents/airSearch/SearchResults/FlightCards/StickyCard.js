@@ -42,14 +42,11 @@ const StickyCard = (params) => {
                 headers: REQUEST_HEADER,
               })
                 .then((res) => {
-                  console.log("Axios Response Ret: ", res);
-
                   resReturn = res.data;
                 })
                 .catch((err) => {
                   console.log("Axios Error: ", err);
                 });
-                console.log("Ret Response: ", resReturn);
             }
 
             if (params.flyOption.departureOption) {
@@ -63,8 +60,7 @@ const StickyCard = (params) => {
                 headers: REQUEST_HEADER,
               })
                 .then((res) => {
-                  console.log("Axios Response Dep: ", res);
-
+                  
                   resDepReturn = res.data;
                 })
                 .catch((err) => {
@@ -72,7 +68,6 @@ const StickyCard = (params) => {
                 });
              
 
-              console.log("Depture Response: ", resDepReturn);
             }
 
             if(resReturn !== null && resDepReturn !== null){

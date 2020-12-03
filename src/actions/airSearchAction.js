@@ -5,6 +5,7 @@ import {
   REQUEST_HEADER,
   EXT_BASE_URL,
   GET_SEARCH_QUERY,
+  GET_AIRLINES,
 } from "./types";
 import Axios from "axios";
 
@@ -32,7 +33,6 @@ export const getAirSearchRequest = (requestData) => async (dispatch) => {
 };
 
 export const getOneWayAirSearchRequest = (requestData) => async (dispatch) => {
-  
   try {
     console.log("Before Send request LOG: ");
     const { traveler, passDetails } = requestData;
@@ -169,6 +169,31 @@ const getProperDate = (pValue) => {
     } else {
       return strDate;
     }
+  }
+};
+
+export const getAirLines = () => async (dispatch) => {
+  try {
+    let url = `${EXT_BASE_URL}/api/airline`;
+
+    
+    const res = await Axios.get(url, {headers:REQUEST_HEADER});
+
+    
+    dispatch({
+      type: GET_AIRLINES,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: GET_ERRORS,
+      payload:
+        err !== undefined
+          ? err.res !== undefined
+            ? err.res.data
+            : "Error: Response  not Or Air not found  "
+          : "Error: Network Connection  ",
+    });
   }
 };
 

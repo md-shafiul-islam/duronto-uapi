@@ -25148,6 +25148,10 @@ class RoundTripPricingCard extends Component {
           returnOption={
             this.state.selectedAir.returnPriceOptions.orgResponse.airPriceResult
           }
+
+          depAirSegment={this.state.selectedAir.depturePriceOptions.orgResponse.airItinerary.airSegment}
+          retAirSegment={this.state.selectedAir.returnPriceOptions.orgResponse.airItinerary.airSegment}
+
           deptureOption={
             this.state.selectedAir.depturePriceOptions.orgResponse
               .airPriceResult
