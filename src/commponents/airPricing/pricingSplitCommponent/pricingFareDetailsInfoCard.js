@@ -1,13 +1,38 @@
+import {Col, Button, Row } from "react-bootstrap";
 import React, { useEffect, useState } from "react";
-import { Card, Row, Col } from "react-bootstrap";
-import PricingFareTypeCard from "./pricingFareTypeCard";
-import PricingFlyDetails from "./pricingFlyDetails";
+import PricingDetailsOptionCard from "./pricingDetailsOptionCard";
+
 
 const PricingFareDetailsInfoCard = (params) => {
-  console.log("Price Fare Details card: ", params);
-
+  
   const [retAirSegmentDe, setRetAirSegmentDe] = useState({});
   const [depAirSegmentDe, setDepAirSegmentDe] = useState({});
+
+  const [selectedPriceOptions, setSelectedPriceOptions] = useState(new Map());
+
+  const setAirPriceOptions =(key, airOpt)=>{
+    
+    if(airOpt !== undefined){
+      selectedPriceOptions.set(key, airOpt);
+
+      console.log("selectedPriceOptions: ",selectedPriceOptions);
+    }
+  }
+
+  const setFlightOptions = (airOption, key, segment)=>{
+    
+    let airPringSelected = {airPriceOpt:airOption, segment:segment};
+
+    setAirPriceOptions(key, airPringSelected);
+  };
+
+  const pricingDetailsAction = ()=>{
+    
+    if(selectedPriceOptions.size === 2){
+      
+      params.selectedPriceAction(selectedPriceOptions);
+    }
+  }
 
   useEffect(() => {
     if (
@@ -152,72 +177,37 @@ const PricingFareDetailsInfoCard = (params) => {
       setRetAirSegmentDe(returnSegmentsDetails);
     }
   }, []);
-
+  console.log("Air Price Rnd params.deptureOption:, ", params.deptureOption);
+  console.log("Air Price Rnd params.returnOption:, ", params.returnOption);
   return (
     <React.Fragment>
-      <Card>
-        <Card.Body>
-          <Row>
-            <Col md={3}>
-              <PricingFlyDetails
-                airSegment={depAirSegmentDe}
-                airPorts={params.airPorts}
-                airLines={params.airLines}
-              />
-            </Col>
-
-            {/*** Pricing Details Mapp */}
-            <Col md={9}>
-              <div className="pricing-items">
-                {params.deptureOption[0].airPricingSolution &&
-                  params.deptureOption[0].airPricingSolution.map(
-                    (depItem, dIdx) => {
-                      return (
-                        <Col
-                          md={5}
-                          key={`pcgc-dep-${dIdx}`}
-                          className="hrz-item"
-                        >
-                          <PricingFareTypeCard airSolution={depItem} />
-                        </Col>
-                      );
-                    }
-                  )}
-              </div>
-            </Col>
-          </Row>
-        </Card.Body>
-      </Card>
-
-      <Card>
-        <Card.Body>
-          <Row>
-            <Col md={3}>
-              <PricingFlyDetails airSegment={retAirSegmentDe} />
-            </Col>
-
-            {/*** Pricing Details Mapp */}
-            <Col md={9}>
-              <div className="pricing-items">
-                {params.returnOption[0].airPricingSolution &&
-                  params.returnOption[0].airPricingSolution.map(
-                    (retnItem, rtIdx) => {
-                      return (
-                        <Col
-                          md={5}
-                          key={`pcgc-ret-${rtIdx}`}
-                          className="hrz-item"
-                        >
-                          <PricingFareTypeCard airSolution={retnItem} />
-                        </Col>
-                      );
-                    }
-                  )}
-              </div>
-            </Col>
-          </Row>
-        </Card.Body>
-      </Card>
+      <PricingDetailsOptionCard 
+        airSegment={depAirSegmentDe}
+        airPorts={params.airPorts}
+        airLines={params.airLines}
+        airSolutions={params.deptureOption[0].airPricingSolution}
+        title={"Depture"}
+        setFlightOption={(airOption)=>{
+          setFlightOptions(airOption, "detureItem", params.depAirSegment);
+        }}
+      />
+      
+      <PricingDetailsOptionCard 
+        airSegment={retAirSegmentDe}
+        airPorts={params.airPorts}
+        airLines={params.airLines}
+        airSolutions={params.returnOption[0].airPricingSolution}
+        title={"Return"}
+        setFlightOption={(airOption)=>{
+          setFlightOptions(airOption, "returnItem", params.depAirSegment);
+        }}
+      />
+      
+      <Row>
+        <Col md={{ span: 2, offset: 10 }}>
+          <Button onClick={()=>{pricingDetailsAction()}}>Continue</Button>
+        </Col>
+      </Row>
     </React.Fragment>
   );
 };

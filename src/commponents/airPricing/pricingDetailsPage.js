@@ -1,23 +1,29 @@
-import React, { Component } from 'react'
-import { Col, Row } from 'react-bootstrap'
-import OneWayPriceing from './oneWayPriceing';
+import React, { Component } from "react";
+import { Col, Row } from "react-bootstrap";
+import OneWayPriceing from "./oneWayPriceing";
+import RndTripPriceingDetailsPage from "./RndTripDetailsPage/rndTripPriceingDetailsPage";
 
 
 class PricingDetailsPage extends Component {
-    render() {
-        return (
-            <React.Fragment>
+  render() {
+    return (
+      <React.Fragment>
+        <Row>
+          {false && (
+            <Col md={12}>
+              <OneWayPriceing />
+            </Col>
+          )}
 
-                <Row>
-                    <Col md={12}>
-                        <OneWayPriceing />
-                    </Col>
-                    
-                </Row>
-
-            </React.Fragment>
-        )
-    }
+          {true && (
+            <Col md={12}>
+              <RndTripPriceingDetailsPage />
+            </Col>
+          )}
+        </Row>
+      </React.Fragment>
+    );
+  }
 }
 
 export default PricingDetailsPage;

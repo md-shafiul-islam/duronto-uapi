@@ -6,10 +6,6 @@ import PricingAirlinceInfo from "./pricingAirlinceInfo";
 const PricingFlyDetails = (params) => {
   console.log("Pricing Fly Details: ", params);
 
-  const getAirportByIndex = (name)=>{
-    //console.log("By Index Of: ", params.airPorts.find);
-  }
-
   const getLayOver = (layovers) => {
     if (layovers !== undefined) {
       return (
@@ -28,29 +24,18 @@ const PricingFlyDetails = (params) => {
 
   const getAirportName = (name) => {
 
+    let port = undefined;
     let portName = "";
 
     if (params.airPorts !== undefined && name !== undefined) {
       let slIdx = undefined;
-    
-      params.airPorts.filter((port, pidx) => {
-        
-        console.log("Air Port : ", port);
-        console.log("Airport Name: ", port.iataCode, " Params: ", name);
-        if (name === port.iataCode) {
+   
+      port = params.airPorts[name];
 
-          console.log("Match Airport Name: ", port.location);
-
-          portName = port.location;
-          slIdx = pidx;
-          
-          return true;
-        }
-      });
-
-      if (portName === "" && slIdx !== undefined) {
-        portName = params.airLinces[slIdx].location;
+      if(port !== undefined){
+        portName = port.name;
       }
+
     }
 
     console.log(" Name: ", portName);

@@ -1,5 +1,4 @@
-import Axios from "axios";
-import {  GET_SELECTED_AIR_PRICE, GET_SELECTED_AIR_ROUND_TRIP_PRICE } from "./types";
+import {  GET_SELECTED_AIR_PRICE, GET_SELECTED_AIR_ROUND_TRIP_PRICE, GET_SELECTED_AIR_ROUND_TRIP_PRICE_DETAILS } from "./types";
 
 export const setPriceDetails = (data) => async (dispatch) => {
   dispatch({
@@ -15,3 +14,12 @@ export const setPriceRoundTrip = (data) => async (dispatch) => {
     payload: data,
   });
 };
+
+
+
+export const setSelectedPrcingDetailsRoundTrip = (data) => async (dispatch) => {
+  dispatch({
+    type: GET_SELECTED_AIR_ROUND_TRIP_PRICE_DETAILS,
+    payload: data,
+  });
+}

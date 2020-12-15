@@ -1,35 +1,26 @@
 import React from "react";
 import { Col, Row } from "react-bootstrap";
+import IconView from "../../airSearch/iconView";
 
 const PricingAirlinceInfo = (params) => {
-  console.log("PricingAirlinceInfo params, ", params);
-  
-  const getAirLineName = (cCode)=>{
+  const getAirLineName = (cCode) => {
     let rCode = "";
+    let airLinse = undefined;
 
-    if(params.airLineList !== undefined && cCode !== undefined){
-
+    if (params.airLineList !== undefined && cCode !== undefined) {
       let sIdx = undefined;
 
-      params.airLineList.filter((airLine, aIdx)=>{
+      airLinse = params.airLineList[cCode];
 
-        if(cCode === airLine.code){
-          sIdx = aIdx;
-
-          rCode = airLine.name;
-          return true;
-        }
-      });
-
-      if(rCode === "" && sIdx !== undefined){
-        rCode = params.airLineList[sIdx].name;
+      if (airLinse !== undefined) {
+        rCode = airLinse.name;
       }
-      
+
       return rCode;
     }
-    
+
     return rCode;
-  }
+  };
 
   const getAirNameAndNo = (flyNums) => {
     if (flyNums !== undefined) {
@@ -37,9 +28,13 @@ const PricingAirlinceInfo = (params) => {
         <React.Fragment>
           {flyNums.map((fItem, idx) => {
             return idx > 0 ? (
-              <span>{`, ${getAirLineName(fItem.name)} | ${fItem.name}-${fItem.num}`}</span>
+              <span>{`, ${getAirLineName(fItem.name)} | ${fItem.name}-${
+                fItem.num
+              }`}</span>
             ) : (
-              <span>{`${getAirLineName(fItem.name)} | ${fItem.name}-${fItem.num}`}</span>
+              <span>{`${getAirLineName(fItem.name)} | ${fItem.name}-${
+                fItem.num
+              }`}</span>
             );
           })}
         </React.Fragment>
@@ -49,7 +44,11 @@ const PricingAirlinceInfo = (params) => {
   return (
     <Row>
       <Col md={3} className="pricing-icon">
-        Icon
+        <IconView
+          airlinseList={params.airLineList}
+          selectedAirs={params.airLinces}
+          iconSizeClass="icon-view-area-medium"
+        />
       </Col>
       <Col md={9} className="pricing-air-inf">
         {getAirNameAndNo(params.flyNum)}

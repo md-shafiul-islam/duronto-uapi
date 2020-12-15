@@ -1,7 +1,6 @@
-import { getByTitle } from "@testing-library/react";
 import React, { useState, useEffect } from "react";
 import { Card, Col, Row } from "react-bootstrap";
-import PricingFareTypeDetails from "./pricingFareTypeDetails";
+
 import PricingFareTypeTitile from "./pricingFareTypeTitile";
 
 const PricingFareTypeCard = (params) => {
@@ -80,6 +79,7 @@ const PricingFareTypeCard = (params) => {
     return pB.title;
   };
 
+  console.log("Price Fare Type Card: params ", params);
   
   return (
     <Card className="pricing-card">
@@ -87,6 +87,11 @@ const PricingFareTypeCard = (params) => {
         <PricingFareTypeTitile
           brandName={getBrandName(brand)}
           totalPrice={params.airSolution.totalPrice}
+          selectedAirElm={params.elemId}
+          cElmId={params.cElmId}
+          setSelectedItem={(iDx)=>{
+            params.setImeIdx(iDx, params.airSolution);
+          }}
         />
       </Card.Title>
 
@@ -94,8 +99,6 @@ const PricingFareTypeCard = (params) => {
         <ul className="price-details-inf">
           {detailsText &&
             detailsText.map((item, tIdx) => {
-
-              
 
               return (
                 <li className="rnd-price-fare-inf">

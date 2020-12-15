@@ -2,9 +2,11 @@ import { GET_SELECTED_AIR_PRICE, GET_SELECTED_AIR_ROUND_TRIP_PRICE } from "../ac
 
 const initialState = {
     selectedAir: {},
+    selectedRoundTripAir:{},    
   };
-  
+ 
   export default function (state = initialState, action) {
+    
     switch (action.type) {
       case GET_SELECTED_AIR_PRICE:
         return {
@@ -17,7 +19,8 @@ const initialState = {
             ...state,
             selectedRoundTripAir: action.payload,
           };
-  
+        
+    
       default:
         return state;
     }

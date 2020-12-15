@@ -1,10 +1,15 @@
 import React, { Component } from "react";
+
 import { PropTypes } from "prop-types";
 import { connect } from "react-redux";
+
 import PricingFareDetailsInfoCard from "./pricingSplitCommponent/pricingFareDetailsInfoCard";
+import { setSelectedPrcingDetailsRoundTrip } from "../../actions/priceAction";
+import { Redirect } from "react-router-dom";
 
 class RoundTripPricingCard extends Component {
   state = {
+    redirectStatus: false,
     selectedAir: {
       depturePriceOptions: {
         prosessPrice: {
@@ -25142,7 +25147,19 @@ class RoundTripPricingCard extends Component {
     },
   };
 
+  continueAirPricingAction = (selPrDettailsOpt) => {
+    
+    let sAirObj = Object.fromEntries(selPrDettailsOpt);
+
+    this.props.setSelectedPrcingDetailsRoundTrip(sAirObj);
+
+    this.setState({ redirectStatus: true });
+  };
   render() {
+    if (this.state.redirectStatus) {
+      return <Redirect to="/air/pricing" />;
+    }
+
     return (
       <div>
         <PricingFareDetailsInfoCard
@@ -25164,6 +25181,9 @@ class RoundTripPricingCard extends Component {
           }
           airLines={this.props.airLines}
           airPorts={this.props.airPorts}
+          selectedPriceAction={(sltPriceOption) => {
+            this.continueAirPricingAction(sltPriceOption);
+          }}
         />
       </div>
     );
@@ -25171,16 +25191,16 @@ class RoundTripPricingCard extends Component {
 }
 
 RoundTripPricingCard.prototypes = {
-  getAirLines: PropTypes.func.isRequired,
-  getAirports: PropTypes.func.isRequired,
+  setSelectedPrcingDetailsRoundTrip: PropTypes.func.isRequired,
   airLines: PropTypes.object.isRequired,
   airPorts: PropTypes.object.isRequired,
 };
-
 const mapStateToProps = (state) => ({
   errors: state.errors,
   airLines: state.airSearch.airLinesList,
   airPorts: state.airSearch.airPortsList,
 });
 
-export default connect(mapStateToProps, null)(RoundTripPricingCard);
+export default connect(mapStateToProps, { setSelectedPrcingDetailsRoundTrip })(
+  RoundTripPricingCard
+);

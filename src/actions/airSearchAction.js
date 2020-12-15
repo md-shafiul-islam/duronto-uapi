@@ -175,7 +175,7 @@ const getProperDate = (pValue) => {
 
 export const getAirLines = () => async (dispatch) => {
   try {
-    let url = `${EXT_BASE_URL}/api/airline`;
+    let url = `${EXT_BASE_URL}/api/airline?type=1`;
   
     const res = await Axios.get(url, {headers:REQUEST_HEADER});
     
@@ -198,7 +198,7 @@ export const getAirLines = () => async (dispatch) => {
 
 export const getAirports = ()=>async (dispatch)=>{
   try {
-    let url = `${EXT_BASE_URL}/api/airport`;
+    let url = `${EXT_BASE_URL}/api/airport?type=1`;
     
     const res = await Axios.get(url, {headers:REQUEST_HEADER});
     

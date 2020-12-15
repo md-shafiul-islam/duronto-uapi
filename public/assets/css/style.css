@@ -1969,9 +1969,7 @@ body {
 
 .pricing-icon{}
 
-.pricing-air-inf{
 
-}
 
 .pricing-faretype-title{
   font-size: .7em;
@@ -2051,3 +2049,70 @@ body {
   float: none;
 }
 
+.pricing-locs{
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.pricing-air-inf{
+  font-size: .80em;
+  font-weight: 500;
+}
+
+.pricing-layover{
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.icon-view-area-small {
+  width: 46px;
+  height: auto;
+}
+
+.icon-view-area-medium {
+  height: auto;
+  width: 90px;
+}
+
+.icon-view-area-big {
+  height: auto;
+  width: 150px;  
+}
+
+.icon-view-area-small .icon-view {
+  width: 28px;
+  height: 28px;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  background-size: 100% 100% !important;
+  float: left;
+  }
+
+.icon-view-area-medium .icon-view {
+  width: 50px;
+  height: 50px;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  background-size: 100% 100% !important;
+  float: left;  
+}
+
+.icon-view-area-big .icon-view {
+  width: 80px;
+  height: 80px;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  background-size: 100% 100% !important;
+  float: left;
+}
+
+.icon-view-area-big  .icon-view:nth-child(even),
+.icon-view-area-medium  .icon-view:nth-child(even),
+.icon-view-area-small .icon-view:nth-child(even) {
+  float: right !important;
+}
+
+.mgt-10{
+  margin-top: -10px;
+}
+  
