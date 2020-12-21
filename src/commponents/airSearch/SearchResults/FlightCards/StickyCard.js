@@ -1,5 +1,4 @@
 import Axios from "axios";
-import { el } from "date-fns/locale";
 import React, { useState } from "react";
 import { Button, Card, Col, Row } from "react-bootstrap";
 import { helperGetPriceReqQuery } from "../../../../actions/helperAction";
@@ -9,14 +8,12 @@ import RoundSelectedTab from "./RoundSelectedTab";
 
 const StickyCard = (params) => {
   const [displayDetails, setDisplayDetails] = useState(false);
-  const [stickyPrice, setStickyPrice] = useState({
-    depResp: null,
-    retResp: null,
-  });
+  const [stickyPrice, setStickyPrice] =  useState({depResp:null, retResp:null});
 
   const [displayModal, setDisplayModal] = useState(false);
 
   const sendPricingRequest = async () => {
+
     if (params.flyOption != undefined) {
       if (params.flyOption) {
 
@@ -67,14 +64,14 @@ const StickyCard = (params) => {
                   console.log("Axios Error: ", err);
                 });
              
-
             }
 
             if(resReturn !== null && resDepReturn !== null){
-              setStickyPrice({depResp:resDepReturn, retResp:resReturn});
+              
+              setStickyPrice({depResp:resDepReturn, retResp:resReturn})
 
-              console.log("Depture!! :, ", JSON.stringify(resDepReturn, null, 2));
-              console.log("Return!! :, ", JSON.stringify(resReturn, null, 2));
+              prePopulatePricingModal();
+
               setDisplayModal(true);
             }
 
@@ -89,6 +86,12 @@ const StickyCard = (params) => {
     const view = displayDetails;
     setDisplayDetails(!view);
   };
+
+  const prePopulatePricingModal = ()=>{
+    
+    console.log("Air Segment Price Prepopulate: ", stickyPrice);
+ 
+  }
 
   const getTimeFormatHr = (timeValue) => {
     if (timeValue != undefined) {
@@ -348,7 +351,11 @@ const StickyCard = (params) => {
           <RoundSelectedTab flyOption={params.flyOption} />
         </Col>
       </Row>
-      <RoundTripPriceOptionModal display={displayModal} />
+      <RoundTripPriceOptionModal display={displayModal} modalAction={(displayStatus)=>{
+        setDisplayModal(displayStatus);
+      }} selectedPricingOptions={stickyPrice} setRndTripOptionsDetails={(pricingOptions)=>{
+        params.getSelectedPricingOptions(pricingOptions);
+      }} />
     </div>
   );
 };

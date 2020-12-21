@@ -1,6 +1,32 @@
-import { GET_DAYES, GET_MONTHS } from "./types";
+const DAYES = [
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+];
 
-export const helperGetTotalFlyTimeBetweenTwoDate = (prevDateTime, cDateTime) => {
+const MONTHS = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
+
+export const helperGetTotalFlyTimeBetweenTwoDate = (
+  prevDateTime,
+  cDateTime
+) => {
   //1000 milsec to sec
   const preDate = new Date(prevDateTime);
   const curDate = new Date(cDateTime);
@@ -79,7 +105,8 @@ export const helperGetPrice = (amount) => {
 };
 
 export const helperGetTravelTime = (timeValue) => {
-  let hrMin, day = 0;
+  let hrMin,
+    day = 0;
 
   if (timeValue > 0) {
     let min,
@@ -120,8 +147,11 @@ export const helperGetFullDateFormat = (dateTime) => {
     localDate = new Date(dateTime);
   }
 
-  day = GET_DAYES[localDate.getDay()].substring(0, 3);
-  month = GET_MONTHS[localDate.getMonth()].substring(0, 3);
+  if (localDate === null && localDate === undefined) {
+    localDate = new Date();
+  }
+  day = DAYES[localDate.getDay()].substring(0, 3);
+  month = MONTHS[localDate.getMonth()].substring(0, 3);
   year = localDate.getFullYear().toString().substring(2);
 
   return `${day}, ${localDate.getDate()} ${month} ${year}`;
@@ -129,9 +159,9 @@ export const helperGetFullDateFormat = (dateTime) => {
 
 export const helperGetFullDateFormatFYear = (dateTime) => {
   let localDate = null;
-  let day,
-    month,
-    year = "";
+  let day = "";
+  let month = "";
+  let year = "";
 
   if (dateTime === undefined) {
     localDate = new Date();
@@ -139,16 +169,29 @@ export const helperGetFullDateFormatFYear = (dateTime) => {
     localDate = new Date(dateTime);
   }
 
-  day = GET_DAYES[localDate.getDay()].substring(0, 3);
-  month = GET_MONTHS[localDate.getMonth()].substring(0, 3);
-  year = localDate.getFullYear().toString();
+  if (localDate !== undefined) {
+    day = DAYES[localDate.getDay()];
+    month = MONTHS[localDate.getMonth()];
+
+    if (day !== undefined) {
+      day = day.substring(0, 3);
+    }
+
+    if (month !== undefined) {
+      month = month.substring(0, 3);
+    }
+
+    console.log("day, ", day, " month ", month);
+
+    year = localDate.getFullYear().toString();
+  }
 
   return `${day}, ${localDate.getDate()} ${month} ${year}`;
 };
 
-export const helperIsNumberString = (stVal)=>{
+export const helperIsNumberString = (stVal) => {
   return /^\d+$/.test(stVal);
-}
+};
 
 export const helperGetDateOnly = (dateAndTime) => {
   if (dateAndTime !== undefined) {
@@ -165,14 +208,12 @@ export const helperGetTimeOnly = (dateAndTime) => {
 };
 
 export const helperGetPriceReqQuery = (flyOption, traveler) => {
-
   console.log("Helper Price Query Options: ", flyOption);
   console.log("Helper Price Query traveler: ", traveler);
-  
+
   let bookOptions = [];
 
   if (flyOption !== undefined) {
-    
     flyOption.bookInfos &&
       flyOption.bookInfos.map((itemBook, bIdx) => {
         let { segment, cabinClass, bookingCode, fareInfos } = itemBook;
@@ -196,9 +237,8 @@ export const helperGetPriceReqQuery = (flyOption, traveler) => {
           bookOptions.push(priceInf);
         }
       });
-    
-      
-    let pasengerProps = undefined;// traveler;
+
+    let pasengerProps = undefined; // traveler;
     let passengers = new Array();
 
     if (pasengerProps !== undefined) {
@@ -213,8 +253,6 @@ export const helperGetPriceReqQuery = (flyOption, traveler) => {
       if (pasengerProps.INF.value > 0) {
         passengers.push({ value: "INF", number: 1 });
       }
-  
-      
     } else {
       passengers.push({ value: "ADT", number: 1 });
     }
@@ -234,7 +272,6 @@ export const helperGetPriceReqQuery = (flyOption, traveler) => {
       },
     };
 
-  
     return priceQuery;
-  } 
+  }
 };

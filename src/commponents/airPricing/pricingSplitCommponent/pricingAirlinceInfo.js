@@ -1,16 +1,25 @@
 import React from "react";
 import { Col, Row } from "react-bootstrap";
+import { shallowEqual, useSelector } from 'react-redux';
 import IconView from "../../airSearch/iconView";
 
 const PricingAirlinceInfo = (params) => {
+  
+  console.log("Pricing Fly Details: -> Pricing Airlince Info ", params);
+
+  const reduxAirLinceList = useSelector((state)=>state.airSearch.airLinesList, shallowEqual);
+
+  console.log("Pricing Fly Details: -> Pricing Airlince Info reduxAirLinceList: ", reduxAirLinceList);
+
+
   const getAirLineName = (cCode) => {
     let rCode = "";
     let airLinse = undefined;
 
-    if (params.airLineList !== undefined && cCode !== undefined) {
+    if (reduxAirLinceList !== undefined && cCode !== undefined) {
       let sIdx = undefined;
 
-      airLinse = params.airLineList[cCode];
+      airLinse = reduxAirLinceList[cCode];
 
       if (airLinse !== undefined) {
         rCode = airLinse.name;
@@ -45,7 +54,7 @@ const PricingAirlinceInfo = (params) => {
     <Row>
       <Col md={3} className="pricing-icon">
         <IconView
-          airlinseList={params.airLineList}
+          airlinseList={reduxAirLinceList}
           selectedAirs={params.airLinces}
           iconSizeClass="icon-view-area-medium"
         />

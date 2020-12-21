@@ -5,6 +5,8 @@ import PricingDetailsOptionCard from "./pricingDetailsOptionCard";
 
 const PricingFareDetailsInfoCard = (params) => {
   
+  console.log("PricingFareDetailsInfoCard params, ", params);
+
   const [retAirSegmentDe, setRetAirSegmentDe] = useState({});
   const [depAirSegmentDe, setDepAirSegmentDe] = useState({});
 
@@ -14,8 +16,6 @@ const PricingFareDetailsInfoCard = (params) => {
     
     if(airOpt !== undefined){
       selectedPriceOptions.set(key, airOpt);
-
-      console.log("selectedPriceOptions: ",selectedPriceOptions);
     }
   }
 
@@ -177,15 +177,14 @@ const PricingFareDetailsInfoCard = (params) => {
       setRetAirSegmentDe(returnSegmentsDetails);
     }
   }, []);
-  console.log("Air Price Rnd params.deptureOption:, ", params.deptureOption);
-  console.log("Air Price Rnd params.returnOption:, ", params.returnOption);
+  console.log("PricingFareDetailsInfoCard Params:, ", params);
   return (
     <React.Fragment>
       <PricingDetailsOptionCard 
         airSegment={depAirSegmentDe}
         airPorts={params.airPorts}
         airLines={params.airLines}
-        airSolutions={params.deptureOption[0].airPricingSolution}
+        airSolutions={params.deptureOption&&params.deptureOption[0]&&params.deptureOption[0].airPricingSolution}
         title={"Depture"}
         setFlightOption={(airOption)=>{
           setFlightOptions(airOption, "detureItem", params.depAirSegment);
@@ -196,7 +195,7 @@ const PricingFareDetailsInfoCard = (params) => {
         airSegment={retAirSegmentDe}
         airPorts={params.airPorts}
         airLines={params.airLines}
-        airSolutions={params.returnOption[0].airPricingSolution}
+        airSolutions={params.returnOption&&params.returnOption[0]&&params.returnOption[0].airPricingSolution}
         title={"Return"}
         setFlightOption={(airOption)=>{
           setFlightOptions(airOption, "returnItem", params.depAirSegment);

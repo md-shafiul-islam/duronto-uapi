@@ -5,20 +5,19 @@ import PricingFareDetailsInfoCard from "../airPricing/pricingSplitCommponent/pri
 const RoundTripPriceOptionModal = (props) => {
   const [show, setShow] = useState(false);
 
-  useEffect(() => {
-    setShow(props.display);
-  }, [props.display]);
-
+  
+  const continueAirPricingAction = (selectedOption)=>{
+    props.setRndTripOptionsDetails(selectedOption)
+  }
+  
   return (
     <React.Fragment>
-      
       <Modal
         className="selected-air-price-model"
-        show={show}
-        onHide={() => setShow(false)}
+        show={props.display}
+        onHide={() => props.modalAction(false)}
         dialogClassName="price-dialog"
         aria-labelledby="arial-label"
-        
       >
         <Modal.Header closeButton>
           <Modal.Title id="selected-air-price-title">
@@ -26,7 +25,25 @@ const RoundTripPriceOptionModal = (props) => {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-        <PricingFareDetailsInfoCard />
+          <PricingFareDetailsInfoCard
+            run="Run via Modal !!!"
+            returnOption={
+              props.selectedPricingOptions.retResp&&props.selectedPricingOptions.retResp.orgResponse.airPriceResult
+            }
+            depAirSegment={
+              props.selectedPricingOptions.depResp&&props.selectedPricingOptions.depResp.orgResponse.airItinerary.airSegment
+            }
+            retAirSegment={
+              props.selectedPricingOptions.retResp&&props.selectedPricingOptions.retResp.orgResponse.airItinerary.airSegment
+            }
+            deptureOption={
+              props.selectedPricingOptions.depResp&&props.selectedPricingOptions.depResp.orgResponse.airPriceResult
+            }
+
+            selectedPriceAction={(sltPriceOption) => {
+              continueAirPricingAction(sltPriceOption);
+            }}
+          />
         </Modal.Body>
       </Modal>
     </React.Fragment>

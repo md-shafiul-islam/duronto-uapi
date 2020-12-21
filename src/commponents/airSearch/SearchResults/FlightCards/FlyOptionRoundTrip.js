@@ -1,7 +1,9 @@
-import { tr } from 'date-fns/locale';
 import React, { Component } from 'react'
 import { Card, Col, Row } from "react-bootstrap";
+import { PropTypes } from "prop-types";
+import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+import { setSelectedPrcingDetailsRoundTrip } from '../../../../actions/priceAction';
 import BookingCardRoundTripOptions from "./BookingCardRoundTripOptions";
 import StickyCard from "./StickyCard";
 
@@ -11,10 +13,14 @@ import StickyCard from "./StickyCard";
     priceRedirect:false,
   }
 
-  setSelectedAirPriceOptions = (returnOption, deptureOption)=>{
+  setSelectedAirPriceOptions = (airPricOptions)=>{
 
-    //this.setState({priceRedirect:true});
+    const airOptions = Object.fromEntries(airPricOptions);
+
+    this.props.setSelectedPrcingDetailsRoundTrip(airOptions);
+    this.setState({priceRedirect:true});
   }
+
   render (){
 
     if(this.state.priceRedirect){
@@ -64,10 +70,11 @@ import StickyCard from "./StickyCard";
           <Col md={12}>
             <StickyCard 
               flyOption={this.props.selectedOption} 
-              getSelectedOptionsPric={(resReturn, resDepReturn)=>{
-                this.setSelectedAirPriceOptions(resReturn, resDepReturn);
-              }
-            }/>
+         
+              getSelectedPricingOptions={(slcOptions)=>{
+                this.setSelectedAirPriceOptions(slcOptions);
+              }}
+            />
           </Col>
         </Row>
       </React.Fragment>
@@ -75,4 +82,7 @@ import StickyCard from "./StickyCard";
   }
 };
 
-export default FlyOptionRoundTrip;
+FlyOptionRoundTrip.prototypes = {
+  setSelectedPrcingDetailsRoundTrip: PropTypes.func.isRequired,
+};
+export default connect(null, {setSelectedPrcingDetailsRoundTrip})(FlyOptionRoundTrip);

@@ -2,10 +2,15 @@ import React from "react";
 import { Col, Row } from "react-bootstrap";
 import { helperGetFullDateFormatFYear } from "../../../actions/helperAction";
 import PricingAirlinceInfo from "./pricingAirlinceInfo";
+import { shallowEqual, useSelector } from 'react-redux';
+
 
 const PricingFlyDetails = (params) => {
-  console.log("Pricing Fly Details: ", params);
 
+  const reduxAirPortList = useSelector((state)=>state.airSearch.airPortsList, shallowEqual);
+
+  console.log("Params: PricingFlyDetails: , ", params);
+  
   const getLayOver = (layovers) => {
     if (layovers !== undefined) {
       return (
@@ -27,10 +32,11 @@ const PricingFlyDetails = (params) => {
     let port = undefined;
     let portName = "";
 
-    if (params.airPorts !== undefined && name !== undefined) {
+    if (reduxAirPortList !== undefined && name !== undefined) {
       let slIdx = undefined;
-   
-      port = params.airPorts[name];
+      
+      console.log("reduxAirPortList[name], ", reduxAirPortList[name]);
+      port = reduxAirPortList[name];
 
       if(port !== undefined){
         portName = port.name;
@@ -38,17 +44,23 @@ const PricingFlyDetails = (params) => {
 
     }
 
-    console.log(" Name: ", portName);
-
     return portName;
   };
 
+  const getFullDateTime = (dateTime)=>{
+
+    if(dateTime !== undefined){
+      return helperGetFullDateFormatFYear(dateTime);
+    }
+   return "";
+  }
+  console.log("Pricing Fly Details: ", params);
   return (
     <React.Fragment>
       <PricingAirlinceInfo
         airLinces={params.airSegment && params.airSegment.airLine}
         flyNum={params.airSegment && params.airSegment.flightNo}
-        airLineList = {params.airLines}
+        
       />
 
       <Row>
@@ -65,7 +77,8 @@ const PricingFlyDetails = (params) => {
       <Row>
         <Col md={12} className="pricing-timefrem">
           Onward Departure |{" "}
-          {helperGetFullDateFormatFYear(params.airSegment.deptureDate)}
+          {console.log("Pricing Fly details params.airSegment.deptureDate: ", params.airSegment.deptureDate)}
+          {getFullDateTime(params.airSegment.deptureDate)}
         </Col>
       </Row>
     </React.Fragment>

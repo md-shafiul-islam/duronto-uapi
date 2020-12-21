@@ -5,6 +5,11 @@ import RndTripPriceingDetailsPage from "./RndTripDetailsPage/rndTripPriceingDeta
 
 
 class PricingDetailsPage extends Component {
+
+  componentDidMount(){
+    console.log("PricingDetailsPage Run !!");
+  }
+
   render() {
     return (
       <React.Fragment>

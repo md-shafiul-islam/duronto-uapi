@@ -7,8 +7,11 @@ import PricingFareDetailsInfoCard from "./pricingSplitCommponent/pricingFareDeta
 import { setSelectedPrcingDetailsRoundTrip } from "../../actions/priceAction";
 import { Redirect } from "react-router-dom";
 
+
 class RoundTripPricingCard extends Component {
+ 
   state = {
+    loadingStatus:false,
     redirectStatus: false,
     selectedAir: {
       depturePriceOptions: {
@@ -25147,6 +25150,12 @@ class RoundTripPricingCard extends Component {
     },
   };
 
+  componentDidMount(){
+
+    console.log("this.props.selcetdOptions, ", this.props);
+ 
+  }
+
   continueAirPricingAction = (selPrDettailsOpt) => {
     
     let sAirObj = Object.fromEntries(selPrDettailsOpt);
@@ -25160,10 +25169,14 @@ class RoundTripPricingCard extends Component {
       return <Redirect to="/air/pricing" />;
     }
 
+    if(this.state.loadingStatus){
+      return<div>Data loading .....</div>;
+    }
+
     return (
       <div>
         <PricingFareDetailsInfoCard
-          run="It Round Trip Comp !!"
+          run="It Run Via Url !!"
           returnOption={
             this.state.selectedAir.returnPriceOptions.orgResponse.airPriceResult
           }

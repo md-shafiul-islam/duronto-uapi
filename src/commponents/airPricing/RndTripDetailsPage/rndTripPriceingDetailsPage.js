@@ -7,7 +7,7 @@ import { getAirLines, getAirports } from '../../../actions/airSearchAction';
 class RndTripPriceingDetailsPage extends Component {
 
     componentDidMount(){
-        
+        console.log("RndTripPriceingDetailsPage: ", RndTripPriceingDetailsPage);
     }
     render() {
         return (
