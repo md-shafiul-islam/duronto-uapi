@@ -208,9 +208,7 @@ export const helperGetTimeOnly = (dateAndTime) => {
 };
 
 export const helperGetPriceReqQuery = (flyOption, traveler) => {
-  console.log("Helper Price Query Options: ", flyOption);
-  console.log("Helper Price Query traveler: ", traveler);
-
+  
   let bookOptions = [];
 
   if (flyOption !== undefined) {
@@ -238,7 +236,7 @@ export const helperGetPriceReqQuery = (flyOption, traveler) => {
         }
       });
 
-    let pasengerProps = undefined; // traveler;
+    let pasengerProps = traveler; // traveler;
     let passengers = new Array();
 
     if (pasengerProps !== undefined) {
@@ -256,6 +254,7 @@ export const helperGetPriceReqQuery = (flyOption, traveler) => {
     } else {
       passengers.push({ value: "ADT", number: 1 });
     }
+
 
     let priceQuery = {
       OfferQueryBuildFromProducts: {

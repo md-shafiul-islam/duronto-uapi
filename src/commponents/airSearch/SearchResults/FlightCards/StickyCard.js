@@ -31,7 +31,7 @@ const StickyCard = (params) => {
             if (params.flyOption.returnOption) {
               let searchQuery = helperGetPriceReqQuery(
                 params.flyOption.returnOption,
-                "Return PrePopulate Query"
+                params.traveler
               );
               
 
@@ -44,12 +44,15 @@ const StickyCard = (params) => {
                 .catch((err) => {
                   console.log("Axios Error: ", err);
                 });
+
+              console.log("Air Price After Request Query: resReturn", resReturn);
+
             }
 
             if (params.flyOption.departureOption) {
               let depSearchQuery = helperGetPriceReqQuery(
                 params.flyOption.departureOption,
-                "Depture PrePopulate Query"
+                params.traveler
               );
               
               
@@ -63,11 +66,15 @@ const StickyCard = (params) => {
                 .catch((err) => {
                   console.log("Axios Error: ", err);
                 });
-             
+                console.log("Air Price After Request Query: resDepReturn ", resDepReturn);
+              
             }
 
             if(resReturn !== null && resDepReturn !== null){
               
+              console.log("Air Price Request Query: resReturn", resReturn);
+              console.log("Air Price Request Query: resDepReturn", resDepReturn);
+
               setStickyPrice({depResp:resDepReturn, retResp:resReturn})
 
               prePopulatePricingModal();

@@ -15,7 +15,9 @@ import StickyCard from "./StickyCard";
 
   setSelectedAirPriceOptions = (airPricOptions)=>{
 
+    console.log("Map Selected Result, ", airPricOptions);
     const airOptions = Object.fromEntries(airPricOptions);
+    console.log("Map to Obj Selected Result, ", airOptions);
 
     this.props.setSelectedPrcingDetailsRoundTrip(airOptions);
     this.setState({priceRedirect:true});
@@ -70,7 +72,7 @@ import StickyCard from "./StickyCard";
           <Col md={12}>
             <StickyCard 
               flyOption={this.props.selectedOption} 
-         
+              traveler={this.props.searchQuery.traveler}
               getSelectedPricingOptions={(slcOptions)=>{
                 this.setSelectedAirPriceOptions(slcOptions);
               }}
@@ -83,6 +85,15 @@ import StickyCard from "./StickyCard";
 };
 
 FlyOptionRoundTrip.prototypes = {
+  searchQuery: PropTypes.object.isRequired,
   setSelectedPrcingDetailsRoundTrip: PropTypes.func.isRequired,
 };
-export default connect(null, {setSelectedPrcingDetailsRoundTrip})(FlyOptionRoundTrip);
+
+const mapStateToProps = (state) => ({
+  errors: state.errors,
+  searchQuery: state.searchQuery.sQuery.searchQuery,
+  airPorts: state.airSearch.airPortsList,
+  rndPricingDetail: state.airPriceDetails.rndDetailsPrice,
+});
+
+export default connect(mapStateToProps, {setSelectedPrcingDetailsRoundTrip})(FlyOptionRoundTrip);
