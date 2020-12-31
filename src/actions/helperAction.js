@@ -126,6 +126,16 @@ export const helperGetPriceNumber = (amount) => {
   return Number(price);
 };
 
+export const helperGetCurrency = (priceAmt)=>{
+  if(priceAmt !== undefined){
+    if(priceAmt != null){
+      return priceAmt.substring(0,3);
+    }
+  }
+
+  return "";
+}
+
 export const helperGetTravelTime = (timeValue) => {
   let hrMin,
     day = 0;

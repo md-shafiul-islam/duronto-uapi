@@ -10,12 +10,13 @@ import AirPricringItinerayTitle from "../airPricringItinerayTitle";
 import PricingLayover from "../pricingLayover";
 import PriceItineraryCard from "../PriceItineraryCard";
 import {
-  helperGetPrice,
+  helperGetCurrency,
   helperGetPriceNumber,
   helperGetTotalFlyTimeBetweenTwoDate,
 } from "../../../actions/helperAction";
 import PricingBaggageCard from "../pricingBaggageCard";
-import FareSummary from "../fareSummary";
+
+import FareSummaryUsingPriceList from "../pricingSplitCommponent/FareSummaryUsingPriceList";
 
 let prevDate = null;
 
@@ -26,6 +27,7 @@ class RndTripPriceingDetailsPage extends Component {
     displayMsg: false,
     retPricingDetails: null,
     depPricingDetails: null,
+    farePriceSummery: null,
   };
 
   UNSAFE_componentWillReceiveProps(nextProps) {
@@ -39,14 +41,13 @@ class RndTripPriceingDetailsPage extends Component {
   }
 
   prePopulateAirPricDetailsEachOne = (priceInfDtls) => {
-
     if (priceInfDtls !== undefined) {
       let { airPriceOpt, segment } = priceInfDtls;
 
       const priceDetails = {
-        baggages: new Array(),
-        changePenalties: new Array(),
-        cancelPenalties: new Array(),
+        baggages: [],
+        changePenalties: [],
+        cancelPenalties: [],
         brand: {},
         cabinClass: "",
         segments: segment,
@@ -56,12 +57,12 @@ class RndTripPriceingDetailsPage extends Component {
         lastDestination: null,
         fstOrigin: null,
         fstDepTime: null,
-        prices: new Array(),
+        prices: [],
       };
 
-      let baggageLists = new Array();
-      let changePenaltyList = new Array();
-      let cancelPenaltyList = new Array();
+      let baggageLists = [];
+      let changePenaltyList = [];
+      let cancelPenaltyList = [];
       let lBrand = null;
       let cabinClass = null;
 
@@ -71,6 +72,7 @@ class RndTripPriceingDetailsPage extends Component {
         lBrand = lBrand === null ? slAirPriceInf.brand : lBrand;
 
         console.log("airPriceOpt, ", airPriceOpt);
+
         airPriceOpt.airPricingInfo.map((airPriceInf, idx) => {
           let { code } = airPriceInf.passengerType[0];
 
@@ -111,7 +113,7 @@ class RndTripPriceingDetailsPage extends Component {
       priceDetails.cabinClass = cabinClass;
 
       let stops = 0;
-      let stopLoc = new Array();
+      let stopLoc = [];
       let totalTime = 0;
       let lastDestination = "";
       let fstOrigin = null;
@@ -148,7 +150,10 @@ class RndTripPriceingDetailsPage extends Component {
   initStateUsingProps = () => {
     let travelerQty = this.initQuery();
 
-    console.log("this.props.rndPricingDetail.detureItem Befor, ", this.props.rndPricingDetail.detureItem);
+    console.log(
+      "this.props.rndPricingDetail.detureItem Befor, ",
+      this.props.rndPricingDetail.detureItem
+    );
 
     if (
       this.props.rndPricingDetail.detureItem !== undefined &&
@@ -161,25 +166,26 @@ class RndTripPriceingDetailsPage extends Component {
         this.props.rndPricingDetail.returnItem
       );
 
-      console.log("this.props.rndPricingDetail.detureItem ", this.props.rndPricingDetail.detureItem);
+      console.log(
+        "this.props.rndPricingDetail.detureItem ",
+        this.props.rndPricingDetail.detureItem
+      );
 
       if (
         returnPriceDetails !== undefined &&
         deptuerPriceDetails !== undefined
       ) {
-        let itineraryPrices = new Array();
+        let itineraryPrices = [];
         itineraryPrices.push({
           key: "Depture: ",
           details: deptuerPriceDetails,
         });
         itineraryPrices.push({ key: "Return: ", details: returnPriceDetails });
 
-        let priceByPassenger = new Array();
-
         console.log("Air Itinerary, ", itineraryPrices);
         console.log("Air Traveler, ", travelerQty);
-  
-        const farePriceSummery = new Array();
+
+        const farePriceSummery = [];
 
         travelerQty &&
           travelerQty.map((traveler, tIdx) => {
@@ -188,14 +194,15 @@ class RndTripPriceingDetailsPage extends Component {
               basePrice: 0,
               tax: 0,
               totalPrice: 0,
+              passengerQty: traveler.value,
+              currency: "",
             };
             let basePrice = 0;
             let taxes = 0;
             let totalPrice = 0;
+            let currency = "";
 
-            let optTotalPrice = 0;
-            let optTaxesAmount = 0;
-            let optBasePrice = 0;
+            console.log("Traveler Qty Obj: ", traveler);
 
             itineraryPrices &&
               itineraryPrices.map((item, itnIx) => {
@@ -207,26 +214,27 @@ class RndTripPriceingDetailsPage extends Component {
                       basePrice += helperGetPriceNumber(pricePass.basePrice);
                       taxes += helperGetPriceNumber(pricePass.taxes);
                       totalPrice += helperGetPriceNumber(pricePass.totalPrice);
+                      currency = helperGetCurrency(pricePass.basePrice);
+
+                      //console.log("Set Summery Obj pricePass.basePrice, Each One, ", pricePass.basePrice);
                     }
                   });
-                
               });
-
 
             combPassengerPrice.basePrice = basePrice;
             combPassengerPrice.totalPrice = totalPrice;
             combPassengerPrice.tax = taxes;
+            combPassengerPrice.currency = currency;
 
             farePriceSummery.push(combPassengerPrice);
             combPassengerPrice = null;
           });
 
-        console.log("Fare Summery Price Brack Array: ", farePriceSummery);
-
         this.setState({
           retPricingDetails: returnPriceDetails,
           depPricingDetails: deptuerPriceDetails,
           travelerInf: travelerQty,
+          farePriceSummery: farePriceSummery,
           loadStatus: false,
         });
       }
@@ -237,7 +245,7 @@ class RndTripPriceingDetailsPage extends Component {
     if (this.props.searchQury !== undefined) {
       let { passDetails, traveler } = this.props.searchQury;
 
-      let travelerQty = new Array();
+      let travelerQty = [];
       if (traveler !== undefined) {
         if (traveler.ADT !== undefined) {
           travelerQty.push({ key: "ADT", value: traveler.ADT.value });
@@ -406,28 +414,8 @@ class RndTripPriceingDetailsPage extends Component {
             </Row>
           </Col>
           <Col md={4}>
-            <FareSummary
-              airPriceList={
-                undefined
-                //this.state.seletedAir.airSolution &&
-                //this.state.seletedAir.airSolution.airPricingInfo
-              }
-              airTotalFlyPrice={
-                undefined
-                //this.state.seletedAir.airSolution &&
-                //this.state.seletedAir.airSolution.totalPrice
-              }
-              airTotalTaxPrice={
-                undefined
-                //this.state.seletedAir.airSolution &&
-                //this.state.seletedAir.airSolution.taxes
-              }
-              airTotalBasePrice={
-                undefined
-                //this.state.seletedAir.airSolution &&
-                //this.state.seletedAir.airSolution.approximateBasePrice
-              }
-              travelerQuantity={undefined /*this.state.travelerQuantity*/}
+            <FareSummaryUsingPriceList
+              airPriceList={this.state.farePriceSummery}
             />
           </Col>
         </Row>
