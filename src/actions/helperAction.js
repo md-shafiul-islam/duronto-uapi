@@ -92,6 +92,11 @@ export const helperGetTimeFormatMin = (timeValue) => {
   }
 };
 
+/**
+ * 
+ * @param {String} amount 
+ * @return Strring Like BDT: 849814
+ */
 export const helperGetPrice = (amount) => {
   let price = "";
 
@@ -102,6 +107,23 @@ export const helperGetPrice = (amount) => {
   }
 
   return price;
+};
+
+/**
+ * 
+ * @param {String} amount 
+ * @return {Number} only amount Number Format
+ */
+export const helperGetPriceNumber = (amount) => {
+  let price = "";
+
+  if (amount === undefined) {
+    return 0;
+  } else {
+    price = amount.substring(3);
+  }
+
+  return Number(price);
 };
 
 export const helperGetTravelTime = (timeValue) => {

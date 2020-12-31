@@ -3,11 +3,9 @@ import { Modal, Button } from "react-bootstrap";
 import PricingFareDetailsInfoCard from "../airPricing/pricingSplitCommponent/pricingFareDetailsInfoCard";
 
 const RoundTripPriceOptionModal = (props) => {
-  const [show, setShow] = useState(false);
-
-  
+    
   const continueAirPricingAction = (selectedOption)=>{
-    props.setRndTripOptionsDetails(selectedOption)
+    props.setRndTripOptionsDetails(selectedOption);
   }
   
   return (

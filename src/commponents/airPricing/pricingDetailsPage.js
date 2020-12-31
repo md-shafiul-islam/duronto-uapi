@@ -7,7 +7,7 @@ import RndTripPriceingDetailsPage from "./RndTripDetailsPage/rndTripPriceingDeta
 class PricingDetailsPage extends Component {
 
   componentDidMount(){
-    console.log("PricingDetailsPage Run !!");
+    console.log("PricingDetailsPage Run !!", this.props);
   }
 
   render() {

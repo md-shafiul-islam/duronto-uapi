@@ -4,7 +4,21 @@ import { Card, Col, Row } from "react-bootstrap";
 import { helperIsNumberString } from "../../actions/helperAction";
 import { GET_PASSENGER } from "../../actions/types";
 
+/**
+ * 
+ * airPriceList
+ * airSolution.airPricingInfo this Arra As airPriceList param
+ */
+/**
+ * travelerQuantity All Traveler Info
+ * airPriceList each one Price info given pricing solution Or Price Info as Array
+ * @param {airPriceList, airTotalBasePrice, airTotalFlyPrice, airTotalTaxPrice, travelerQuantity} params 
+ */
 const FareSummary = (params) => {
+
+  console.log("Fare Summary Params: ", params);
+
+
   const [priceStstus, setPriceStstus] = useState(false);
   const [taxStatus, setTaxStatus] = useState(false);
   const [taxItems, setTaxItems] = useState({

@@ -14,12 +14,12 @@ import StickyCard from "./StickyCard";
   }
 
   setSelectedAirPriceOptions = (airPricOptions)=>{
-
-    console.log("Map Selected Result, ", airPricOptions);
+    
     const airOptions = Object.fromEntries(airPricOptions);
-    console.log("Map to Obj Selected Result, ", airOptions);
-
+    
     this.props.setSelectedPrcingDetailsRoundTrip(airOptions);
+
+    console.log("Modal pricing Action !!!, ", airOptions);
     this.setState({priceRedirect:true});
   }
 

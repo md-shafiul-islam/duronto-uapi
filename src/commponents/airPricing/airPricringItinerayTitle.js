@@ -1,10 +1,11 @@
 import React, {useState} from "react";
 import { Badge, Col, Row } from "react-bootstrap";
-import { helperGetTravelTime } from "../../actions/helperAction";
+import { helperGetFullDateFormat, helperGetTravelTime } from "../../actions/helperAction";
 import AirFareRuleModal from "./airFareRuleModal";
 
 const AirPricringItinerayTitle = (params) => {
 
+  console.log("Air Pricing Itineray Title: Params:, ", params)
   const [modalDisplay, setModalDisplay] = useState(false);
 
   const showFareRuleModal =()=>{
@@ -28,12 +29,12 @@ const AirPricringItinerayTitle = (params) => {
       <Row className="pricing">
         <Col md={2}>
             <div className="fly-label">
-                <p className="fly-type">Depture</p>
-                <p className="fly-date">SAT 15 Nov</p>
+                <p className="fly-type">{params.title}</p>
+                <p className="fly-date">{helperGetFullDateFormat(params.departureTime)}</p>
             </div>
         </Col>
         <Col md={5} className="price-fly-inf">
-            <div className="locations">BOM-DEL</div>
+            <div className="locations">{`${params.origin}-${params.destination}`}</div>
             <div className="fly-inf">{params.stops > 0 ? `${params.stops} Stop `: "Non Stop "} | {helperGetTravelTime(params.totalFlyTime)} | {params.cabinClass}</div>
         </Col>
         <Col md={5}>

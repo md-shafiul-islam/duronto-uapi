@@ -29,7 +29,6 @@ const PricingFareDetailsInfoCard = (params) => {
   const pricingDetailsAction = ()=>{
     
     if(selectedPriceOptions.size === 2){
-      
       params.selectedPriceAction(selectedPriceOptions);
     }
   }
@@ -177,7 +176,7 @@ const PricingFareDetailsInfoCard = (params) => {
       setRetAirSegmentDe(returnSegmentsDetails);
     }
   }, []);
-  console.log("PricingFareDetailsInfoCard Params:, ", params);
+  
   return (
     <React.Fragment>
       <PricingDetailsOptionCard 
@@ -198,7 +197,7 @@ const PricingFareDetailsInfoCard = (params) => {
         airSolutions={params.returnOption&&params.returnOption[0]&&params.returnOption[0].airPricingSolution}
         title={"Return"}
         setFlightOption={(airOption)=>{
-          setFlightOptions(airOption, "returnItem", params.depAirSegment);
+          setFlightOptions(airOption, "returnItem", params.retAirSegment);
         }}
       />
       
