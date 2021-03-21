@@ -1,8 +1,8 @@
 import {
   GET_AIRLINES,
   GET_AIRPORTS,
+  GET_AIRPORTS_ARR,
   GET_AIR_SEARCH_RESPONSE,
-  GET_SEARCH_QUERY,
 } from "../actions/types";
 
 const initialState = {
@@ -32,6 +32,11 @@ export default function (state = initialState, action) {
         ...state,
         airPortsList: action.payload,
       };
+    case GET_AIRPORTS_ARR:
+      return{
+        ...state,
+        airPortsArr:action.payload
+      }  
 
     default:
       return state;

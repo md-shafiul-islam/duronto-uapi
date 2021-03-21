@@ -20,9 +20,15 @@ class PricingDetailsPage extends Component {
             </Col>
           )}
 
-          {true && (
+          {false && (
             <Col md={12}>
               <RndTripPriceingDetailsPage />
+            </Col>
+          )}
+
+          {true && (
+            <Col md={12}>
+              
             </Col>
           )}
         </Row>

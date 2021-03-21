@@ -2115,4 +2115,17 @@ body {
 .mgt-10{
   margin-top: -10px;
 }
+
+.m-item{
+  width: 100px !important;
+  color: #4e4d4d;
+}
+
+.menu-icon{
+  font-size: 2em;
+}
+
+.menu-text{
+  padding-top: 5px;
+}
   

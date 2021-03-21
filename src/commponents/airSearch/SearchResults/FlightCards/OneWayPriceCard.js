@@ -55,7 +55,7 @@ const OneWayPriceCard = (params) => {
       upsell = "";
 
     if (pTexts !== undefined) {
-      pTexts.map((text, Idx) => {
+      pTexts&&pTexts.map((text, Idx) => {
         if (text.type === "MarketingConsumer") {
           marketingConsumer = text.value;
         }
@@ -180,7 +180,7 @@ const OneWayPriceCard = (params) => {
                             <React.Fragment>
                               <div className="fly-price-inf">
                                 {getPriceDetailsText(
-                                  brand.text,
+                                  brand&&brand.text,
                                   approximateTotalPrice,
                                   brand,
                                   airPriceOne,

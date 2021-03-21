@@ -128,6 +128,11 @@ const MultiCityOptionsCards = (params) => {
   };
 
   console.log("MultiCity Options Cards: ", params);
+
+  const pricingAction = (x)=>{
+    console.log("MultiCity Options Cards Price Action: SL items, ", x);
+    console.log("MultiCity Options Cards Price Action: ", params.flighAirPricetList);
+  }
   return (
     <React.Fragment>
       <Row>
@@ -143,7 +148,7 @@ const MultiCityOptionsCards = (params) => {
                           <Row>
                             <Col md={6}>Air Lin Name: Duration</Col>
                             <Col md={6}>
-                              <Button>Book Now</Button>
+                              <Button onClick={()=>{pricingAction(mOption)}}>Book Now</Button>
                             </Col>
                           </Row>
                         </Card.Title>

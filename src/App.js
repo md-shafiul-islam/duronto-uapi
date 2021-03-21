@@ -1,16 +1,18 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import "./App.css";
-import { connect, Provider } from "react-redux";
+import { Provider } from "react-redux";
 import store from "./store";
 
 
 import { Col, Row, Container } from "react-bootstrap";
-import AirSearchForm from "./commponents/testCompt/AirSearchForm";
+import AirSearchForm from "./commponents/searchCompt/AirSearchForm";
 import AirSearchResult from "./commponents/airSearch/SearchResults/AirSearchResult";
 import PricingDetailsPage from "./commponents/airPricing/pricingDetailsPage";
 import RoundTripPricingCard from "./commponents/airPricing/roundTripPricingCard";
 import HeaderContent from "./commponents/headerContent";
+import Header from "./commponents/header/header";
+import FlightsPage from "./pages/FlightsPage";
 
 const airPort = [
   { name: "Aalborg", code: "AAL" },
@@ -55,7 +57,9 @@ class App extends Component {
         <Container fluid>
           <Router>
             <HeaderContent />
+            <Header />
             <Route exact path="/air/search" component={AirSearchForm} />
+            <Route exact path="/flights" component={FlightsPage} />
             <Route
               exact
               path="/air/search/result"

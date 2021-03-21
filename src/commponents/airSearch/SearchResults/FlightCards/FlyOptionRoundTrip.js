@@ -1,31 +1,28 @@
-import React, { Component } from 'react'
-import { Card, Col, Row } from "react-bootstrap";
+import React, { Component } from "react";
+import { Col, Row } from "react-bootstrap";
 import { PropTypes } from "prop-types";
-import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
-import { setSelectedPrcingDetailsRoundTrip } from '../../../../actions/priceAction';
+import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
+import { setSelectedPrcingDetailsRoundTrip } from "../../../../actions/priceAction";
 import BookingCardRoundTripOptions from "./BookingCardRoundTripOptions";
 import StickyCard from "./StickyCard";
 
- class FlyOptionRoundTrip extends Component{
-  
+class FlyOptionRoundTrip extends Component {
   state = {
-    priceRedirect:false,
-  }
+    priceRedirect: false,
+  };
 
-  setSelectedAirPriceOptions = (airPricOptions)=>{
-    
+  setSelectedAirPriceOptions = (airPricOptions) => {
     const airOptions = Object.fromEntries(airPricOptions);
-    
+
     this.props.setSelectedPrcingDetailsRoundTrip(airOptions);
 
-    console.log("Modal pricing Action !!!, ", airOptions);
-    this.setState({priceRedirect:true});
-  }
+    console.log("Modal pricing Action !!!, ", JSON.stringify(airOptions));
+    this.setState({ priceRedirect: true });
+  };
 
-  render (){
-
-    if(this.state.priceRedirect){
+  render() {
+    if (this.state.priceRedirect) {
       return <Redirect to="/air/pricing" />;
     }
     return (
@@ -53,27 +50,40 @@ import StickyCard from "./StickyCard";
           <Col md={6}>
             {this.props.availAbleFlights &&
               this.props.availAbleFlights.map((flyItem, fIdx) => {
-                if (flyItem.airLeg.group === this.props.airLegs[1].group) {
-                  return (
-                    <React.Fragment>
-                      <BookingCardRoundTripOptions
-                        preSelecteItem={this.props.preSelectFly.returnFly}
-                        flyItem={flyItem}
-                        elmId={fIdx}
-                        getSelectedItem={(flyOption, opIdx, elmId) => {
-                          this.props.getRetSelectedFly(flyOption, opIdx, elmId);
-                        }}
-                      />
-                    </React.Fragment>
-                  );
+                if (
+                  flyItem.airLeg !== undefined &&
+                  this.props.airLegs[1] !== undefined
+                ) {
+                  if (
+                    flyItem.airLeg.group !== undefined &&
+                    this.props.airLegs[1].group !== undefined &&
+                    flyItem.airLeg.group === this.props.airLegs[1].group
+                  ) {
+                    return (
+                      <React.Fragment>
+                        <BookingCardRoundTripOptions
+                          preSelecteItem={this.props.preSelectFly.returnFly}
+                          flyItem={flyItem}
+                          elmId={fIdx}
+                          getSelectedItem={(flyOption, opIdx, elmId) => {
+                            this.props.getRetSelectedFly(
+                              flyOption,
+                              opIdx,
+                              elmId
+                            );
+                          }}
+                        />
+                      </React.Fragment>
+                    );
+                  }
                 }
               })}
           </Col>
           <Col md={12}>
-            <StickyCard 
-              flyOption={this.props.selectedOption} 
+            <StickyCard
+              flyOption={this.props.selectedOption}
               traveler={this.props.searchQuery.traveler}
-              getSelectedPricingOptions={(slcOptions)=>{
+              getSelectedPricingOptions={(slcOptions) => {
                 this.setSelectedAirPriceOptions(slcOptions);
               }}
             />
@@ -82,7 +92,7 @@ import StickyCard from "./StickyCard";
       </React.Fragment>
     );
   }
-};
+}
 
 FlyOptionRoundTrip.prototypes = {
   searchQuery: PropTypes.object.isRequired,
@@ -96,4 +106,6 @@ const mapStateToProps = (state) => ({
   rndPricingDetail: state.airPriceDetails.rndDetailsPrice,
 });
 
-export default connect(mapStateToProps, {setSelectedPrcingDetailsRoundTrip})(FlyOptionRoundTrip);
+export default connect(mapStateToProps, { setSelectedPrcingDetailsRoundTrip })(
+  FlyOptionRoundTrip
+);
