@@ -1,5 +1,6 @@
 body {
   font-family: Lato-Regular, Arial, Helvetica, sans-serif;
+  background: #f1f1f1 !important;
 }
 .content-warper {
   margin: 0 auto;
@@ -144,8 +145,6 @@ body {
   color: #120000;
 }
 
-.card-hover {
-}
 .card-hover:hover {
   cursor: pointer;
   background-color: #eaf5ff;
@@ -1841,10 +1840,6 @@ body {
 
 }
 
-.panelty-cnt{
-
-}
-
 .panelty-cnt .penalty-item{
   width: 100%;
   height: 30px;
@@ -2127,5 +2122,30 @@ body {
 
 .menu-text{
   padding-top: 5px;
+}
+
+.common-card .card,
+.common-card .card-body {
+  padding: 5px;
+}
+
+.zidx-50{
+  z-index: 50;
+}
+
+.com-sticky{
+  position: relative;
+}
+.loaderPlaceholder{
+  background: #FFF;
+  border-radius: 10px;
+  border: none;
+  position: absolute;
+  top: -60px;
+  left: 0;
+  right: 0;
+  z-index: 0;
+  height: 300px;
+  box-shadow: 0 0 1px rgb(0 0 0 / 13%), 0 1px 3px rgb(0 0 0 / 20%);
 }
   

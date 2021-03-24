@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Col, Row } from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
 
 const FareSummaryCard = (props) => {
   const getPriceFormat = (price) => {
@@ -25,21 +25,21 @@ const FareSummaryCard = (props) => {
           <Row className="air-total-price">
             <Col md={6}>Total</Col>
             <Col md={6} className="fare-amount">
-              {getPriceFormat(props.fareSummary.airTotalPrice)}
+              {getPriceFormat(props.fareSummary&&props.fareSummary.totalPrice)}
             </Col>
           </Row>
 
           <Row className="air-base-price">
             <Col md={6}>Base Fare</Col>
             <Col md={6} className="fare-amount">
-              {getPriceFormat(props.fareSummary.airBasePrice)}
+              {getPriceFormat(props.fareSummary&&props.fareSummary.basePrice)}
             </Col>
           </Row>
 
           <Row className="air-tax">
             <Col md={6}>Tax</Col>
             <Col md={6} className="fare-amount">
-              {getPriceFormat(props.fareSummary.airTax)}
+              {getPriceFormat(props.fareSummary&&props.fareSummary.taxes)}
             </Col>
           </Row>
         </Col>

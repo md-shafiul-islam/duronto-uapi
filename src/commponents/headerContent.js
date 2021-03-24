@@ -3,16 +3,27 @@ import React, { Component } from "react";
 import { PropTypes } from "prop-types";
 import { connect } from "react-redux";
 import { getAirLines, getAirports, airPortsArray } from "../actions/airSearchAction";
+import TopNavBar from "./header/nav/topNavBar";
+import { Container } from "react-bootstrap";
 
 class HeaderContent extends Component {
   componentDidMount() {
-    this.props.getAirLines();
-    this.props.getAirports();
-    this.props.airPortsArray();
+    // this.props.getAirLines();
+    // this.props.getAirports();
+    // this.props.airPortsArray();
   }
 
   render() {
-    return <div></div>;
+    return (
+      <React.Fragment>
+         <Container>
+          
+          <TopNavBar />          
+         </Container>
+         
+        
+      </React.Fragment>
+    );
   }
 }
 

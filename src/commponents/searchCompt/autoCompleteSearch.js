@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import Autosuggest from "react-autosuggest";
 import AutosuggestHighlightMatch from "autosuggest-highlight/match";
 import AutosuggestHighlightParse from "autosuggest-highlight/parse";
-import { Col } from "react-bootstrap";
+import Axios from "axios";
+import { REQUEST_HEADER_GET } from "../../actions/types";
 
 /**
  * Auto Complete Search Box
@@ -16,14 +17,34 @@ const AutoCompleteSearch = (props) => {
   const sugOptions = [];
   const [selectedValue, setSelectedValue] = useState("");
 
+  const [rqSugs, setRqSugs] = useState([]);
+
   useEffect(() => {
-    setLocalSugegestions(props.options);
+
+    if(props.options !== undefined){
+      setLocalSugegestions(props.options);
+    }else{
+      setLocalSugegestions([]);
+    }
+    
   }, []);
 
+  const getSugestionViaReq = async (recValue)=>{
+
+    console.log("Search Query: ", recValue);
+    let url = `http://localhost:8050/airports-query/${recValue}`;
+    await Axios.get(url, {headers:REQUEST_HEADER_GET})
+    .then((res)=>{
+      console.log("RES: ", res.data.message);
+      res.data.ports && setLocalSugegestions(res.data.ports);
+    }).catch((res)=>{
+      console.log("Error: ", JSON.stringify(res, null, 2));
+    });
+
+  }
+
   const searchSuggesionUsinKey = (value) => {
-    props.options
-      .filter(
-        ({ name, iataCode }) =>
+    localSugegestions && localSugegestions.filter(({ name, iataCode }) =>
           name.toLowerCase().indexOf(searchKey.toLowerCase()) > -1 ||
           iataCode.indexOf(searchKey) > -1
       )
@@ -73,13 +94,16 @@ const AutoCompleteSearch = (props) => {
             },
           }}
           suggestions={localSugegestions}
-          onSuggestionsFetchRequested={async ({ value }) => {
-            if (!value) {
-              setLocalSugegestions([]);
-              return;
-            }
+          onSuggestionsFetchRequested={({ value }) => {
 
-            setLocalSugegestions(searchSuggesionUsinKey(value));
+            console.log("Search value, ", value);
+            if (value !== undefined && value !== null) {
+              
+              getSugestionViaReq(value);
+              
+            }else{
+              setLocalSugegestions(searchSuggesionUsinKey(value));
+            }
             return;
           }}
           onSuggestionsClearRequested={() => {

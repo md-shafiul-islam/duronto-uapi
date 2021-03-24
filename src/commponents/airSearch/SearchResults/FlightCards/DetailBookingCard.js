@@ -6,8 +6,9 @@ import { GET_DAYES, GET_MONTHS } from "../../../../actions/types";
 const DetailBookingCard = (params) => {
   const [travelTime, setTravelTime] = useState({ min: 0, hr: 0 });
 
+ 
   useEffect(() => {
-    getTravelTime(params.bookInf.segment.flightTime);
+    getTravelTime(params.segment.flightTime);
   }, []);
 
   const getTravelTime = (timeValue) => {
@@ -91,8 +92,10 @@ const DetailBookingCard = (params) => {
   };
 
   const getBaggage = (infData) => {
+    
     if (infData) {
       if (infData.baggageAllowance) {
+        
         if (infData.baggageAllowance.maxWeight) {
           if (
             infData.baggageAllowance.maxWeight.value === null &&
@@ -148,19 +151,19 @@ const DetailBookingCard = (params) => {
                 <Col md={4}>
                   <div className="fly-time-inf">
                     <span className="fly-hour">
-                      {getTimeFormatHr(params.bookInf.segment.departureTime)}
+                      {getTimeFormatHr(params.segment.departureTime)}
                       {":"}
                     </span>
                     <span className="fly-min">
-                      {getTimeFormatMin(params.bookInf.segment.departureTime)}
+                      {getTimeFormatMin(params.segment.departureTime)}
                     </span>
                   </div>
                   <div className="fly-date-time">
-                    {getDateFormat(params.bookInf.segment.departureTime)}
+                    {getDateFormat(params.segment.departureTime)}
                   </div>
                   <div className="fly-loc-inf">
                     <span>
-                      {params.bookInf && params.bookInf.segment.origin}
+                      {params.segment && params.segment.origin}
                     </span>
                   </div>
                 </Col>
@@ -174,18 +177,18 @@ const DetailBookingCard = (params) => {
                 <Col md={4}>
                   <div className="fly-time-inf">
                     <span className="fly-hour">
-                      {getTimeFormatHr(params.bookInf.segment.arrivalTime)}
+                      {getTimeFormatHr(params.segment.arrivalTime)}
                       {":"}
                     </span>
                     <span className="fly-min">
-                      {getTimeFormatMin(params.bookInf.segment.arrivalTime)}
+                      {getTimeFormatMin(params.segment.arrivalTime)}
                     </span>
                   </div>
                   <div className="fly-date-time">
-                    {getDateFormat(params.bookInf.segment.arrivalTime)}
+                    {getDateFormat(params.segment.arrivalTime)}
                   </div>
                   <span className="fly-loc-inf">
-                    {params.bookInf && params.bookInf.segment.destination}
+                    {params.segment && params.segment.destination}
                   </span>
                 </Col>
               </Row>
@@ -200,7 +203,7 @@ const DetailBookingCard = (params) => {
 
           <Row>
             <Col md={4}>ADULT:</Col>
-            <Col md={6}>{getBaggage(params.bookInf.fareInfos)}</Col>
+            <Col md={6}>{getBaggage(params.fareInfo)}</Col>
           </Row>
         </Col>
       </Row>

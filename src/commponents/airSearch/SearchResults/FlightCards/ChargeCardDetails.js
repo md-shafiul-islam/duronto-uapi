@@ -2,6 +2,8 @@ import React from "react";
 import { Card, Col, Row } from "react-bootstrap";
 
 const ChargeCardDetails = (props) => {
+  console.log("ChargeCardDetails, ", props);
+
   const getPriceFormat = (price) => {
     if (price === undefined) {
       return " 0.0";
@@ -34,76 +36,38 @@ const ChargeCardDetails = (props) => {
               </span>
             </Col>
           </Row>
-
-          <Row>
-            <Col className="passenger-type" md={6}>
-              ADULT{" "}
-            </Col>
-            <Col md={6} className="penalty">
-              {props &&
-                props.data.ADT &&
-                props.data.ADT.map((itemAdt) => {
-                  return (
-                    <React.Fragment>
-                      <Row>
-                        <Col md={12}>
-                          <span className="cond">{itemAdt.penaltyApplies}</span>
-                          <span className="amount">
-                            {itemAdt.amount === null ? "0.0" : itemAdt.amount}
-                          </span>
-                        </Col>
-                      </Row>
-                    </React.Fragment>
-                  );
-                })}
-            </Col>
-          </Row>
-
-          <Row>
-            <Col className="passenger-type" md={6}>
-              CHILD{" "}
-            </Col>
-            <Col md={6} className="penalty">
-              {props.data.CNN &&
-                props.data.CNN.map((itemAdt) => {
-                  return (
-                    <React.Fragment>
-                      <Row>
-                        <Col md={12}>
-                          <span className="cond">{itemAdt.penaltyApplies}</span>
-                          <span className="amount">
-                            {itemAdt.amount === null ? "0.0" : itemAdt.amount}
-                          </span>
-                        </Col>
-                      </Row>
-                    </React.Fragment>
-                  );
-                })}
-            </Col>
-          </Row>
-
-          <Row>
-            <Col className="passenger-type" md={6}>
-              INFANT{" "}
-            </Col>
-            <Col md={6} className="penalty">
-              {props.data.INF &&
-                props.data.INF.map((itemAdt) => {
-                  return (
-                    <React.Fragment>
-                      <Row>
-                        <Col md={12}>
-                          <span className="cond">{itemAdt.penaltyApplies}</span>
-                          <span className="amount">
-                            {itemAdt.amount === null ? "0.0" : itemAdt.amount}
-                          </span>
-                        </Col>
-                      </Row>
-                    </React.Fragment>
-                  );
-                })}
-            </Col>
-          </Row>
+          {props.data !== undefined ? (
+            <Row>
+              <React.Fragment>
+                <Col className="passenger-type" md={6}>
+                  {props.data && props.data.type !== undefined
+                    ? props.data.type
+                    : ""}
+                </Col>
+                <Col md={6} className="penalty">
+                  {props.data.penalty &&
+                    props.data.penalty.map((item, pIdx) => {
+                      return (
+                        <React.Fragment key={`cp-${pIdx}`}>
+                          <Row>
+                            <Col md={12}>
+                              <span className="cond">
+                                {item.penaltyApplies}
+                              </span>
+                              <span className="amount">
+                                {item.amount === null ? "0.0" : getPriceFormat(item.amount)}
+                              </span>
+                            </Col>
+                          </Row>
+                        </React.Fragment>
+                      );
+                    })}
+                </Col>
+              </React.Fragment>
+            </Row>
+          ) : (
+            ""
+          )}
         </Card.Body>
       </Card>
     </React.Fragment>

@@ -15,10 +15,12 @@ const SelectedTab = (props) => {
     props.getSelectedOption(item, ids);
   };
 
+  console.log("SelectedTab ", props);
+
   let prevArvTime = "";
 
   useEffect(() => {
-    setDateMonth(getDayAndMonth(props.flyOption.flyDepartureTime));
+    setDateMonth(getDayAndMonth(props.segment&&props.segment.departureTime));
   }, []);
 
   const getDayAndMonth = (dateTime) => {
@@ -94,10 +96,10 @@ const SelectedTab = (props) => {
                   {props.totalTravelTime}
                 </Col>
               </Row>
-
-              {props.bookInfos &&
-                props.bookInfos.map((book, ibx) => {
-                  let { fareInfos, segment } = book;
+              
+              {props.bookInfos&&props.bookInfos.map((bookInf, sIdx)=>{
+                  let segment = props.segments&&props.segments[bookInf.segmentRef];
+                  let fareInfo = props.fareInfos&&props.fareInfos[bookInf.fareInfoRef];
                   let timeDeff = "";
                   let { origin } = segment;
                   if (prevArvTime !== undefined) {
@@ -111,8 +113,8 @@ const SelectedTab = (props) => {
                   prevArvTime = segment && segment.arrivalTime;
 
                   return (
-                    <React.Fragment>
-                      {ibx > 0 ? (
+                    <React.Fragment key={`layover-${sIdx}`}>
+                      {sIdx > 0 ? (
                         <Row className="layover">
                           <Col md={12} className="layover-position">
                             <div className="border-center "></div>
@@ -136,13 +138,16 @@ const SelectedTab = (props) => {
                       )}
 
                       <DetailBookingCard
-                        bookInf={book}
+                        //bookInf={segment}
                         totalTravelTime={props.totalTravelTime}
                         travelLocs={props.travelInf}
+                        segment={segment}
+                        fareInfo={fareInfo}
                       />
                     </React.Fragment>
                   );
-                })}
+              })}
+              
             </Tab.Pane>
 
             <Tab.Pane eventKey="fareSummary">

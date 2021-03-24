@@ -13,6 +13,9 @@ import RoundTripPricingCard from "./commponents/airPricing/roundTripPricingCard"
 import HeaderContent from "./commponents/headerContent";
 import Header from "./commponents/header/header";
 import FlightsPage from "./pages/FlightsPage";
+import EmptyCont from "./commponents/helper/emptyCont";
+import HomePage from "./pages/HomePage";
+import OneWaySearchResult from "./commponents/airSearch/oneWaySearch/oneWaySearchResult";
 
 const airPort = [
   { name: "Aalborg", code: "AAL" },
@@ -54,12 +57,13 @@ class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        <Container fluid>
-          <Router>
-            <HeaderContent />
-            <Header />
-            <Route exact path="/air/search" component={AirSearchForm} />
+        <Container fluid >
+          <EmptyCont height="100px" />
+          <OneWaySearchResult />
+          <Router>            
+            <Route exact path="/" component={HomePage} />
             <Route exact path="/flights" component={FlightsPage} />
+            <Route exact path="/air/search" component={AirSearchForm} />
             <Route
               exact
               path="/air/search/result"
