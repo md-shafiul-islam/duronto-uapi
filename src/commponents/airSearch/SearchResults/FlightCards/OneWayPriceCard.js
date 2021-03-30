@@ -3,6 +3,8 @@ import { Button, Col, Row } from "react-bootstrap";
 
 const OneWayPriceCard = (params) => {
 
+  console.log("OneWayPriceCard, ", OneWayPriceCard);
+
   const setBookOption = (priceOption, idx, srIdx) => {
     
     let {

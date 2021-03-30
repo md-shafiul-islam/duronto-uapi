@@ -1,9 +1,9 @@
-import { getUnixTime } from "date-fns";
 import React from "react";
 import { Col, Row } from "react-bootstrap";
 
 const PricingBaggageCard = (params) => {
 
+  console.log("PricingBaggageCard Params, ", params);
     const getUnit = (unitParam)=>{
         let unitData ="";
         if(unitParam !== undefined){
@@ -60,24 +60,24 @@ const PricingBaggageCard = (params) => {
   };
   return (
     <React.Fragment>
-      <Col md={6} className="pricing-baggage-cnt">
+      <Col md={12} className="pricing-baggage-cnt">
         <Row className="btitle">
-          <Col md={4}>Baggage:</Col>
-          <Col md={4}>Check in:</Col>
-          <Col md={4}>Cabin:</Col>
+          <Col md={2}>Baggage:</Col>
+          <Col md={2}>Check in:</Col>
+          <Col md={3}>Cabin:</Col>
         </Row>
         {params.baggageAllowance &&
           params.baggageAllowance.map((baggage, idx) => {
             return (
               <Row>
-                <Col md={4}>
+                <Col md={2}>
                   {baggage.key}
                   {console.log("Each Baggage: ", baggage)}
                 </Col>
-                <Col md={4}>
+                <Col md={2}>
                   {getCheckInBaggage(baggage.value.baggageAllowanceInfo)}
                 </Col>
-                <Col md={4}>
+                <Col md={3}>
                   {getCabinBaggage(baggage.value.carryOnAllowanceInfo)}
                 </Col>
               </Row>

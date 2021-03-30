@@ -11,11 +11,11 @@ import { GET_PASSENGER } from "../../actions/types";
 /**
  * travelerQuantity All Traveler Info
  * airPriceList each one Price info given pricing solution Or Price Info as Array
- * @param {airPriceList, airTotalBasePrice, airTotalFlyPrice, airTotalTaxPrice, travelerQuantity} params 
+ * @param {airPriceSummary {}} params 
  */
 const FareSummary = (params) => {
 
-  console.log("Fare Summary Params: ", params);
+  // console.log("Fare Summary Params: ", params);
 
 
   const [priceStstus, setPriceStstus] = useState(false);
@@ -33,7 +33,7 @@ const FareSummary = (params) => {
   useEffect(() => {
     let travelerQuantity = params.travelerQuantity;
 
-    console.log("travelerQuantity: ", travelerQuantity);
+    // console.log("travelerQuantity: ", travelerQuantity);
     
     if (params.airPriceList !== undefined) {
      
@@ -152,7 +152,12 @@ const FareSummary = (params) => {
     }
     return "0.0";
   };
-
+  let airPriceSummaries = {};
+  if(params.airPriceSummary !== null && params.airPriceSummary !== undefined){
+    airPriceSummaries = params.airPriceSummary;
+  }
+  let {priceSummeries, approximateBasePrice, approximateTaxes, approximateTotalPrice, basePrice, equivalentBasePrice, taxes, totalPrice} = airPriceSummaries;
+  
   return (
     <React.Fragment>
       <Card className="fare-sum-card">
@@ -176,7 +181,7 @@ const FareSummary = (params) => {
                   Base Price{" "}
                   <span className="fare-amount">
                     {priceStstus === false
-                      ? `${currency}: ${priceItems.totalPriceAmount}`
+                      ? `${getPriceFormat(approximateBasePrice)}`
                       : ""}
                   </span>
                 </p>
@@ -186,21 +191,22 @@ const FareSummary = (params) => {
                     display: `${priceStstus === true ? "block" : "none"}`,
                   }}
                 >
-                  {priceItems &&
-                    priceItems.details.map((priceItem, pIdx) => {
+                  {priceSummeries &&
+                    priceSummeries.map((priceSummary, pIdx) => {
+                      let {eqBasePrice, appxBasePrice, appxTotalPrice, bPrice, toPrice, passenger} = priceSummary;
                       return (
                         <li key={`fprice-${pIdx}`}>
                           <span className="fare-amount-label">
-                            {priceItem.pQty > 1
-                              ? `${getPassengerByCode(priceItem.key)}'(s) (${
-                                  priceItem.pQty
-                                } X ${getPriceFormat(priceItem.value)}): `
-                              : `${getPassengerByCode(priceItem.key)} (${
-                                  priceItem.pQty
-                                } X ${getPriceFormat(priceItem.value)}): `}
+                            {passenger.qty > 1
+                              ? `${getPassengerByCode(passenger.code)}'(s) (${
+                                passenger.qty
+                                } X ${getAmount(eqBasePrice)}): `
+                              : `${getPassengerByCode(passenger.code)} (${
+                                passenger.qty
+                                } X ${getPriceFormat(eqBasePrice)}): `}
                           </span>
                           <span className="fare-amount">
-                            {`${currency}: ${priceItem.amount}`}
+                            {`${currency}: ${getMultyplayByPassenger(getAmount(eqBasePrice), passenger.qty)}`}
                           </span>
                         </li>
                       );
@@ -222,7 +228,7 @@ const FareSummary = (params) => {
                   Fee & Taxes{" "}
                   <span className="fare-amount">
                     {taxStatus === false
-                      ? `${currency}: ${taxItems.totalTaxAmount}`
+                      ? `${getPriceFormat(taxes)}`
                       : ""}
                   </span>
                 </p>
@@ -236,7 +242,7 @@ const FareSummary = (params) => {
                   <li>
                     <span>Total Fess & Surcharges: </span>
                     <span className="fare-amount">
-                      {`${currency}: ${taxItems.totalTaxAmount}`}
+                      {`${getPriceFormat(taxes)}`}
                     </span>
                   </li>
                 </ul>
@@ -248,9 +254,7 @@ const FareSummary = (params) => {
             <p className="fare-total-amount">
               Total Amount:{" "}
               <span className="fare-amount">
-                {`${currency} ${
-                  taxItems.totalTaxAmount + priceItems.totalPriceAmount
-                }`}
+                {`${getPriceFormat(totalPrice)}`}
               </span>
             </p>
           </Col>

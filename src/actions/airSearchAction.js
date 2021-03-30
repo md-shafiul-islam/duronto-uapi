@@ -36,68 +36,10 @@ export const getAirSearchRequest = (requestData) => async (dispatch) => {
 
 export const getOneWayAirSearchRequest = (requestData) => async (dispatch) => {
   try {
-    console.log("Before Send request LOG: ");
-    const { traveler, passDetails } = requestData;
-    let pasengerList = [];
+    //http://localhost:8050/flights
+    let url = `${EXT_BASE_URL}/flights`;
 
-    if (traveler !== undefined) {
-      if (traveler.ADT !== undefined) {
-        if (traveler.ADT.value > 0) {
-          pasengerList.push({ value: "ADT", number: traveler.ADT.value });
-        }
-      }
-
-      if (traveler.ADT !== undefined) {
-        if (traveler.CNN.value > 0) {
-          pasengerList.push({ value: "CHD", number: traveler.CNN.value });
-        }
-      }
-
-      if (traveler.INF !== undefined) {
-        if (traveler.ADT.value > 0) {
-          pasengerList.push({ value: "INF", number: traveler.INF.value });
-        }
-      }
-    }
-
-    let stDate = null;
-    let fromDate = "";
-    let toDate = "";
-    let item = null;
-
-    if (passDetails != undefined) {
-      item = passDetails[0];
-      if (item !== undefined && item !== null) {
-        stDate = getProperDate(item.depTime);
-        fromDate = item.from !== undefined ? item.from.code : "";
-        toDate = item.to !== undefined ? item.to.code : "";
-      }
-    }
-
-    let query = {
-      CatalogOfferingsRequestAir: {
-        offersPerPage: 5,
-        PassengerCriteria: pasengerList,
-        SearchCriteriaFlight: [
-          {
-            "@type": "SearchCriteriaFlight",
-            departureDate: stDate,
-            From: {
-              value: fromDate,
-            },
-            To: {
-              value: toDate,
-            },
-          },
-        ],
-
-        SearchModifiersAir: {},
-      },
-    };
-    console.log("One Way Try: ", query);
-    let url = `${EXT_BASE_URL}/api/catalogofferings`;
-
-    const res = await Axios.post(url, JSON.stringify(query, null, 2), {
+    const res = await Axios.post(url, JSON.stringify(requestData, null, 2), {
       headers: REQUEST_HEADER,
     });
 

@@ -5,7 +5,7 @@ import AirFareRuleModal from "./airFareRuleModal";
 
 const AirPricringItinerayTitle = (params) => {
 
-  console.log("Air Pricing Itineray Title: Params:, ", params)
+  //console.log("Air Pricing Itineray Title: Params:, ", params)
   const [modalDisplay, setModalDisplay] = useState(false);
 
   const showFareRuleModal =()=>{
@@ -29,7 +29,7 @@ const AirPricringItinerayTitle = (params) => {
       <Row className="pricing">
         <Col md={2}>
             <div className="fly-label">
-                <p className="fly-type">{params.title}</p>
+                <p className="fly-type">{`${params.origin} ${params.platingCarrier} ${params.destination}`}</p>
                 <p className="fly-date">{helperGetFullDateFormat(params.departureTime)}</p>
             </div>
         </Col>

@@ -36,17 +36,17 @@ const ChargeCardDetails = (props) => {
               </span>
             </Col>
           </Row>
-          {props.data !== undefined ? (
-            <Row>
+
+          {props.data&&props.data.map((item, idx)=>{
+            return(
+              <Row>
               <React.Fragment>
                 <Col className="passenger-type" md={6}>
-                  {props.data && props.data.type !== undefined
-                    ? props.data.type
-                    : ""}
+                  {item && item.key}
                 </Col>
                 <Col md={6} className="penalty">
-                  {props.data.penalty &&
-                    props.data.penalty.map((item, pIdx) => {
+                  {item.penalty &&
+                    item.penalty.map((item, pIdx) => {
                       return (
                         <React.Fragment key={`cp-${pIdx}`}>
                           <Row>
@@ -65,9 +65,9 @@ const ChargeCardDetails = (props) => {
                 </Col>
               </React.Fragment>
             </Row>
-          ) : (
-            ""
-          )}
+            )
+          })}
+          
         </Card.Body>
       </Card>
     </React.Fragment>

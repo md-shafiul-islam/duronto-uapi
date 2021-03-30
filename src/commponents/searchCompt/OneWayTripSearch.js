@@ -1,11 +1,17 @@
+import { FieldArray, Form, Formik } from "formik";
 import React, { Component } from "react";
+import { Col, Row } from "react-bootstrap";
+import AutoCompleteSearch from "./autoCompleteSearch";
+import DatePickerRange from "./datePickerRange";
+import SearchOption from "./searchOption";
+import TravellersAndClass from "./travellersAndClass";
 
 class OneWayTripSearch extends Component {
   render() {
     return (
       <React.Fragment>
         <Formik
-          initialValues={roundInitValue}
+          initialValues={this.state.initForm}
           onSubmit={(values, actions) => {
             this.submitForm(values);
           }}
@@ -33,7 +39,7 @@ class OneWayTripSearch extends Component {
                                       >
                                         <AutoCompleteSearch
                                           pHolder="From"
-                                          options={airPort}
+                                          options={this.state.airPorts}
                                           getSelectedItem={(value) => {
                                             props.setFieldValue(
                                               `passDetails[${indx}].from`,
@@ -56,7 +62,7 @@ class OneWayTripSearch extends Component {
                                       >
                                         <AutoCompleteSearch
                                           pHolder="To"
-                                          options={airPort}
+                                          options={this.state.airPorts}
                                           getSelectedItem={(value) => {
                                             props.setFieldValue(
                                               `passDetails[${indx}].to`,

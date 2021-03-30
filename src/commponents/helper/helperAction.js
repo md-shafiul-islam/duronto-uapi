@@ -15,8 +15,7 @@ export const helperGetTooglePriceView = () => {
 };
 
 export const helperGetPriceDetailsRequest = async (priceQuery) => {
-    console.log("Price Request Query: ", priceQuery);
-
+    
     let url = `${EXT_PRICE_URL}/api/v_1_0/buildfromproducts`;
 
     if (!this.state.dataLoadStatus) {

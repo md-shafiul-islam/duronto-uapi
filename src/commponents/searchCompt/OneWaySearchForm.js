@@ -6,6 +6,7 @@ import TravellersAndClass from "./travellersAndClass";
 import SingleDatePicker from "./SingleDatePicker";
 import AutoSearchSuggestionList from "./AutoSearchSuggestionList";
 
+
 const OneWaySearchForm = (params) => {
   const [lastDate, setLastDate] = useState(new Date());
   const [oneWayDate, setOneWayDate] = useState(new Date());
@@ -42,8 +43,7 @@ const OneWaySearchForm = (params) => {
                                           `passDetails[${indx}].from`,
                                           value !== undefined ? {name:value.name, code:value.iataCode} : null
                                         );
-
-                                        params.getOneWayTripData(props.values);
+                                        params.getOneWayTripData(props.values, 1, null);
                                       }}
                                     />
                                   </Col>
@@ -59,7 +59,8 @@ const OneWaySearchForm = (params) => {
                                           `passDetails[${indx}].to`,
                                           value !== undefined ? {name:value.name, code:value.iataCode} : null
                                         );
-                                        params.getOneWayTripData(props.values);
+                                        params.getOneWayTripData(props.values, 2, null);
+
                                       }}
                                     />
                                   </Col>
@@ -78,7 +79,7 @@ const OneWaySearchForm = (params) => {
 
                                         setLastDate(item);
 
-                                        params.getOneWayTripData(props.values);
+                                        params.getOneWayTripData(props.values, 3, null);
                                       }}
                                     />
                                   </Col>
@@ -122,7 +123,9 @@ const OneWaySearchForm = (params) => {
                                       `traveler.cabClass`,
                                       cabinClass
                                     );
-                                    params.getOneWayTripData(props.values);
+                                    params.getOneWayTripData(props.values, 5, {adults, child, infants, cabinClass});
+
+                                    
                                   }}
                                 />
                               </Col>

@@ -1,20 +1,21 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col, ListGroup } from "react-bootstrap";
+import { Row, Col } from "react-bootstrap";
 
 /**
  *
  * @param {populateItem, items[{name:'', value:number}], ulClass} props
  */
 const ComRange = (props) => {
-  const [selected, setSelected] = useState(props.populateItem);
+  const [selected, setSelected] = useState({name:"", value:0});
 
-  /*
+
   useEffect(() => {
-    setSelected(props.populateItem);
-  }, []);*/
+    let initVal = props.populateItem === undefined ? {name:"", value:0} :props.populateItem;
+    setSelected(initVal);
+  }, []);
 
   const toggleItem = (item) => {
-    setSelected(item.value);
+    setSelected(item);
     props.getData(item);
   };
 
@@ -30,7 +31,7 @@ const ComRange = (props) => {
                   <li
                     key={`${props.keyFix}-${i}`}
                     className={`${
-                      selected === item.value
+                      selected.value === item.value
                         ? props.itemClass + " selected"
                         : props.itemClass
                     }`}

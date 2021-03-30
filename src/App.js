@@ -59,10 +59,11 @@ class App extends Component {
       <Provider store={store}>
         <Container fluid >
           <EmptyCont height="100px" />
-          <OneWaySearchResult />
+          
           <Router>            
             <Route exact path="/" component={HomePage} />
             <Route exact path="/flights" component={FlightsPage} />
+            <Route exact path="/flights/search" component={AirSearchResult} />
             <Route exact path="/air/search" component={AirSearchForm} />
             <Route
               exact
@@ -70,7 +71,7 @@ class App extends Component {
               component={AirSearchResult}
             />
 
-            <Route exact path="/air/pricing" component={PricingDetailsPage} />
+            <Route exact path="/pricing" component={PricingDetailsPage} />
 
             <Route exact path="/air/rndTrippricing" component={RoundTripPricingCard} />
 

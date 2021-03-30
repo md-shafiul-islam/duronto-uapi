@@ -51,7 +51,7 @@ const SearchOption = (props) => {
             {selectedItem && (
               <React.Fragment>
                 <Col>
-                  <div>
+                  <div className="pdl-5">
                     <span className="seacrh-content">{selectedItem.name}</span>
                     <br />
                     <span className="seacrh-content-code">

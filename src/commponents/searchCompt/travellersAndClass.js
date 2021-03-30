@@ -27,9 +27,9 @@ const passChRang = [
 ];
 
 const passClassRange = [
-  { name: "Business", value: 0 },
-  { name: "Economy/Premium Economy", value: 1 },
-  { name: "Premium Economy", value: 2 },
+  { name: "Business", value: "Business" },
+  { name: "Economy", value: "Economy" },
+  { name: "Premium Economy", value: "PremiumEconomy" },
 ];
 
 const TravellersAndClass = (props) => {
@@ -161,7 +161,7 @@ const TravellersAndClass = (props) => {
                       <Col md={9}>
                         <ComRange
                           items={passRang}
-                          populateItem={0}
+                          populateItem={adults}
                           keyFix="adt"
                           ulClass="rang-list"
                           itemClass="item"
@@ -177,7 +177,7 @@ const TravellersAndClass = (props) => {
                       <Col md={6}>
                         <ComRange
                           items={passChRang}
-                          populateItem={0}
+                          populateItem={child}
                           keyFix="chi"
                           ulClass="rang-list"
                           itemClass="item"
@@ -188,7 +188,7 @@ const TravellersAndClass = (props) => {
                       <Col md={6}>
                         <ComRange
                           items={passChRang}
-                          populateItem={0}
+                          populateItem={infants}
                           keyFix="inf"
                           ulClass="rang-list"
                           itemClass="item"
@@ -202,8 +202,8 @@ const TravellersAndClass = (props) => {
                       <Col md={12}>
                         <ComRange
                           items={passClassRange}
-                          populateItem={0}
-                          keyFix="inf"
+                          populateItem={cabinClass}
+                          keyFix="cabin"
                           ulClass="rang-list"
                           itemClass="item"
                           headerText="CHOOSE TRAVEL CLASS"
