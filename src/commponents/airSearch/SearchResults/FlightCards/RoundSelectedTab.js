@@ -1,10 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { Tabs, Tab, Nav, Row, Col, Card } from "react-bootstrap";
 import { GET_MONTHS } from "../../../../actions/types";
+import { helperGetTotalFlyTimeReadable } from "../../../helper/helperAction";
+import RoundTripChargeDetailsCard from "../GenericCard/roundTripChargeDetailsCard";
+import ChargeCardDetails from "./ChargeCardDetails";
+import FareSummaryCard from "./FareSummaryCard";
 
 import RoundTripDetails from "./RoundTripDetails";
 
 const RoundSelectedTab = (params) => {
+
+  // console.log("RoundSelectedTab Params, ", params);
+  
   const [key, setKey] = useState("flightDetails");
 
   const selectedBookingOptionAction = (ids, item) => {
@@ -13,23 +20,21 @@ const RoundSelectedTab = (params) => {
 
   let prevArvTime = "";
 
-  let { departureOption, returnOption } = params.flyOption;
+  // let { departureOption, returnOption } = params&&params.flyOption;
 
   const getDayAndMonth = (dateTime) => {
-    if (dateTime === undefined) {
-      return "";
-    }
+
     let localDate = null;
     let month,
       dayOfMonth = 0;
 
-    if (dateTime === undefined) {
+    if (dateTime === undefined || dateTime === null) {
       localDate = new Date();
     } else {
       localDate = new Date(dateTime);
     }
 
-    month = GET_MONTHS[localDate.getMonth()].substring(0, 3);
+    month = GET_MONTHS[localDate.getMonth()]&&GET_MONTHS[localDate.getMonth()].substring(0, 3);
     dayOfMonth = localDate.getDate();
     return `${dayOfMonth} ${month}`;
   };
@@ -109,7 +114,7 @@ const RoundSelectedTab = (params) => {
 
     return timeFare;
   };
-
+    
   return (
     <React.Fragment>
       <Tab.Container id="menu-tabs" defaultActiveKey="flightDetails">
@@ -139,31 +144,33 @@ const RoundSelectedTab = (params) => {
                       <Row className="rnd-travel-locs">
                         <Col md={6} className="rnd-travel-title-inf">
                           {getTravelLocation(
-                            departureOption && departureOption.firstOrigin
+                            params.selectedAir && params.selectedAir.dep&&
+                            params.selectedAir.dep.origin
                           )}{" "}
                           To{" "}
                           {getTravelLocation(
-                            departureOption && departureOption.lastDestination
+                            params.selectedAir && params.selectedAir.dep&&
+                            params.selectedAir.dep.destination
                           )}
                           ,{" "}
                           {getDayAndMonth(
-                            departureOption && departureOption.flyDepartureTime
+                            params.selectedAir && params.selectedAir.dep&&
+                            params.selectedAir.dep.option.departureDateTime
                           )}
                         </Col>
                         <Col md={6} className="rnd-travel-title-time">
-                          {departureOption !== null
-                            ? getTotalFlyTime(
-                                departureOption.flyDepartureTime,
-                                departureOption.flyArrivalTime
-                              )
+                          {params.selectedAir !== null
+                            ? helperGetTotalFlyTimeReadable(params.selectedAir && params.selectedAir.dep&&
+                            params.selectedAir.dep.option&&params.selectedAir.dep.option.travelTime)
                             : ""}
                         </Col>
                       </Row>
 
-                      {departureOption &&
-                        departureOption.bookInfos &&
-                        departureOption.bookInfos.map((book, ibx) => {
-                          let { fareInfos, segment } = book;
+                      {params.selectedAir && params.selectedAir.dep&&
+                            params.selectedAir.dep.option&&params.selectedAir.dep.option.bookingInfos&&
+                            params.selectedAir.dep.option.bookingInfos.map((book, ibx) => {
+                          {/* console.log("RST book, ", book); */}
+                          let { bookingCode, bookingCount, cabinClass, fareInf, segment } = book;
                           let timeDeff = "";
                           let { origin } = segment;
                           if (prevArvTime !== undefined) {
@@ -177,7 +184,7 @@ const RoundSelectedTab = (params) => {
                           prevArvTime = segment && segment.arrivalTime;
 
                           return (
-                            <React.Fragment>
+                            <React.Fragment key={`slp-${ibx}`}>
                               {ibx > 0 ? (
                                 <Row className="rnd-layover">
                                   <Col md={12} className="rnd-layover-position">
@@ -194,7 +201,11 @@ const RoundSelectedTab = (params) => {
                                 ""
                               )}
 
-                              <RoundTripDetails bookInf={book} />
+                              <RoundTripDetails 
+                                // bookInf={book} 
+                                fareinfo={fareInf}
+                                segment={segment}
+                              />
                             </React.Fragment>
                           );
                         })}
@@ -205,31 +216,33 @@ const RoundSelectedTab = (params) => {
                       <Row className="rnd-travel-locs">
                         <Col md={6} className="rnd-travel-title-inf">
                           {getTravelLocation(
-                            returnOption && returnOption.firstOrigin
+                            params.selectedAir && params.selectedAir.ret&&
+                            params.selectedAir.ret.origin
                           )}{" "}
                           To{" "}
                           {getTravelLocation(
-                            returnOption && returnOption.lastDestination
+                            params.selectedAir && params.selectedAir.ret&&
+                            params.selectedAir.ret.destination
                           )}
                           ,{" "}
                           {getDayAndMonth(
-                            returnOption && returnOption.flyDepartureTime
+                            params.selectedAir && params.selectedAir.ret&&
+                            params.selectedAir.ret.option&&params.selectedAir.ret.option.departureDateTime
                           )}
                         </Col>
                         <Col md={6} className="rnd-travel-title-time">
-                          {returnOption !== null
-                            ? getTotalFlyTime(
-                                returnOption.flyDepartureTime,
-                                returnOption.flyArrivalTime
-                              )
+                          {params.selectedAir !== null && params.selectedAir !== undefined
+                            ? helperGetTotalFlyTimeReadable(params.selectedAir && params.selectedAir.ret&&
+                            params.selectedAir.ret.option&&params.selectedAir.ret.option.travelTime)
                             : ""}
                         </Col>
                       </Row>
 
-                      {returnOption &&
-                        returnOption.bookInfos &&
-                        returnOption.bookInfos.map((book, ibx) => {
-                          let { fareInfos, segment } = book;
+                      {params.selectedAir && params.selectedAir.ret&&
+                            params.selectedAir.ret.option&&params.selectedAir.ret.option.bookingInfos&&
+                            params.selectedAir.ret.option.bookingInfos.map((book, ibx) => {
+                              let { bookingCode, bookingCount, cabinClass, fareInf, segment } = book;
+                          
                           let timeDeff = "";
                           let { origin } = segment;
                           if (prevArvTime !== undefined) {
@@ -243,7 +256,7 @@ const RoundSelectedTab = (params) => {
                           prevArvTime = segment && segment.arrivalTime;
 
                           return (
-                            <React.Fragment>
+                            <React.Fragment key={`flo-${ibx}`}>
                               {ibx > 0 ? (
                                 <Row className="rnd-layover">
                                   <Col md={12} className="rnd-layover-position">
@@ -260,7 +273,11 @@ const RoundSelectedTab = (params) => {
                                 ""
                               )}
 
-                              <RoundTripDetails bookInf={book} />
+                              <RoundTripDetails 
+                                // bookInf={book} 
+                                fareinfo = {fareInf}
+                                segment = {segment}
+                              />
                             </React.Fragment>
                           );
                         })}
@@ -270,14 +287,32 @@ const RoundSelectedTab = (params) => {
               </Tab.Pane>
 
               <Tab.Pane eventKey="fareSummary">
-                {/*<FareSummaryCard fareSummary={params.fareSummary} />*/}
+                <FareSummaryCard fareSummary={params.fareSummary} currencyType={params.currencyType} />
               </Tab.Pane>
 
               <Tab.Pane eventKey="cancellation">
-                {/*<ChargeCardDetails data={params.cancel} />*/}
+                <Row className="charge-details-container">
+                  <Col md={12}>
+                    <RoundTripChargeDetailsCard 
+                      departurePenalties={params.selectedAir&&params.selectedAir.dep&&params.selectedAir.dep.cancelPenalties} 
+                      returnPenalties={params.selectedAir&&params.selectedAir.ret&&params.selectedAir.ret.cancelPenalties} 
+                      depCarrier={params.selectedAir&&params.selectedAir.dep&&params.selectedAir.dep.platingCarrier}
+                      retCarrier={params.selectedAir&&params.selectedAir.ret&&params.selectedAir.ret.platingCarrier}
+                      depTitle={`${params.selectedAir&&params.selectedAir.dep&&params.selectedAir.dep.origin}-${params.selectedAir&&params.selectedAir.dep&&params.selectedAir.dep.destination}`}
+                      retTitle={`${params.selectedAir&&params.selectedAir.ret&&params.selectedAir.ret.origin}-${params.selectedAir&&params.selectedAir.ret&&params.selectedAir.ret.destination}`}
+                    />
+                  </Col>
+                </Row>                
               </Tab.Pane>
               <Tab.Pane eventKey="dateChange">
-                {/*<ChargeCardDetails data={params.cancel} />*/}
+                <RoundTripChargeDetailsCard 
+                  departurePenalties={params.selectedAir&&params.selectedAir.dep&&params.selectedAir.dep.changePenalties} 
+                  returnPenalties={params.selectedAir&&params.selectedAir.ret&&params.selectedAir.ret.changePenalties} 
+                  depCarrier={params.selectedAir&&params.selectedAir.dep&&params.selectedAir.dep.platingCarrier}
+                  retCarrier={params.selectedAir&&params.selectedAir.ret&&params.selectedAir.ret.platingCarrier}
+                  depTitle={`${params.selectedAir&&params.selectedAir.dep&&params.selectedAir.dep.origin}-${params.selectedAir&&params.selectedAir.dep&&params.selectedAir.dep.destination}`}
+                  retTitle={`${params.selectedAir&&params.selectedAir.ret&&params.selectedAir.ret.origin}-${params.selectedAir&&params.selectedAir.ret&&params.selectedAir.ret.destination}`}
+                />
               </Tab.Pane>
             </Tab.Content>
           </Col>

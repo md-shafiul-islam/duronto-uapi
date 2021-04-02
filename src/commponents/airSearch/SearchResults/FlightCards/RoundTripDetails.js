@@ -3,7 +3,19 @@ import { Col, Row } from "react-bootstrap";
 import { GET_DAYES, GET_MONTHS } from "../../../../actions/types";
 
 const RoundTripDetails = (params) => {
-  console.log("Round Trip Details: Params ", params);
+  // console.log("Round Trip Details: Params ", params);
+
+  const getBaggage = (mxWeight)=>{
+
+    if(mxWeight !== undefined && mxWeight !== null){
+
+      if(mxWeight.value !== null && mxWeight.value !== undefined){
+        return `${mxWeight.value} ${mxWeight.unit}`;
+      }
+    }
+    return " Not Available ";
+  }
+
   const getTimeFormatHr = (timeValue) => {
     if (timeValue != undefined) {
       if (timeValue === null) {
@@ -27,8 +39,8 @@ const RoundTripDetails = (params) => {
     return "00";
   };
 
-  let { fareInfos, segment } = params.bookInf;
-  let { baggageAllowance } = fareInfos;
+  let { fareinfo, segment } = params;
+  let { baggageAllowance } = fareinfo;
   let { maxWeight } = baggageAllowance;
 
   const getTimeFormatMin = (timeValue) => {
@@ -127,7 +139,7 @@ const RoundTripDetails = (params) => {
         <Col md={12}>
           <div className="rnd-icon"></div>
           <div className="rnd-air-name">
-            <span>Go Air</span> <span>G8 117 | 32A</span>
+            <span>{segment&&segment.carrier}</span> <span>{`${segment&&segment.carrier}-${segment&&segment.flightNumber}`}</span>
           </div>
         </Col>
       </Row>
@@ -169,9 +181,7 @@ const RoundTripDetails = (params) => {
         </Col>
         <Col md={6}>Total:</Col>
         <Col md={6}>
-          {maxWeight === undefined
-            ? " Not Available "
-            : `${maxWeight.value} ${maxWeight.unit}`}
+          { getBaggage(maxWeight)}
         </Col>
       </Row>
     </React.Fragment>

@@ -13,7 +13,7 @@ import Axios from "axios";
 
 export const getAirSearchRequest = (requestData) => async (dispatch) => {
   try {
-    let url = `${EXT_BASE_URL}/api/catalogofferings`;
+    let url = `${EXT_BASE_URL}/flights`;
 
     const res = await Axios.post(url, requestData, { headers: REQUEST_HEADER });
 

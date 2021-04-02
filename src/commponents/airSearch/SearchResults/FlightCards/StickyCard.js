@@ -1,12 +1,60 @@
 import Axios from "axios";
 import React, { useState } from "react";
 import { Button, Card, Col, Row } from "react-bootstrap";
+import { shallowEqual, useSelector } from "react-redux";
 import { helperGetPriceReqQuery } from "../../../../actions/helperAction";
 import { EXT_PRICE_URL, REQUEST_HEADER } from "../../../../actions/types";
+import { helperGetAmount, helperIsEmpty } from "../../../helper/helperAction";
 import RoundTripPriceOptionModal from "../../../Modals/roundTripPriceOptionModal";
 import RoundSelectedTab from "./RoundSelectedTab";
 
 const StickyCard = (params) => {
+
+  const slectedAir = useSelector(state => state.airPrice.selectedRoundTripAir, shallowEqual);
+
+  // console.log("Redux slectedAir, ", slectedAir);
+  let fareSummary = {totalPrice:0, basePrice:0, taxes:0};
+
+  if(slectedAir  !== null && slectedAir !== undefined){
+    let {dep, ret} = slectedAir;
+
+    let dBPrice = 0,
+       dTPrice = 0, 
+       dTax = 0, 
+       rBPrice = 0, 
+       rTPrice = 0, 
+       rTax = 0;
+
+    if(dep !== undefined && dep){
+      if(dep.eachPrices !== undefined && dep.eachPrices !== null){
+        dBPrice = helperGetAmount(dep.eachPrices.eachEqBasePrice);
+        dTPrice = helperGetAmount(dep.eachPrices.eachTotalPrice);
+        dTax = helperGetAmount(dep.eachPrices.eachTotalTax);
+      }
+    }
+
+    if(ret !== undefined && ret !== null){
+      if(ret.eachPrices !== undefined && ret.eachPrices !== null){
+        rTPrice = helperGetAmount(ret.eachPrices.eachTotalPrice);
+        rBPrice = helperGetAmount(ret.eachPrices.eachEqBasePrice);
+        rTax = helperGetAmount(ret.eachPrices.eachTotalTax);
+      }
+    }
+    
+    let totalTax, totalPrice, totalBasePrice = 0;
+    
+    totalBasePrice = (dBPrice + rBPrice);
+    totalPrice = ( dTPrice + rTPrice);
+    totalTax = (dTax + rTax);
+
+    fareSummary.taxes = totalTax;
+    fareSummary.totalPrice = totalPrice;
+    fareSummary.basePrice = totalBasePrice;
+  }
+  
+  // console.log("Fare Summary: ", fareSummary);
+  // console.log("Redux slectedAir, ", slectedAir);
+
   const [displayDetails, setDisplayDetails] = useState(false);
   const [stickyPrice, setStickyPrice] =  useState({depResp:null, retResp:null});
 
@@ -45,7 +93,7 @@ const StickyCard = (params) => {
                   console.log("Axios Error: ", err);
                 });
 
-              console.log("Air Price After Request Query: resReturn", resReturn);
+              // console.log("Air Price After Request Query: resReturn", resReturn);
 
             }
 
@@ -66,14 +114,14 @@ const StickyCard = (params) => {
                 .catch((err) => {
                   console.log("Axios Error: ", err);
                 });
-                console.log("Air Price After Request Query: resDepReturn ", resDepReturn);
+                // console.log("Air Price After Request Query: resDepReturn ", resDepReturn);
               
             }
 
             if(resReturn !== null && resDepReturn !== null){
               
-              console.log("Air Price Request Query: resReturn", resReturn);
-              console.log("Air Price Request Query: resDepReturn", resDepReturn);
+              // console.log("Air Price Request Query: resReturn", resReturn);
+              // console.log("Air Price Request Query: resDepReturn", resDepReturn);
 
               setStickyPrice({depResp:resDepReturn, retResp:resReturn})
 
@@ -193,6 +241,8 @@ const StickyCard = (params) => {
     );
   };
 
+  
+
   return (
     <div className="item-sticky">
       <Row className="sticky-part">
@@ -200,12 +250,11 @@ const StickyCard = (params) => {
           <Row className="mp-0">
             <Col md={6} className="sl-item">
               <p className="fly-inf">
-                Departure | Air India |{" "}
-                {params.flyOption &&
-                  params.flyOption.departureOption &&
-                  params.flyOption.departureOption.flightNumbers.map(
+                Departure | {slectedAir&&slectedAir.dep&&slectedAir.dep.platingCarrier} |{" "}
+                {slectedAir&&slectedAir.dep&&slectedAir.dep.option 
+                  &&slectedAir.dep.option.flightNums.map(
                     (flNo, idx) => {
-                      return <span>{idx > 0 ? `, ${flNo}` : flNo}</span>;
+                      return <span key={`nm-${idx}`}>{idx > 0 ? `, ${flNo}` : flNo}</span>;
                     }
                   )}
               </p>
@@ -214,51 +263,46 @@ const StickyCard = (params) => {
                 <Col md={5} className="rnd-time">
                   <span>
                     {getTimeFormatHr(
-                      params.flyOption &&
-                        params.flyOption.departureOption &&
-                        params.flyOption.departureOption.flyDepartureTime
+                      slectedAir&&slectedAir.dep&&slectedAir.dep.option &&
+                      slectedAir.dep.option.departureDateTime
                     )}
                     :
                     {getTimeFormatMin(
-                      params.flyOption &&
-                        params.flyOption.departureOption &&
-                        params.flyOption.departureOption.flyDepartureTime
+                      slectedAir&&slectedAir.dep&&slectedAir.dep.option &&
+                      slectedAir.dep.option.departureDateTime
                     )}{" "}
                   </span>
                   <span>
-                    <i class="fas fa-arrow-right fa-sm"></i>{" "}
+                    <i className="fas fa-arrow-right fa-sm"></i>{" "}
                   </span>
                   <span>
                     {getTimeFormatHr(
-                      params.flyOption &&
-                        params.flyOption.departureOption &&
-                        params.flyOption.departureOption.flyArrivalTime
+                      slectedAir&&slectedAir.dep&&slectedAir.dep.option &&
+                      slectedAir.dep.option.arrivalDateTime
                     )}
                     :
                     {getTimeFormatMin(
-                      params.flyOption &&
-                        params.flyOption.departureOption &&
-                        params.flyOption.departureOption.flyArrivalTime
+                      slectedAir&&slectedAir.dep&&slectedAir.dep.option &&
+                      slectedAir.dep.option.arrivalDateTime
                     )}
                   </span>
                 </Col>
                 <Col md={5} className="price">
                   {getPrice(
-                    params.flyOption &&
-                      params.flyOption.departureOption &&
-                      params.flyOption.departureOption.totalPrice
+                    slectedAir&&slectedAir.dep&&
+                      slectedAir.dep.eachPrices&&
+                      slectedAir.dep.eachPrices.eachTotalPrice
                   )}
                 </Col>
               </Row>
             </Col>
             <Col md={6} className="sl-item">
               <p className="fly-inf">
-                Return | Air India |{" "}
-                {params.flyOption &&
-                  params.flyOption.returnOption &&
-                  params.flyOption.returnOption.flightNumbers.map(
+                Return | {slectedAir&&slectedAir.ret&&slectedAir.ret.platingCarrier} |{" "}
+                {slectedAir&&slectedAir.ret&&slectedAir.ret.option 
+                  &&slectedAir.ret.option.flightNums.map(
                     (rflNo, ridx) => {
-                      return <span>{ridx > 0 ? `, ${rflNo}` : rflNo}</span>;
+                      return <span key={`fl-${ridx}`}>{ridx > 0 ? `, ${rflNo}` : rflNo}</span>;
                     }
                   )}
               </p>
@@ -267,39 +311,34 @@ const StickyCard = (params) => {
                 <Col md={5} className="rnd-time">
                   <span>
                     {getTimeFormatHr(
-                      params.flyOption &&
-                        params.flyOption.returnOption &&
-                        params.flyOption.returnOption.flyDepartureTime
+                      slectedAir&&slectedAir.ret&&slectedAir.ret.option &&
+                      slectedAir.ret.option.departureDateTime
                     )}
                     :
                     {getTimeFormatMin(
-                      params.flyOption &&
-                        params.flyOption.returnOption &&
-                        params.flyOption.returnOption.flyDepartureTime
+                      slectedAir&&slectedAir.ret&&slectedAir.ret.option &&
+                      slectedAir.ret.option.departureDateTime
                     )}{" "}
                   </span>
                   <span>
-                    <i class="fas fa-arrow-right fa-sm"></i>{" "}
+                    <i className="fas fa-arrow-right fa-sm"></i>{" "}
                   </span>
                   <span>
                     {getTimeFormatHr(
-                      params.flyOption &&
-                        params.flyOption.returnOption &&
-                        params.flyOption.returnOption.flyArrivalTime
+                      slectedAir&&slectedAir.ret&&slectedAir.ret.option &&
+                      slectedAir.ret.option.arrivalDateTime
                     )}
                     :
                     {getTimeFormatMin(
-                      params.flyOption &&
-                        params.flyOption.returnOption &&
-                        params.flyOption.returnOption.flyArrivalTime
+                      slectedAir&&slectedAir.ret&&slectedAir.ret.option &&
+                      slectedAir.ret.option.arrivalDateTime
                     )}
                   </span>
                 </Col>
                 <Col md={5} className="price">
                   {getPrice(
-                    params.flyOption &&
-                      params.flyOption.returnOption &&
-                      params.flyOption.returnOption.totalPrice
+                    slectedAir&&slectedAir.ret&& slectedAir.ret.eachPrices&&
+                      slectedAir.ret.eachPrices.eachTotalPrice
                   )}
                 </Col>
               </Row>
@@ -311,12 +350,11 @@ const StickyCard = (params) => {
             <Col md={6}>
               <div className="total-amount">
                 {getTotalAirPrice(
-                  params.flyOption &&
-                    params.flyOption.returnOption &&
-                    params.flyOption.returnOption.totalPrice,
-                  params.flyOption &&
-                    params.flyOption.departureOption &&
-                    params.flyOption.departureOption.totalPrice
+                  slectedAir&&slectedAir.dep&&
+                      slectedAir.dep.eachPrices&&
+                      slectedAir.dep.eachPrices.eachTotalPrice,
+                      slectedAir&&slectedAir.ret&& slectedAir.ret.eachPrices&&
+                      slectedAir.ret.eachPrices.eachTotalPrice
                 )}
               </div>
             </Col>
@@ -338,7 +376,7 @@ const StickyCard = (params) => {
               }}
             >
               <i
-                class="fas fa-angle-up"
+                className="fas fa-angle-up"
                 style={{
                   transform: `${displayDetails ? "rotateZ(-180deg)" : ""}`,
                   cursor: "pointer",
@@ -355,7 +393,12 @@ const StickyCard = (params) => {
         }`}
       >
         <Col md={12}>
-          <RoundSelectedTab flyOption={params.flyOption} />
+          <RoundSelectedTab 
+            // flyOption={params.flyOption} 
+            selectedAir={slectedAir}
+            fareSummary={fareSummary}
+            currencyType={params.currencyType}
+          />
         </Col>
       </Row>
       <RoundTripPriceOptionModal display={displayModal} modalAction={(displayStatus)=>{

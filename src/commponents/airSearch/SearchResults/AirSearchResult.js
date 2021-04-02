@@ -7,11 +7,12 @@ import { getSearchResult } from "../../../actions/airSearchAction";
 import FlyOptionRoundTrip from "./FlightCards/FlyOptionRoundTrip";
 import MultiCityOptionsCards from "./FlightCards/MultiCityOptionsCards";
 import OneWaySearchResult from "../oneWaySearch/oneWaySearchResult";
+import RoundTripFlightResult from "./GenericCard/roundTripFlightResult";
 
 class AirSearchResult extends Component {
   state = {
     searchQuery: {},
-    searchType: 0,
+    searchType: 2,
     pStatus: true,
     bookingOption: [{}],
     selectedRndFly: {
@@ -29,49 +30,20 @@ class AirSearchResult extends Component {
     flightDetailsLists: [],
     brands: [],
     routes: [],
-    multyCityOption:{},
-    oneWayOption:{},
-    roundTripOption:{},
-
-    pricing: {
-      OfferQueryBuildFromProducts: {
-        BuildFromProductsRequest: {
-          "@type": "BuildFromProductsRequestAir",
-          PassengerCriteria: [{ value: "ADT", number: 1 }],
-          ProductCriteriaAir: [
-            {
-              "@type": "ProductCriteriaAir",
-              SpecificFlightCriteria: [
-                {
-                  "@type": "SpecificFlightCriteria",
-                  carrier: "F9",
-                  flightNumber: "403",
-                  departureDate: "2018-09-22",
-                  departureTime: "10:22:00.000-06:00",
-                  arrivalDate: "2018-09-22",
-                  arrivalTime: "11:57:00.000-07:00",
-                  from: "DEN",
-                  to: "LAX",
-                  cabin: "Economy",
-                  classOfService: "G",
-                  segmentSequence: "0",
-                },
-              ],
-            },
-          ],
-        },
-      },
-    },
+    multyCityOption: {},
+    oneWayOption: {},
+    roundTripOption: {},
   };
 
   UNSAFE_componentWillReceiveProps = (nextProps) => {
+    if (
+      nextProps.airSearchResponse.airSearchResponse !== undefined &&
+      nextProps.searchQuery.sQuery.searchQuery !== undefined
+    ) {
+      let { status } = nextProps.airSearchResponse.airSearchResponse;
 
-    
-    if (nextProps.airSearchResponse.airSearchResponse !== undefined && nextProps.searchQuery.sQuery.searchQuery !== undefined) {
-      let{status} = nextProps.airSearchResponse.airSearchResponse;
-    
-      if(status){
-        console.log("If Status: ", nextProps)
+      if (status) {
+        console.log("If Status: ", nextProps);
         this.setState({
           response: nextProps.airSearchResponse.airSearchResponse.response,
           searchType: nextProps.searchQuery.sQuery.type,
@@ -82,7 +54,6 @@ class AirSearchResult extends Component {
           this.initPreSelectItem();
         }
       }
-      
     }
   };
 
@@ -93,9 +64,16 @@ class AirSearchResult extends Component {
   }
 
   initPreSelectItem = () => {
+
+    if (this.state.responseData === undefined) {
+
+      return;
+    }
+    
     if (this.state.responseData.response === undefined) {
       return;
     }
+    
 
     let {
       availableAirOptions,
@@ -220,8 +198,9 @@ class AirSearchResult extends Component {
   };
 
   render() {
-    let { searchType, response} = this.state;    
+    let { searchType, response } = this.state;
     console.log("searchType, ", searchType);
+    
     return (
       <React.Fragment>
         <Row>
@@ -233,13 +212,14 @@ class AirSearchResult extends Component {
         <Row>
           <Col md={3}></Col>
           <Col md={9}>
-            {searchType === 1 ? <OneWaySearchResult result={response} /> : ''}
+            {searchType === 1 ? <OneWaySearchResult result={response} /> : ""}
           </Col>
         </Row>
 
         <Row>
           <Col md={3}></Col>
           <Col md={9}>
+            {searchType === 2 ? <RoundTripFlightResult  /> : ""}
             {/* searchType === 2
               ? availableAirOptions && (
                   <React.Fragment>

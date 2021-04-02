@@ -1364,6 +1364,7 @@ body {
 .round-trip-title .check-box {
   width: 25px;
   float: left;
+  cursor: pointer;
 }
 
 .round-trip-title .rnd-air-inf {
@@ -2152,5 +2153,20 @@ body {
   z-index: 0;
   height: 300px;
   box-shadow: 0 0 1px rgb(0 0 0 / 13%), 0 1px 3px rgb(0 0 0 / 20%);
+}
+
+.curreny-code{
+  font-size: .75em;
+  font-weight: bold;
+}
+
+.charge-details-container{
+  height: 300px;
+  overflow-y: auto;
+}
+
+.rndt-charge-card {
+  margin: 0px !important; 
+  padding: 0px;
 }
   

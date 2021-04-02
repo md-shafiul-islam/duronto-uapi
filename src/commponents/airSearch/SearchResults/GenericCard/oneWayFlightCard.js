@@ -35,7 +35,7 @@ import SelectedTab from "../SelectedTab";
  * @returns {One Way Search Result Card}
  */
 const OneWayFlightCard = (params) => {
-  console.log("OneWayFlightCard ", params);
+  // console.log("OneWayFlightCard ", params);
 
   const searchQuery = useSelector(
     (state) => state.searchQuery.sQuery.searchQuery, shallowEqual
@@ -43,7 +43,7 @@ const OneWayFlightCard = (params) => {
 
   const dispatch = useDispatch();
 
-  console.log("Search Query: ", searchQuery);
+  // console.log("Search Query: ", searchQuery);
 
   const [priceDisplay, setPriceDisplay] = useState(false);
   const [display, setDisplay] = useState(false);
@@ -107,8 +107,8 @@ const OneWayFlightCard = (params) => {
                 carrs.push(sSeg.carrier);
               }
 
-              if (idx > 0 && params.option.bookingInfo.length > idx) {
-                stops.push(sSeg.destination);
+              if (idx > 0) {
+                stops.push(sSeg.origin);
               }
 
               segs.push(sSeg);
@@ -116,7 +116,7 @@ const OneWayFlightCard = (params) => {
           });
       }
 
-      console.log("Segments: Use", segs);
+      // console.log("Segments: Use", segs);
 
       setInitOpt({
         segments: segs,
@@ -130,7 +130,7 @@ const OneWayFlightCard = (params) => {
       });
     }
 
-    console.log("State stops: ", initOpt.stops);
+    // console.log("State stops: ", initOpt.stops);
   }, []);
 
   const getPriceDetails = () => {
@@ -161,7 +161,7 @@ const OneWayFlightCard = (params) => {
 
     url = `${url}/api/v_1_0/airPriceRequest`;
     priceQuery = JSON.stringify(priceQuery, null, 2);
-    console.log("Befor Send Price Request: ", priceQuery);
+    // console.log("Befor Send Price Request: ", priceQuery);
     if (!price.loadStatus) {
       Axios.post(url, priceQuery, { headers: REQUEST_HEADER })
         .then((res) => {

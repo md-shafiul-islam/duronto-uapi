@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Button, Card, Col, Row } from "react-bootstrap";
+import { helperGetTotalFlyTimeReadable } from "../../../helper/helperAction";
 
 const BookingCardRoundTripOptions = (params) => {
+  // console.log("BookingCardRoundTripOptions params, ", params);
   const [display, setDisplay] = useState(false);
   const [totalTravelTime, setTotalTravelTime] = useState("");
   const [selectedItem, setSelectedItem] = useState(false);
@@ -12,6 +14,9 @@ const BookingCardRoundTripOptions = (params) => {
         params.flyItem.flyDepartureTime,
         params.flyItem.flyArrivalTime
       )*/
+      if(params.elmKey === params.preSetItem){
+        params.getSelectedItem({ elmKey:params.elmKey, flight:params.flight});
+      }
   }, []);
   const toggleDisplay = () => {
     setDisplay(!display);
@@ -95,62 +100,70 @@ const BookingCardRoundTripOptions = (params) => {
   };
 
   const getPrice = (amount) => {
-    let price = "";
 
     if (amount === undefined) {
       return "";
-    } else {
-      price = `${amount.substring(0, 3)}: ${amount.substring(3)}`;
     }
-
-    return price;
-  };
-
-  const getFlyOptionAndTime = (flyOption) => {
-    let airStop = "";
-
-    airStop = flyOption.airStops.length;
 
     return (
       <React.Fragment>
-        <div>
-          <span>
-            {getTotalFlyTime(
-              flyOption.flyDepartureTime,
-              flyOption.flyArrivalTime
-            )}
-          </span>
-        </div>
-        <div className="line-area">
-          <ul className="route-air-line">
-            {flyOption &&
-              flyOption.airStops.map((item, i) => {
-                return <li className="air-point">&nbsp;</li>;
-              })}
-          </ul>
-        </div>
-        <div className="line-airport-round">
-          {airStop > 0 ? airStop : "Non"} stop {airStop > 0 ? " via" : ""}{" "}
-          {flyOption.airStops &&
-            flyOption.airStops.map((stop, i) => {
-              return <span>{stop}</span>;
-            })}
-        </div>
+        <span className="curreny-code">{`${amount.substring(0, 3)}: `}</span>
+        <span>{amount.substring(3)}</span>
       </React.Fragment>
     );
   };
 
+  const getFlyOptionAndTime = (option) => {
+
+    if (option !== undefined && option !== null) {
+      
+      return (
+        <React.Fragment key={params.elmKey}>
+          <div>
+            <span>
+              {helperGetTotalFlyTimeReadable(option.travelTime)}
+            </span>
+          </div>
+          <div className="line-area">
+            <ul className="route-air-line">
+              {option &&
+                option.stops.map((item, i) => {
+                  return <li key={`stp-${i}`} className="air-point">&nbsp;</li>;
+                })}
+            </ul>
+          </div>
+          <div className="line-airport-round">
+            {option.stops.length > 0 ? option.stops.length : "Non"} stop {option.stops.length > 0 ? " via" : ""}{" "}
+            {option.stops &&
+              option.stops.map((stop, i) => {
+                return <span key={`si-${i}`}>{stop}</span>;
+              })}
+          </div>
+        </React.Fragment>
+      );
+    }
+    return "";
+  };
+
   const getCarirers = (carriers, flightNumbers) => {
+    // console.log(
+    //   "Aire BCRTO,  carriers, flightNumbers, ",
+    //   carriers,
+    //   flightNumbers
+    // );
+
     let flightItem = "";
     let carrierItem = "";
 
-    carriers.map((carrier, idx) => {
-      carrierItem += idx > 0 ? ` | ${carrier}` : `${carrier}`;
-    });
+    carriers &&
+      carriers.map((carrier, idx) => {
+        carrierItem += idx > 0 ? ` | ${carrier}` : `${carrier}`;
+      });
 
-    flightNumbers.map((flightNumbers, fIdx) => {
-      flightItem += fIdx > 0 ? ` | ${flightNumbers}` : `${flightNumbers}`;
-    });
+    flightNumbers &&
+      flightNumbers.map((flightNumbers, fIdx) => {
+        flightItem += fIdx > 0 ? ` | ${flightNumbers}` : `${flightNumbers}`;
+      });
 
     return `${carrierItem}, ${flightItem}`;
   };
@@ -161,103 +174,101 @@ const BookingCardRoundTripOptions = (params) => {
   };
 
   useEffect(() => {}, []);
+
   return (
-    <React.Fragment>
+    <React.Fragment key={params.elmKey}>
       <Card className="booking-card">
-        {params.flyItem &&
-          params.flyItem.flyOptions &&
-          params.flyItem.flyOptions.map((flyOption, idx) => {
-            return (
-              <Card.Body
-                className={`${
-                  params.preSelecteItem.opId === idx &&
-                  params.preSelecteItem.elmId === params.elmId
-                    ? " op-active "
-                    : ""
-                }`}
+        <Card.Body className={params.elmKey === params.preSetItem ? "op-active" : ""}>
+          <Row className={`round-trip-title`}>
+            <Col md={12}>
+              <div
+                className="check-box"
+                onClick={() => {
+                  toggleSelectedIte(selectedItem);
+                  params.getSelectedItem({ elmKey:params.elmKey, flight:params.flight});
+                }}
               >
-                <React.Fragment>
-                  <Row className={`round-trip-title`}>
-                    <Col md={12}>
-                      <div
-                        className="check-box"
-                        onClick={() => {
-                          toggleSelectedIte(selectedItem);
-                          params.getSelectedItem(flyOption, idx, params.elmId);
-                        }}
-                      >
-                        {params.preSelecteItem.opId === idx &&
-                        params.preSelecteItem.elmId === params.elmId ? (
-                          <i class="far fa-dot-circle"></i>
-                        ) : (
-                          <i class="far fa-circle"></i>
-                        )}
-                      </div>
-                      <div className="rnd-air-inf">
-                        {getCarirers(
-                          flyOption.carriers,
-                          flyOption.flightNumbers
-                        )}
-                      </div>
-                    </Col>
-                  </Row>
+                {params.elmKey === params.preSetItem ? <i className="far fa-dot-circle"></i> : <i className="far fa-circle"></i>}
+                
+              </div>
+              <div className="rnd-air-inf">
+                {getCarirers(
+                  params.flight.option && params.flight.option.carriers,
+                  params.flight.option && params.flight.option.flightNums
+                )}
+              </div>
+            </Col>
+          </Row>
 
-                  <Row className="round-trip-content">
-                    <Col md={2} className="rt-icon">
-                      Icon
-                    </Col>
-                    <Col md={7} className="mp-0">
-                      <Row className="rnd-trevel-inf">
-                        <Col md={4}>
-                          <div className="fly-time-inf">
-                            <span className="fly-hour">
-                              {getTimeFormatHr(flyOption.flyDepartureTime)}
-                              {":"}
-                            </span>
-                            <span className="fly-min">
-                              {getTimeFormatMin(flyOption.flyDepartureTime)}
-                            </span>
-                          </div>
-                          <div className="fly-loc-inf">
-                            <span>{flyOption.firstOrigin}</span>
-                          </div>
-                        </Col>
+          <Row className="round-trip-content">
+            <Col md={2} className="rt-icon">
+              Icon
+            </Col>
+            <Col md={7} className="mp-0">
+              <Row className="rnd-trevel-inf">
+                <Col md={4}>
+                  <div className="fly-time-inf">
+                    <span className="fly-hour">
+                      {getTimeFormatHr(
+                        params.flight.option &&
+                          params.flight.option.departureDateTime
+                      )}
+                      {":"}
+                    </span>
+                    <span className="fly-min">
+                      {getTimeFormatMin(
+                        params.flight.option &&
+                          params.flight.option.departureDateTime
+                      )}
+                    </span>
+                  </div>
+                  <div className="fly-loc-inf">
+                    <span>{params.flight.origin}</span>
+                  </div>
+                </Col>
 
-                        <Col md={4}>
-                          <span className="travel-time">
-                            {getFlyOptionAndTime(flyOption)}
-                          </span>
-                        </Col>
+                <Col md={4}>
+                  <span className="travel-time">
+                    {getFlyOptionAndTime(params.flight && params.flight.option)}
+                  </span>
+                </Col>
 
-                        <Col md={4}>
-                          <div className="fly-time-inf">
-                            <span className="fly-hour">
-                              {getTimeFormatHr(flyOption.flyArrivalTime)}
-                              {":"}
-                            </span>
-                            <span className="fly-min">
-                              {getTimeFormatMin(flyOption.flyArrivalTime)}
-                            </span>
-                          </div>
-                          <span className="fly-loc-inf">
-                            {flyOption.lastDestination}
-                          </span>
-                        </Col>
-                      </Row>
-                    </Col>
-                    <Col md={3}>
-                      <span className="price">
-                        {getPrice(flyOption.totalPrice)}
-                      </span>
-                    </Col>
-                  </Row>
-                </React.Fragment>
-              </Card.Body>
-            );
-          })}
+                <Col md={4}>
+                  <div className="fly-time-inf">
+                    <span className="fly-hour">
+                      {getTimeFormatHr(
+                        params.flight.option &&
+                          params.flight.option.arrivalDateTime
+                      )}
+                      {":"}
+                    </span>
+                    <span className="fly-min">
+                      {getTimeFormatMin(
+                        params.flight.option &&
+                          params.flight.option.arrivalDateTime
+                      )}
+                    </span>
+                  </div>
+                  <span className="fly-loc-inf">
+                    {params.flight.destination}
+                  </span>
+                </Col>
+              </Row>
+            </Col>
+            <Col md={3}>
+              <span className="price">
+                {getPrice(
+                  params.flight.eachPrices &&
+                    params.flight.eachPrices.eachTotalPrice
+                )}
+              </span>
+            </Col>
+          </Row>
+        </Card.Body>
       </Card>
     </React.Fragment>
   );
+
 };
 
 export default BookingCardRoundTripOptions;

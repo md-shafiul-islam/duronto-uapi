@@ -2,19 +2,7 @@ import React from "react";
 import { Col, Row } from "react-bootstrap";
 
 const FareSummaryCard = (props) => {
-  const getPriceFormat = (price) => {
-    if (price === undefined || price === null) {
-      return "Availabe Price Details After Price request";
-    } else {
-      let cType,
-        amount = "";
-
-      cType = price.substring(0, 3);
-      amount = price.substring(3);
-
-      return `${cType}: ${amount}`;
-    }
-  };
+  
   return (
     <React.Fragment>
       <Row>
@@ -25,21 +13,21 @@ const FareSummaryCard = (props) => {
           <Row className="air-total-price">
             <Col md={6}>Total</Col>
             <Col md={6} className="fare-amount">
-              {getPriceFormat(props.fareSummary&&props.fareSummary.totalPrice)}
+              {`${props.currencyType}. ${props.fareSummary&&props.fareSummary.totalPrice}`}
             </Col>
           </Row>
 
           <Row className="air-base-price">
             <Col md={6}>Base Fare</Col>
             <Col md={6} className="fare-amount">
-              {getPriceFormat(props.fareSummary&&props.fareSummary.basePrice)}
+              {`${props.currencyType}. ${props.fareSummary&&props.fareSummary.basePrice}`}
             </Col>
           </Row>
 
           <Row className="air-tax">
             <Col md={6}>Tax</Col>
             <Col md={6} className="fare-amount">
-              {getPriceFormat(props.fareSummary&&props.fareSummary.taxes)}
+              {`${props.currencyType}. ${props.fareSummary&&props.fareSummary.taxes}`}
             </Col>
           </Row>
         </Col>

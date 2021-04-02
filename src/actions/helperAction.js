@@ -94,7 +94,7 @@ export const helperGetTimeFormatMin = (timeValue) => {
 
 /**
  * 
- * @param {String} amount 
+ * @param {String} amount like BDT849814
  * @return Strring Like BDT: 849814
  */
 export const helperGetPrice = (amount) => {
