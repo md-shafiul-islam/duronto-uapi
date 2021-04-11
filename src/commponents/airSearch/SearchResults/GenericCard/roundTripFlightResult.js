@@ -3,9 +3,10 @@ import { Col, Row } from "react-bootstrap";
 import { PropTypes } from "prop-types";
 import { connect } from "react-redux";
 import HelperLoader from "../../../helper/helperLoader";
-import { setSelectedPrcingDetailsRoundTrip, setPriceRoundTrip} from "../../../../actions/priceAction";
+import { setSelectedPrcingDetailsRoundTrip, setPriceRoundTrip, getPriceSearchAction} from "../../../../actions/priceAction";
 import BookingCardRoundTripOptions from "../FlightCards/BookingCardRoundTripOptions";
 import StickyCard from "../FlightCards/StickyCard";
+import { helperGetPriceReqQuery } from "../../../../actions/helperAction";
 
 class RoundTripFlightResult extends Component {
 
@@ -11759,17 +11760,18 @@ class RoundTripFlightResult extends Component {
   setSelectedAir = (airOption)=>{
 
     let {selectedIdx, flight, key} = airOption;
-    
-    // console.log("Selected IDX, ", selectedIdx);
-    // console.log("Selected flight , ", flight);
-    // console.log("Selected key, ", key);
-
+    let depQuery = {}, retQuery = {};
     if(key === "dep"){
+      depQuery = helperGetPriceReqQuery(flight, this.props.searchQuery, this.state.response.traceId);
+      this.props.getPriceSearchAction(depQuery, 1);
       this.state.selectedFlights.set(key, flight);
       this.setState({preSelectIdx:{departureFlight:selectedIdx, retFlight: this.state.preSelectIdx.retFlight}});
     }
 
     if(key === "ret"){
+      retQuery = helperGetPriceReqQuery(flight, this.props.searchQuery, this.state.response.traceId);
+      this.props.getPriceSearchAction(retQuery, 0);
+
       this.state.selectedFlights.set(key, flight);
       this.setState({preSelectIdx:{departureFlight:this.state.preSelectIdx.departureFlight, retFlight: selectedIdx}});
     }
@@ -11838,12 +11840,12 @@ class RoundTripFlightResult extends Component {
           </Col>
           <Col md={12}>
             <StickyCard
-              selectedRoundAir={this.props.selectedRoundAir}
               // flyOption={this.props.selectedOption}
               // traveler={this.props.searchQuery.traveler}
               // getSelectedPricingOptions={(slcOptions) => {
               //   this.setSelectedAirPriceOptions(slcOptions);
               // }}
+              traceId={traceId}
               currencyType={currencyType}
             />
           </Col>
@@ -11869,4 +11871,4 @@ const mapStateToProps = (state) => ({
   selectedRoundAir:state.airPrice.selectedRoundTripAir
 });
 
-export default connect(mapStateToProps, {setSelectedPrcingDetailsRoundTrip, setPriceRoundTrip})(RoundTripFlightResult) ;
+export default connect(mapStateToProps, {setSelectedPrcingDetailsRoundTrip, setPriceRoundTrip, getPriceSearchAction})(RoundTripFlightResult) ;

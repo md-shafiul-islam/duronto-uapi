@@ -1,11 +1,11 @@
-import {Col, Button, Row } from "react-bootstrap";
+import {Col, Row } from "react-bootstrap";
 import React, { useEffect, useState } from "react";
 import PricingDetailsOptionCard from "./pricingDetailsOptionCard";
 
 
 const PricingFareDetailsInfoCard = (params) => {
   
-  console.log("PricingFareDetailsInfoCard params, ", params);
+  // console.log("PricingFareDetailsInfoCard params, ", params);
 
   const [retAirSegmentDe, setRetAirSegmentDe] = useState({});
   const [depAirSegmentDe, setDepAirSegmentDe] = useState({});
@@ -38,8 +38,8 @@ const PricingFareDetailsInfoCard = (params) => {
       params.depAirSegment !== undefined &&
       params.retAirSegment !== undefined
     ) {
-      let depLenght = params.depAirSegment.length;
-      let retLenght = params.retAirSegment.length;
+      let depLenght = params.depAirSegment&&params.depAirSegment.length;
+      let retLenght = params.retAirSegment&&params.retAirSegment.length;
 
       let detureSegmentsDetails = {
         airLine: [],
@@ -104,7 +104,7 @@ const PricingFareDetailsInfoCard = (params) => {
         detureSegmentsDetails.airLine = depAirlines;
         detureSegmentsDetails.layover = depLayovers;
       } else {
-        params.depAirSegment.map((depSegItem, dIdx) => {
+        params.depAirSegment&&params.depAirSegment.map((depSegItem, dIdx) => {
           if (depLenght === dIdx) {
             detureSegmentsDetails.deptureDate = depSegItem.departureTime;
 
@@ -123,7 +123,7 @@ const PricingFareDetailsInfoCard = (params) => {
       setDepAirSegmentDe(detureSegmentsDetails);
 
       if (retLenght > 1) {
-        params.retAirSegment.map((retSegItem, rIdx) => {
+        params.retAirSegment&&params.retAirSegment.map((retSegItem, rIdx) => {
           if (rIdx === 0) {
             returnSegmentsDetails.origin = retSegItem.origin;
             returnSegmentsDetails.deptureDate = retSegItem.departureTime;
@@ -157,7 +157,7 @@ const PricingFareDetailsInfoCard = (params) => {
         returnSegmentsDetails.airLine = retAirlines;
         returnSegmentsDetails.layover = retLayovers;
       } else {
-        params.retAirSegment.map((retSegItem, rIdx) => {
+        params.retAirSegment&&params.retAirSegment.map((retSegItem, rIdx) => {
           if (retLenght === rIdx) {
             returnSegmentsDetails.deptureDate = retSegItem.departureTime;
 
@@ -203,7 +203,7 @@ const PricingFareDetailsInfoCard = (params) => {
       
       <Row>
         <Col md={{ span: 2, offset: 10 }}>
-          <Button onClick={()=>{pricingDetailsAction()}}>Continue</Button>
+          {/* <Button onClick={()=>{pricingDetailsAction()}}>Continue</Button> */}
         </Col>
       </Row>
     </React.Fragment>

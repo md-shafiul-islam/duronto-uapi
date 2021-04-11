@@ -30,12 +30,12 @@ const IconView = (params) => {
     <React.Fragment>
       <div className={`${params.iconSizeClass}`}>
       {/*params.selectedAirs*/}
-      { slAir &&
-        slAir.map((code, cIdx) => {
+      { params.selectedAirs &&
+        params.selectedAirs.map((code, cIdx) => {
           return (
             
             <div
-              className={`icon-view ${slAir.length} ${cIdx >= 1 ? " mgt-10 " : ""}`}
+              className={`icon-view ${params.selectedAirs.length} ${cIdx >= 1 ? " mgt-10 " : ""}`}
               style={{ backgroundImage: `url(${getBgImageUrl(code)})` }}
             ></div>
             

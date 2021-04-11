@@ -8,13 +8,22 @@ import { EXT_PRICE_URL, REQUEST_HEADER } from "../../actions/types";
  * @returns {{Number} amount 89247897}
  */
 export const helperGetAmount = (amountSting)=>{
-  if(amountSting !== undefined && amountSting !== null){
+  if(amountSting){
 
     return Number(amountSting.substring(3));
   }
   return 0;
 }
 
+export const helperGetMltyplyTwoNumber = (val, val2)=>{
+  if(val && val2){
+    val = Number(val);
+    val2 = Number(val2);
+
+    return (val * val2);
+  }
+  return 0;
+}
 /**
  * @params {JS Date date}
  * @return { date String like yyyy-mm-dd 2021-07-15 }
@@ -280,16 +289,18 @@ export const helperGetTotalFlyTimeReadable = (travelTime) => {
 
 export const helperIsEmpty = (obj)=>{
 
-  if(obj === null){
+  if(obj === null || obj === undefined){
+    return true;
+  }
+
+  if(obj.length === 0){
     return true;
   }
 
   if(obj.length > 0){
     return false;
   }
-  if(obj.length === 0){
-    return true;
-  }
+ 
   if(Object.keys(obj).length === 0 && obj.constructor === Object){
     return true;
   }

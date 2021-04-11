@@ -14,13 +14,13 @@ class PricingDetailsPage extends Component {
     return (
       <React.Fragment>
         <Row>
-          {true && (
+          {false && (
             <Col md={12}>
               <OneWayPriceing />
             </Col>
           )}
 
-          {false && (
+          {true && (
             <Col md={12}>
               <RndTripPriceingDetailsPage />
             </Col>

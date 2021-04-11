@@ -1,12 +1,26 @@
-import React, { useState, useEffect } from "react";
-import { Modal, Button } from "react-bootstrap";
+import React from "react";
+import { Modal } from "react-bootstrap";
+import { shallowEqual, useSelector } from "react-redux";
 import PricingFareDetailsInfoCard from "../airPricing/pricingSplitCommponent/pricingFareDetailsInfoCard";
+import PricingModalDetailsCard from "../airPricing/pricingSplitCommponent/pricingModalDetailsCard";
 
 const RoundTripPriceOptionModal = (props) => {
-    
-  const continueAirPricingAction = (selectedOption)=>{
+  const continueAirPricingAction = (selectedOption) => {
     props.setRndTripOptionsDetails(selectedOption);
-  }
+  };
+
+  // const rndRetPrice = useSelector(
+  //   (state) => state.airPrice.rndModalRetPrices
+  // );
+  // const rndDepPrice = useSelector(
+  //   (state) => state.airPrice.rndModalDepPrices
+  // );
+
+  // console.log("RoundTripPriceOptionModal props, ", props);
+
+  // console.log("RoundTripPriceOptionModal rndRetPrice, ", rndRetPrice);
+  // console.log("RoundTripPriceOptionModal rndDepPrice, ", rndDepPrice);
+  
   
   return (
     <React.Fragment>
@@ -23,25 +37,32 @@ const RoundTripPriceOptionModal = (props) => {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <PricingFareDetailsInfoCard
-            run="Run via Modal !!!"
-            returnOption={
-              props.selectedPricingOptions.retResp&&props.selectedPricingOptions.retResp.orgResponse.airPriceResult
-            }
-            depAirSegment={
-              props.selectedPricingOptions.depResp&&props.selectedPricingOptions.depResp.orgResponse.airItinerary.airSegment
-            }
-            retAirSegment={
-              props.selectedPricingOptions.retResp&&props.selectedPricingOptions.retResp.orgResponse.airItinerary.airSegment
-            }
-            deptureOption={
-              props.selectedPricingOptions.depResp&&props.selectedPricingOptions.depResp.orgResponse.airPriceResult
-            }
+          {/* {rndRetPrice.status && rndDepPrice.status ? (
+            <PricingFareDetailsInfoCard
+              run="Run via Modal !!!"
+              returnOption={
+                rndRetPrice.orgResponse&&rndRetPrice.orgResponse.airPriceResult
+              }
+              depAirSegment={
+                rndDepPrice.orgResponse&&rndDepPrice.orgResponse.airItinerary&&
+                rndDepPrice.orgResponse.airItinerary.airSegment
+              }
+              retAirSegment={
+                rndRetPrice.orgResponse&&rndRetPrice.orgResponse.airItinerary&&
+                rndRetPrice.orgResponse.airItinerary.airSegment
+              }
+              deptureOption={
+                rndDepPrice.orgResponse&&rndDepPrice.orgResponse.airPriceResult
+              }
+              selectedPriceAction={(sltPriceOption) => {
+                continueAirPricingAction(sltPriceOption);
+              }}
+            />
+          ) : (
+            ""
+          )} */}
 
-            selectedPriceAction={(sltPriceOption) => {
-              continueAirPricingAction(sltPriceOption);
-            }}
-          />
+          <PricingModalDetailsCard />
         </Modal.Body>
       </Modal>
     </React.Fragment>

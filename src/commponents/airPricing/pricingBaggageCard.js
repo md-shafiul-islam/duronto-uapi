@@ -58,6 +58,8 @@ const PricingBaggageCard = (params) => {
         }
     }
   };
+
+  let {baggageAllowance} = params.baggageAllowance;
   return (
     <React.Fragment>
       <Col md={12} className="pricing-baggage-cnt">
@@ -66,8 +68,9 @@ const PricingBaggageCard = (params) => {
           <Col md={2}>Check in:</Col>
           <Col md={3}>Cabin:</Col>
         </Row>
-        {params.baggageAllowance &&
-          params.baggageAllowance.map((baggage, idx) => {
+        {baggageAllowance &&
+          baggageAllowance.map((baggage, idx) => {
+            let {baggageAllowances } = baggage;
             return (
               <Row>
                 <Col md={2}>
@@ -75,10 +78,10 @@ const PricingBaggageCard = (params) => {
                   {console.log("Each Baggage: ", baggage)}
                 </Col>
                 <Col md={2}>
-                  {getCheckInBaggage(baggage.value.baggageAllowanceInfo)}
+                  {getCheckInBaggage(baggageAllowances&&baggageAllowances.baggageAllowanceInfo)}
                 </Col>
                 <Col md={3}>
-                  {getCabinBaggage(baggage.value.carryOnAllowanceInfo)}
+                  {getCabinBaggage(baggageAllowances&&baggageAllowances.carryOnAllowanceInfo)}
                 </Col>
               </Row>
             );

@@ -54,7 +54,7 @@ class AirSearchForm extends Component {
     preSetRoundTripForm: null,
     preSetRoundTripTo: null,
     preSetRoundTripDepTime: new Date(),
-    pStatus: false,
+    pStatus: true,
   };
 
   searchOneWayTrip = (queryData) => {

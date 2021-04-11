@@ -4,32 +4,33 @@ import { Col, Row } from "react-bootstrap";
 const AirPenaltyOrRuleDetails = (params) => {
   const [penaltyFess, setPenaltyFess] = useState(new Array());
 
+  console.log("AirPenaltyOrRuleDetails", params);
   useEffect(() => {
-    let allFess = new Array();
+    // let allFess = new Array();
 
-    if (params.penaltyList !== undefined) {
-      if (params.penaltyList[0] !== undefined) {
-        params.penaltyList[0].value.map((penaltyItem, pIdx) => {
-          allFess.push({ key: penaltyItem.penaltyApplies, value: new Array() });
-        });
-      }
+    // if (params.penaltyList) {
+    //   if (params.penaltyList[0]) {
+    //     params.penaltyList[0].value.map((penaltyItem, pIdx) => {
+    //       allFess.push({ key: penaltyItem.penaltyApplies, value: new Array() });
+    //     });
+    //   }
 
-      params.penaltyList.map((penalty, pIdx) => {
-        if (penalty.value !== undefined) {
-          penalty.value.map((item, itemIdx) => {
-            allFess.map((fessItem, fIdx) => {
-              if (fessItem.key === item.penaltyApplies) {
-                fessItem.value.push({ type: penalty.key, plty: item });
-              }
-            });
-          });
-        }
-      });
+    //   params.penaltyList.map((penalty, pIdx) => {
+    //     if (penalty.value !== undefined) {
+    //       penalty.value.map((item, itemIdx) => {
+    //         allFess.map((fessItem, fIdx) => {
+    //           if (fessItem.key === item.penaltyApplies) {
+    //             fessItem.value.push({ type: penalty.key, plty: item });
+    //           }
+    //         });
+    //       });
+    //     }
+    //   });
 
-      console.log("All Fess: ", allFess);
+    //   console.log("All Fess: ", allFess);
 
-      setPenaltyFess(allFess);
-    }
+    //   setPenaltyFess(allFess);
+    // }
   }, []);
 
   const getPenaltyTitle = (item) => {
@@ -83,7 +84,7 @@ const AirPenaltyOrRuleDetails = (params) => {
     <React.Fragment>
       <Row>
         <Col md={12}>
-          {params.penaltyList[0] && (
+          {params.penaltyList&&params.penaltyList[0] && (
             <React.Fragment>
             <Row className="penalty-row">
                 <Col md={6}><span className=" align-middle">Time Frame</span></Col>

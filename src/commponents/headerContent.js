@@ -8,9 +8,9 @@ import { Container } from "react-bootstrap";
 
 class HeaderContent extends Component {
   componentDidMount() {
-    // this.props.getAirLines();
-    // this.props.getAirports();
-    // this.props.airPortsArray();
+    this.props.getAirLines();
+    this.props.getAirports();
+    this.props.airPortsArray();
   }
 
   render() {

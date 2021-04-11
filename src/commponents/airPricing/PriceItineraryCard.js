@@ -9,6 +9,9 @@ import {
 } from "../../actions/helperAction";
 
 const PriceItineraryCard = (prams) => {
+
+  console.log("PriceItineraryCard, ", prams);
+
   const [displayMsg, setDisplayMsg] = useState({});
   const diplayInfoShow = () => {
     console.log("Mouse Hover: ");
@@ -32,7 +35,7 @@ const PriceItineraryCard = (prams) => {
   };
 
   const getToolTopInf = (brand) => {
-    if (brand !== undefined) {
+    if (brand) {
       if (brand.text) {
         let selectedText = "";
 

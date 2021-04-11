@@ -54,6 +54,11 @@ export const GET_AIRPORTS_ARR = "GET_AIRPORTS_ARR";
 
 export const GET_SELECTED_AIR_ROUND_TRIP_PRICE_DETAILS = "GET_SELECTED_AIR_ROUND_TRIP_PRICE_DETAILS";
 
+export const GET_MOD_AIR_PRICE_DEP = "AIR_PRICE_DEP";
+export const GET_MOD_AIR_PRICE_RET = "AIR_PRICE_RET";
+
+export const GET_SELECTED_ROUND_TRIP_SOLUTION = "GET_SELECTED_ROUND_TRIP_SOLUTION";
+
 export const GET_PASSENGER = [
   {key:"ADT", value:"Adult"},
   {key:"CHD", value:"Children"},

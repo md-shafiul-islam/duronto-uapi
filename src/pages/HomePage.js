@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import { Container } from 'react-bootstrap'
+import OffersCard from '../commponents/carousel/offersCard'
 import HeaderContent from '../commponents/headerContent'
 
  class HomePage extends Component {
@@ -6,6 +8,9 @@ import HeaderContent from '../commponents/headerContent'
         return (
             <React.Fragment>
                 <HeaderContent />
+                <Container>
+                    <OffersCard />
+                </Container>
             </React.Fragment>
         )
     }

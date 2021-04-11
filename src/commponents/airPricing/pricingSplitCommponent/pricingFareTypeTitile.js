@@ -17,8 +17,9 @@ const PricingFareTypeTitile = (params) => {
         
           <span>{params.brandName}</span>
           {console.log(" Brand Name: ", params.brandName)}
+          {console.log(" params.priceInfs: ", params.priceInfs)}
         </Col>
-        <Col md={5} className="pricing-faretype-price">{helperGetPrice(params.totalPrice)}</Col>
+        <Col md={5} className="pricing-faretype-price">{helperGetPrice(params.priceInfs&&params.priceInfs.totalPrice)}</Col>
         <Col md={12} className="price-fare-tag"><span>Fare Offer by airline</span></Col>
       </Row>
       

@@ -93,25 +93,24 @@ export const helperGetTimeFormatMin = (timeValue) => {
 };
 
 /**
- * 
+ *
  * @param {String} amount like BDT849814
  * @return Strring Like BDT: 849814
  */
 export const helperGetPrice = (amount) => {
-  let price = "";
 
-  if (amount === undefined) {
-    return "";
-  } else {
-    price = `${amount.substring(0, 3)}: ${amount.substring(3)}`;
-  }
+  console.log("helperGetPrice amount, ", amount);
 
-  return price;
+  if (amount !== undefined && amount !== null && typeof amount === "string") {
+    return `${amount.substring(0, 3)}: ${amount.substring(3)}`;
+    
+  } 
+  return "0.0";
 };
 
 /**
- * 
- * @param {String} amount 
+ *
+ * @param {String} amount
  * @return {Number} only amount Number Format
  */
 export const helperGetPriceNumber = (amount) => {
@@ -126,15 +125,15 @@ export const helperGetPriceNumber = (amount) => {
   return Number(price);
 };
 
-export const helperGetCurrency = (priceAmt)=>{
-  if(priceAmt !== undefined){
-    if(priceAmt != null){
-      return priceAmt.substring(0,3);
+export const helperGetCurrency = (priceAmt) => {
+  if (priceAmt !== undefined) {
+    if (priceAmt != null) {
+      return priceAmt.substring(0, 3);
     }
   }
 
   return "";
-}
+};
 
 export const helperGetTravelTime = (timeValue) => {
   let hrMin,
@@ -239,69 +238,44 @@ export const helperGetTimeOnly = (dateAndTime) => {
   }
 };
 
-export const helperGetPriceReqQuery = (flyOption, traveler) => {
-  
-  let bookOptions = [];
+export const helperGetPriceReqQuery = (searchItem, traveler, traceId) => {
+  console.log("helperGetPriceReqQuery !!! ", searchItem, traveler, traceId);
 
-  if (flyOption !== undefined) {
-    flyOption.bookInfos &&
-      flyOption.bookInfos.map((itemBook, bIdx) => {
-        let { segment, cabinClass, bookingCode, fareInfos } = itemBook;
+  let passengers = [{ passCode: "ADT" }];
 
-        if (itemBook.segment !== undefined) {
-          let priceInf = {
-            "@type": "SpecificFlightCriteria",
-            carrier: segment.carrier,
-            flightNumber: segment.flightNumber,
-            departureDate: helperGetDateOnly(segment.departureTime),
-            departureTime: helperGetTimeOnly(segment.departureTime),
-            arrivalDate: helperGetDateOnly(segment.arrivalTime),
-            arrivalTime: helperGetTimeOnly(segment.arrivalTime),
-            from: segment.origin,
-            to: segment.destination,
-            cabin: cabinClass,
-            classOfService: bookingCode,
-            segmentSequence: bIdx,
-          };
+  if(traveler !== undefined && traveler !== null){
 
-          bookOptions.push(priceInf);
-        }
+    if (traveler.passengers !== undefined && traveler.pushpassengers !== null) {
+      passengers = traveler.passengers.map((item, idx) => {
+        return { passCode: item.code };
       });
+    } 
 
-    let pasengerProps = traveler; // traveler;
-    let passengers = new Array();
+  }
 
-    if (pasengerProps !== undefined) {
-      if (pasengerProps.ADT.value > 0) {
-        passengers.push({ value: "ADT", number: 1 });
-      }
+  if (
+    searchItem !== undefined && searchItem !== null ) {
+    let { option, platingCarrier } = searchItem;
+    let segments = [];
+    if (option !== undefined && option !== null) {
+      let { bookingInfos } = option;
 
-      if (pasengerProps.CNN.value > 0) {
-        passengers.push({ value: "CNN", number: 1 });
-      }
+      bookingInfos &&
+        bookingInfos.map((book, idx) => {
+          let { segment, cabinClass, bookingCode, bookingCount } = book;
 
-      if (pasengerProps.INF.value > 0) {
-        passengers.push({ value: "INF", number: 1 });
-      }
-    } else {
-      passengers.push({ value: "ADT", number: 1 });
+          segments.push(segment);
+        });
     }
 
-
     let priceQuery = {
-      OfferQueryBuildFromProducts: {
-        BuildFromProductsRequest: {
-          "@type": "BuildFromProductsRequestAir",
-          PassengerCriteria: passengers,
-          ProductCriteriaAir: [
-            {
-              "@type": "ProductCriteriaAir",
-              SpecificFlightCriteria: bookOptions,
-            },
-          ],
-        },
-      },
+      traceId: traceId,
+      platingCarrier: platingCarrier,
+      pssengers: passengers,
+      segments: segments,
     };
+
+    console.log("helperGetPriceReqQuery !!! priceQuery, ", priceQuery);
 
     return priceQuery;
   }

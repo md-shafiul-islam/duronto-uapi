@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Card, Col, Row } from "react-bootstrap";
 import { GET_PASSENGER } from "../../../actions/types";
+import { helperGetMltyplyTwoNumber } from "../../helper/helperAction";
 
 /**
  * airPriceList Data Structure
@@ -36,56 +37,12 @@ import { GET_PASSENGER } from "../../../actions/types";
  * @param {airPriceList} params
  */
 const FareSummaryUsingPriceList = (params) => {
+
+  // console.log("FareSummaryUsingPriceList, ", params);
+  
   const [priceStstus, setPriceStstus] = useState(false);
   const [taxStatus, setTaxStatus] = useState(false);
 
-  const [totalPriceAmt, setTotalPriceAmt] = useState(0);
-  const [totalBasePriceAmnt, setTotalBasePriceAmnt] = useState(0);
-
-  const [totalTaxAmount, setTotalTaxAmount] = useState(0);
-
-  const [priceItems, setPriceItems] = useState({
-    totalPriceAmount: 0.0,
-    details: [],
-  });
-  const [currency, setCurrency] = useState("");
-
-  useEffect(() => {
-    initFareDate();
-  }, []);
-
-  const initFareDate = () => {
-    if (params.airPriceList !== undefined) {
-      let totalPrice = 0;
-      let totalPriceDetails = [];
-      let totalTax = 0;
-      let totalBasePrice = 0;
-      let currency = "";
-
-      params.airPriceList.map((airPrice, idx) => {
-        let tBasePrice = 0;
-
-        tBasePrice += airPrice.basePrice * airPrice.passengerQty;
-        totalPrice += airPrice.totalPrice * airPrice.passengerQty;
-        totalBasePrice += airPrice.basePrice * airPrice.passengerQty;
-
-        totalPriceDetails.push({
-          key: airPrice.key,
-          qty: airPrice.passengerQty,
-          totalPasBasePrice: tBasePrice,
-          eachBasePrice: airPrice.basePrice,
-        });
-        totalTax += airPrice.tax * airPrice.passengerQty;
-        currency = airPrice.currency;
-      });
-
-      setTotalTaxAmount(totalTax);
-      setPriceItems({ details: totalPriceDetails });
-      setTotalPriceAmt(totalPrice);
-      setTotalBasePriceAmnt(totalBasePrice);
-      setCurrency(currency);
-    }
-  };
 
   /* ES Functions Start */
 
@@ -113,6 +70,8 @@ const FareSummaryUsingPriceList = (params) => {
   };
 
   // ES Functions End
+
+  let {currencyType, eachPrices, equBasePrice, taxes, totalPrice} = params&&params.airPriceList;
   return (
     <React.Fragment>
       <Card className="fare-sum-card">
@@ -134,7 +93,7 @@ const FareSummaryUsingPriceList = (params) => {
                   Base Price{" "}
                   <span className="fare-amount">
                     {priceStstus === false
-                      ? `${currency}: ${totalBasePriceAmnt}`
+                      ? `${currencyType}: ${equBasePrice}`
                       : ""}
                   </span>
                 </p>
@@ -144,21 +103,21 @@ const FareSummaryUsingPriceList = (params) => {
                     display: `${priceStstus === true ? "block" : "none"}`,
                   }}
                 >
-                  {priceItems &&
-                    priceItems.details.map((priceItem, pIdx) => {
+                  {eachPrices &&
+                    eachPrices.map((priceItem, pIdx) => {
                       return (
                         <li key={`fprice-${pIdx}`}>
                           <span className="fare-amount-label">
-                            {priceItem.qty > 1
+                            {priceItem.passengerQty > 1
                               ? `${getPassengerByCode(priceItem.key)}'(s) (${
-                                  priceItem.qty
-                                } X ${priceItem.eachBasePrice}): `
+                                  priceItem.passengerQty
+                                } X ${priceItem.eqBasePrice}): `
                               : `${getPassengerByCode(priceItem.key)} (${
-                                  priceItem.qty
-                                } X ${priceItem.eachBasePrice}): `}
+                                  priceItem.passengerQty
+                                } X ${priceItem.eqBasePrice}): `}
                           </span>
                           <span className="fare-amount">
-                            {`${currency}: ${priceItem.totalPasBasePrice}`}
+                            {`${currencyType}: ${helperGetMltyplyTwoNumber(priceItem.passengerQty, priceItem.eqBasePrice)}`}
                           </span>
                         </li>
                       );
@@ -180,7 +139,7 @@ const FareSummaryUsingPriceList = (params) => {
                   Fee & Taxes{" "}
                   <span className="fare-amount">
                     {taxStatus === false
-                      ? `${currency}: ${totalTaxAmount}`
+                      ? `${currencyType}: ${taxes}`
                       : ""}
                   </span>
                 </p>
@@ -194,7 +153,7 @@ const FareSummaryUsingPriceList = (params) => {
                   <li>
                     <span>Total Fess & Surcharges: </span>
                     <span className="fare-amount">
-                      {`${currency}: ${totalTaxAmount}`}
+                      {`${currencyType}: ${taxes}`}
                     </span>
                   </li>
                 </ul>
@@ -206,7 +165,7 @@ const FareSummaryUsingPriceList = (params) => {
             <p className="fare-total-amount">
               Total Amount:{" "}
               <span className="fare-amount">
-                {`${currency} ${totalPriceAmt}`}
+                {`${currencyType} ${totalPrice}`}
               </span>
             </p>
           </Col>

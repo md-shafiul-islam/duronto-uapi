@@ -118,7 +118,7 @@ const getProperDate = (pValue) => {
 
 export const getAirLines = () => async (dispatch) => {
   try {
-    let url = `${EXT_BASE_URL}/api/airline?type=1`;
+    let url = `${EXT_BASE_URL}/airline?type=1`;
   
     const res = await Axios.get(url, {headers:REQUEST_HEADER});
     
@@ -141,7 +141,7 @@ export const getAirLines = () => async (dispatch) => {
 
 export const getAirports = ()=>async (dispatch)=>{
   try {
-    let url = `${EXT_BASE_URL}/api/airport?type=1`;
+    let url = `${EXT_BASE_URL}/airport?type=1`;
     
     const res = await Axios.get(url, {headers:REQUEST_HEADER});
     
@@ -171,7 +171,7 @@ export const setSearchQuery = (data) => async (dispatch) => {
 
 export const airPortsArray = ()=>async (dispatch)=>{
   try {
-    let url = `${EXT_BASE_URL}/api/airport?type=0`;
+    let url = `${EXT_BASE_URL}/airport?type=0`;
     
     const res = await Axios.get(url, {headers:REQUEST_HEADER});
     

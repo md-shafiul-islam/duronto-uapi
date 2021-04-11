@@ -282,8 +282,8 @@ body {
   width: 100%;
   margin: 0px !important;
   padding: 5px 15px 0px;
-  font-size: .8em !important;
-  font-weight: bold !important; 
+  font-size: 0.8em !important;
+  font-weight: bold !important;
 }
 
 .search-bstyle {
@@ -298,7 +298,7 @@ body {
   white-space: nowrap;
 }
 
-.pdl-5{
+.pdl-5 {
   padding-left: 5px !important;
 }
 
@@ -1664,6 +1664,10 @@ body {
   margin-top: 250px;
 }
 
+.mt-50{
+  margin-top: 50px;
+}
+
 .price-inf-btn {
   cursor: pointer;
   position: relative;
@@ -1723,7 +1727,7 @@ body {
 
 .pricing-baggage-cnt .btitle {
   text-transform: uppercase;
-  font-size: .85em;
+  font-size: 0.85em;
   font-weight: bold;
   margin-bottom: 10px;
 }
@@ -1744,14 +1748,13 @@ body {
   font-size: 1.25em;
   font-weight: 600;
   text-transform: uppercase;
-  margin-bottom: .25em;
+  margin-bottom: 0.25em;
 }
 
 .baggage-area {
-  border-top:1px solid rgba(0, 0, 0, 0.08);
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
   margin-top: 20px;
   padding-top: 10px;
-
 }
 
 .fly-label .fly-date {
@@ -1805,24 +1808,22 @@ body {
   cursor: pointer;
 }
 
-.price-fare-rule-tab{
+.price-fare-rule-tab {
   margin-bottom: 10px;
 }
 
-.price-fare-rule-tab .nav-pills .nav-link.active{
+.price-fare-rule-tab .nav-pills .nav-link.active {
   background-color: #f1f8ff;
   color: #120000;
   border-bottom: 2px solid #008cff;
   border-radius: opx !important;
-
 }
 
-.price-fare-rule-tab .nav-item{
+.price-fare-rule-tab .nav-item {
   position: relative;
 }
 
-
-.price-fare-rule-tab .nav-pills .nav-link.active .price-arrow-down{
+.price-fare-rule-tab .nav-pills .nav-link.active .price-arrow-down {
   position: absolute;
   bottom: -4px;
   left: 45%;
@@ -1833,25 +1834,24 @@ body {
   border-top: 5px solid #008cff;
 }
 
-.penalty-row{
+.penalty-row {
   border-bottom: 1px solid #333333;
   margin: 0px !important;
 }
 
-.penalty-title{
+.penalty-title {
   height: 40px;
   margin: 15px 0px 0px 0px;
   width: auto;
   display: block;
-
 }
 
-.panelty-cnt .penalty-item{
+.panelty-cnt .penalty-item {
   width: 100%;
   height: 30px;
   padding: 5px;
   float: left;
-  font-size: .75em;
+  font-size: 0.75em;
 }
 
 .price-rule-model {
@@ -1864,11 +1864,10 @@ body {
   padding: 5px 10px;
 }
 
-.price-rule-model .modal-header.modal-title .h4{
-  
+.price-rule-model .modal-header.modal-title .h4 {
 }
 
-.fare-sum-card{
+.fare-sum-card {
   border-radius: 10px !important;
 }
 
@@ -1885,12 +1884,12 @@ body {
   font-weight: normal;
 }
 
-.far-title{
+.far-title {
   width: 100%;
   margin: 0px !important;
 }
 
-.fare-sum-price .first-item{
+.fare-sum-price .first-item {
   border-bottom: 1px solid rgba(0, 0, 0, 0.08);
   padding: 10px;
   cursor: pointer;
@@ -1898,8 +1897,7 @@ body {
   font-size: 1em;
 }
 
-
-.fare-sum-price .first-item ul{
+.fare-sum-price .first-item ul {
   margin-top: 10px;
 }
 
@@ -1907,8 +1905,7 @@ body {
   cursor: text;
 }
 
-.fare-sum-price .first-item ul li{
-  
+.fare-sum-price .first-item ul li {
   line-height: 24px;
 }
 
@@ -1919,7 +1916,7 @@ body {
   float: right;
 }
 
-.fare-total-amount{
+.fare-total-amount {
   font-weight: bold;
   font-size: 1.25em;
   padding: 5px 15px;
@@ -1929,76 +1926,69 @@ body {
   width: 65%;
 }
 
-.mgbt20{ /*margin layover*/
+.mgbt20 {
+  /*margin layover*/
   margin-top: 20px;
-
 }
 
-
-.selected-air-price-model{
+.selected-air-price-model {
   width: 100% !important;
 }
 
-.selected-air-price-content{
+.selected-air-price-content {
   width: 100% !important;
 }
-
 
 .price-dialog {
   width: 100% !important;
 }
 
-.selected-air-price-model .price-dialog{
+.selected-air-price-model .price-dialog {
   width: 90% !important;
   max-width: none !important;
 }
 
-.price-dialog .modal-content{
+.price-dialog .modal-content {
   width: 100%;
 }
 
-/************** Round trip Pricing Modal ************/ 
+/************** Round trip Pricing Modal ************/
 
-.pricing-card{
+.pricing-card {
   padding-bottom: 5px;
-  margin-bottom: .25rem !important;
-  box-shadow: 0 0 1px rgba(0,0,0,.125), 0 1px 2px rgba(0,0,0,.2) !important;
+  margin-bottom: 0.25rem !important;
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.125), 0 1px 2px rgba(0, 0, 0, 0.2) !important;
   border-radius: 10px !important;
   white-space: normal;
-    
 }
 
-.pricing-icon{}
+.pricing-icon {
+}
 
-
-
-.pricing-faretype-title{
-  font-size: .7em;
+.pricing-faretype-title {
+  font-size: 0.7em;
   font-weight: 700;
   padding: 10px 0px;
-
 }
 
-.pricing-faretype-title p{
-  font-size: .7em;
+.pricing-faretype-title p {
+  font-size: 0.7em;
   font-weight: 700;
   padding: 10px 0px;
-
 }
 
-.pricing-faretype-price{
-  font-size: .7em;
+.pricing-faretype-price {
+  font-size: 0.7em;
   font-weight: 700;
   padding: 10px 0px;
-  
 }
 
-.price-fare-tag{
+.price-fare-tag {
   font-size: small;
-  padding:0px 5px ;
+  padding: 0px 5px;
 }
 
-.price-details-inf{
+.price-details-inf {
   margin: 0px !important;
   padding: 0px;
   list-style: none;
@@ -2006,35 +1996,33 @@ body {
   font-size: 0.75em;
 }
 
-.rnd-price-fare-inf{
+.rnd-price-fare-inf {
   padding: 2px;
 }
 
-.rnd-price-fare-inf .icon-color{
- color: #01a1b9;
-
+.rnd-price-fare-inf .icon-color {
+  color: #01a1b9;
 }
 
-.price-details-inf:last-child{
+.price-details-inf:last-child {
   padding-top: 5px;
 }
 
-.price-sl-btn{
+.price-sl-btn {
   cursor: pointer;
   padding: 5px;
 }
 
-.price-fare-tag span{
+.price-fare-tag span {
   padding: 0px 0px 0px 25px;
 }
 
-.price-details-inf-card{
+.price-details-inf-card {
   padding-top: 0px !important;
-
 }
 
 .price-details-inf-title {
-  border: 1px  solid #ddd;
+  border: 1px solid #ddd;
   padding-bottom: 10px;
   margin-bottom: 5px !important;
 }
@@ -2045,22 +2033,22 @@ body {
   width: auto;
 }
 
-.pricing-items >  .hrz-item{
+.pricing-items > .hrz-item {
   display: inline-block;
   float: none;
 }
 
-.pricing-locs{
+.pricing-locs {
   font-size: 14px;
   font-weight: 500;
 }
 
-.pricing-air-inf{
-  font-size: .80em;
+.pricing-air-inf {
+  font-size: 0.8em;
   font-weight: 500;
 }
 
-.pricing-layover{
+.pricing-layover {
   font-size: 12px;
   font-weight: 500;
 }
@@ -2077,7 +2065,7 @@ body {
 
 .icon-view-area-big {
   height: auto;
-  width: 150px;  
+  width: 150px;
 }
 
 .icon-view-area-small .icon-view {
@@ -2087,7 +2075,7 @@ body {
   background-repeat: no-repeat !important;
   background-size: 100% 100% !important;
   float: left;
-  }
+}
 
 .icon-view-area-medium .icon-view {
   width: 50px;
@@ -2095,7 +2083,7 @@ body {
   background-position: center !important;
   background-repeat: no-repeat !important;
   background-size: 100% 100% !important;
-  float: left;  
+  float: left;
 }
 
 .icon-view-area-big .icon-view {
@@ -2107,26 +2095,26 @@ body {
   float: left;
 }
 
-.icon-view-area-big  .icon-view:nth-child(even),
-.icon-view-area-medium  .icon-view:nth-child(even),
+.icon-view-area-big .icon-view:nth-child(even),
+.icon-view-area-medium .icon-view:nth-child(even),
 .icon-view-area-small .icon-view:nth-child(even) {
   float: right !important;
 }
 
-.mgt-10{
+.mgt-10 {
   margin-top: -10px;
 }
 
-.m-item{
+.m-item {
   width: 100px !important;
   color: #4e4d4d;
 }
 
-.menu-icon{
+.menu-icon {
   font-size: 2em;
 }
 
-.menu-text{
+.menu-text {
   padding-top: 5px;
 }
 
@@ -2135,15 +2123,15 @@ body {
   padding: 5px;
 }
 
-.zidx-50{
+.zidx-50 {
   z-index: 50;
 }
 
-.com-sticky{
+.com-sticky {
   position: relative;
 }
-.loaderPlaceholder{
-  background: #FFF;
+.loaderPlaceholder {
+  background: #fff;
   border-radius: 10px;
   border: none;
   position: absolute;
@@ -2155,18 +2143,137 @@ body {
   box-shadow: 0 0 1px rgb(0 0 0 / 13%), 0 1px 3px rgb(0 0 0 / 20%);
 }
 
-.curreny-code{
-  font-size: .75em;
+.curreny-code {
+  font-size: 0.75em;
   font-weight: bold;
 }
 
-.charge-details-container{
+.charge-details-container {
   height: 300px;
   overflow-y: auto;
 }
 
 .rndt-charge-card {
-  margin: 0px !important; 
+  margin: 0px !important;
   padding: 0px;
 }
-  
+
+.dtcarousel-container {
+  margin: 40px 0px 0px;
+}
+
+.dtcarousel-content {
+  width: 100%;
+  height: 100%;
+  box-shadow: 0 0 1px rgb(0 0 0 / 13%), 0 1px 3px rgb(0 0 0 / 20%);
+  margin-bottom: 1rem;
+  background-clip: border-box;
+  border: 0 solid rgba(0, 0, 0, 0.125);
+  border-radius: 0.25rem;
+}
+
+.dtcarousel-container .image-container {
+  width: 40%;
+  display: block;
+  float: left;
+  padding: 5px;
+  position: relative;
+}
+.dtcarousel-container .offer-content {
+  width: 60%;
+  display: block;
+  float: left;
+  padding: 5px;
+  position: relative;
+}
+
+.dtcarousel-container .offer-content .offer-type {
+  font-size: 1em;
+  font-weight: 500;
+  position: absolute;
+  top: -25px;
+  padding: 0px 0px 0px 5px;
+  text-transform: uppercase;
+}
+
+.dtcarousel-container .image-container {
+  margin-top: -35px;
+  border: 3px solid #fff;
+  border-radius: 5px;
+  _box-shadow: 0 0 1px rgb(0 0 0 / 13%), 0 1px 3px rgb(0 0 0 / 20%);
+}
+
+.dtcarousel-container .cc-image {
+  display: block;
+}
+
+.dtcarousel-container .image-container img {
+  border-radius: 5px;
+  border: 1px solid #fff;
+}
+
+.dtcarousel-container .offer-content .offer-title {
+  font-size: 1em;
+  padding: 5px;
+  font-weight: bolder;
+}
+
+.dtcarousel-container .offer-content .tag-line {
+  font-size: 0.75em;
+  font-weight: 600;
+}
+
+/* CST Carousel Start */
+.cst-carousel-paren {
+  height: 230px;
+  overflow: hidden;
+}
+.cst-carousel {
+  width: auto;
+  overflow-x: auto;
+  display: flex;
+  height: 200px;
+  transition: .3s;
+}
+
+.cst-carousel-item {
+  flex: 0 0 400px;
+  position: relative;
+  width: 300px;
+  padding-right: 7.5px;
+  padding-left: 7.5px;
+}
+
+.cst-carousel::-webkit-scrollbar {
+  display: none;
+}
+
+.cst-carousel-btn-area{
+  width: 80px;
+  height: 40px;
+  position: absolute;
+  top: -60px;
+  right: 0px;
+  box-shadow: 0 0 1px rgb(0 0 0 / 13%), 0 1px 3px rgb(0 0 0 / 20%);
+  border-radius: 50px;
+  padding: 5px 4px;
+}
+
+.cst-carousel-btn-area .nextBtn,
+.cst-carousel-btn-area .prevBtn {
+  padding: 10px;
+  cursor: pointer;
+  font-size: 1.25em;
+}
+
+.cst-carousel-btn-area .btn-active{
+  color: #0059ff;
+}
+
+.cst-carousel-btn-area .btn-disable{
+  color: #70bef3;
+}
+
+
+
+/* CST Carousel End */

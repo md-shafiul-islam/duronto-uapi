@@ -17,17 +17,23 @@ import {
 import PricingBaggageCard from "../pricingBaggageCard";
 
 import FareSummaryUsingPriceList from "../pricingSplitCommponent/FareSummaryUsingPriceList";
+import {
+  helperGetAmount,
+  helperGetTotalFlyTime,
+  helperIsEmpty,
+} from "../../helper/helperAction";
 
 let prevDate = null;
 
 class RndTripPriceingDetailsPage extends Component {
   state = {
     travelerInf: {},
-    loadStatus: true,
+    loadStatus: false,
     displayMsg: false,
     retPricingDetails: null,
     depPricingDetails: null,
-    farePriceSummery: null,
+    farePriceSummery: {eachPrices:[], totalPrice:0, taxes:0, equBasePrice:0, currencyType:""},
+    redirecStatus: false,
   };
 
   UNSAFE_componentWillReceiveProps(nextProps) {
@@ -38,126 +44,153 @@ class RndTripPriceingDetailsPage extends Component {
   componentDidMount() {
     console.log("RND Trip Pricing Details Page: Props ", this.props);
     this.initStateUsingProps();
+    // this.prePopulateAirPricDetailsEachOne(undefined);
   }
 
-  prePopulateAirPricDetailsEachOne = (priceInfDtls) => {
-    if (priceInfDtls !== undefined) {
-      let { airPriceOpt, segment } = priceInfDtls;
-
-      const priceDetails = {
-        baggages: [],
-        changePenalties: [],
-        cancelPenalties: [],
-        brand: {},
-        cabinClass: "",
-        segments: segment,
-        stops: 0,
-        stopsLocs: null,
-        totalFlyTime: null,
-        lastDestination: null,
-        fstOrigin: null,
-        fstDepTime: null,
-        prices: [],
+  destructSegments = (segment) => {
+    if (segment) {
+      let firstOrigin = "",
+        stops = [],
+        fstDepTime = "",
+        lastDestination = "",
+        lastArrivalTime = "";
+      segment.map((seg, sIdx) => {
+        if (sIdx === 0) {
+          firstOrigin = seg.origin;
+          fstDepTime = seg.departureTime;
+        } else {
+          if (!stops.includes(seg.origin)) {
+            stops.push(seg.origin);
+          }
+        }
+        lastDestination = seg.destination;
+        lastArrivalTime = seg.arrivalTime;
+      });
+      return {
+        firstOrigin,
+        lastDestination,
+        stops,
+        fstDepTime,
+        totalFlyTime: helperGetTotalFlyTime(fstDepTime, lastArrivalTime),
+        lastArrivalTime,
       };
+    }
+  };
 
-      let baggageLists = [];
-      let changePenaltyList = [];
-      let cancelPenaltyList = [];
-      let lBrand = null;
-      let cabinClass = null;
+  prePopulateAirPricDetailsEachOne = (airPrOption) => {
 
-      if (airPriceOpt !== undefined) {
-        let slAirPriceInf = airPriceOpt.airPricingInfo[0].fareInfo[0];
+    console.log(" RND PDP airPriceOpt, ", airPrOption);
+    if (airPrOption) {
+      let { airPriceOpt, segment } = airPrOption;
+      //Price Info Or Extract Solution Start
 
-        lBrand = lBrand === null ? slAirPriceInf.brand : lBrand;
+      let airSolution = this.destructAirSolution(airPriceOpt);
 
-        console.log("airPriceOpt, ", airPriceOpt);
+      //Price Info Or Extract Solution End
 
-        airPriceOpt.airPricingInfo.map((airPriceInf, idx) => {
-          let { code } = airPriceInf.passengerType[0];
+      //Segment Info Start
+      let segOptions = this.destructSegments(segment);
+      //Segment Info End
+      return {solutionInf: airSolution, segmentInf: segOptions, segments:segment};
+    }
+    
+    
+  };
 
-          cancelPenaltyList.push({
-            key: code,
-            value: airPriceInf.cancelPenalty,
+  destructAirSolution = (airPriceOpt) => {
+
+    if (airPriceOpt) {
+
+    let baggageLists = [];
+    let changePenaltyList = [];
+    let cancelPenaltyList = [];
+    let lBrand = null;
+    let cabClass = null;
+    let fareSummary = {};
+    
+    let {
+      totalPrice,
+      approximateBasePrice,
+      approximateTaxes,
+      equivalentBasePrice,
+      taxes,
+      airPricingInfo,
+      approximateTotalPrice,
+      basePrice,
+    } = airPriceOpt;
+
+    fareSummary = {
+      priceSummeries: [],
+      approximateBasePrice,
+      approximateTaxes,
+      approximateTotalPrice,
+      basePrice,
+      equivalentBasePrice,
+      taxes,
+      totalPrice,
+    };
+    let priceInfs = [];
+
+    airPricingInfo &&
+      airPricingInfo.map((airPriceInf, apIdx) => {
+        if (airPriceInf) {
+          let {
+            fareInfo,
+            bookingInfo,
+            totalPrice,
+            taxes,
+            passengerType,
+            equivalentBasePrice,
+            cancelPenalty,
+            changePenalty,
+            baggageAllowances,
+          } = airPriceInf;
+
+          baggageLists.push({
+            key: passengerType[0].code,
+            baggageAllowances,
           });
           changePenaltyList.push({
-            key: code,
-            value: airPriceInf.changePenalty,
+            key: passengerType[0].code,
+            penalty: changePenalty,
           });
-          baggageLists.push({
-            key: code,
-            value: airPriceInf.baggageAllowances,
+          cancelPenaltyList.push({
+            key: passengerType[0].code,
+            penalty: cancelPenalty,
           });
 
-          if (cabinClass === null) {
-            cabinClass = airPriceInf.bookingInfo[0].cabinClass;
+          priceInfs.push({
+            key: passengerType[0].code,
+            totalPrice,
+            taxes,
+            eqBasePrice: equivalentBasePrice,
+            passQty: passengerType.length,
+          });
+
+          if (bookingInfo[0]) {
+            cabClass = bookingInfo[0].cabinClass;
           }
 
-          priceDetails.prices.push({
-            key: code,
-            basePrice: airPriceInf.equivalentBasePrice,
-            taxes: airPriceInf.taxes,
-            totalPrice: airPriceInf.totalPrice,
-          });
-        });
-      }
+          if (fareInfo) {
+            let { brand } = fareInfo;
 
-      /*priceDetails.opBasePrice = airPriceOpt.equivalentBasePrice;
-      priceDetails.opTotalPrice = airPriceOpt.totalPrice;
-      priceDetails.opTaxesAmount = airPriceOpt.taxes;*/
-
-      priceDetails.baggages = baggageLists;
-      priceDetails.changePenalties = changePenaltyList;
-      priceDetails.cancelPenalties = cancelPenaltyList;
-      priceDetails.brand = lBrand;
-      priceDetails.cabinClass = cabinClass;
-
-      let stops = 0;
-      let stopLoc = [];
-      let totalTime = 0;
-      let lastDestination = "";
-      let fstOrigin = null;
-      let fstDepTime = null;
-
-      if (segment !== undefined) {
-        segment.map((segment, segIdx) => {
-          if (segIdx === 0) {
-            fstOrigin = segment.origin;
-            fstDepTime = segment.departureTime;
+            lBrand = !helperIsEmpty(lBrand) ? brand : lBrand;
           }
-          if (segIdx > 0) {
-            stops++;
-            stopLoc.push(segment.origin);
-          }
-          totalTime = totalTime + segment.flightTime;
-          lastDestination = segment.destination;
-        });
-      }
+        }
+      });
 
-      priceDetails.stops = stops;
-      priceDetails.stopsLocs = stopLoc;
-      priceDetails.totalFlyTime = totalTime;
+      fareSummary.priceSummeries = priceInfs;
 
-      priceDetails.lastDestination = lastDestination;
-      priceDetails.fstOrigin = fstOrigin;
-      priceDetails.fstDepTime = fstDepTime;
-
-      console.log("Return Befor Fly Price Info Details: ", priceDetails);
-      return priceDetails;
+      return {fareSummary, lBrand, baggageLists, changePenaltyList, cancelPenaltyList, cabinClass:cabClass};
     }
   };
 
   initStateUsingProps = () => {
-    let travelerQty = this.initQuery();
-
-    console.log(
-      "this.props.rndPricingDetail.detureItem Befor, ",
-      this.props.rndPricingDetail.detureItem
-    );
-
+    // let travelerQty = this.initQuery();
+    
     if (
-      this.props.rndPricingDetail.detureItem !== undefined &&
-      this.props.rndPricingDetail.returnItem !== undefined
+      !helperIsEmpty(this.props.rndPricingDetail.detureItem) &&
+      !helperIsEmpty(this.props.rndPricingDetail.returnItem)
     ) {
       let deptuerPriceDetails = this.prePopulateAirPricDetailsEachOne(
         this.props.rndPricingDetail.detureItem
@@ -166,14 +199,9 @@ class RndTripPriceingDetailsPage extends Component {
         this.props.rndPricingDetail.returnItem
       );
 
-      console.log(
-        "this.props.rndPricingDetail.detureItem ",
-        this.props.rndPricingDetail.detureItem
-      );
-
       if (
-        returnPriceDetails !== undefined &&
-        deptuerPriceDetails !== undefined
+        !helperIsEmpty(returnPriceDetails) &&
+        !helperIsEmpty(deptuerPriceDetails)
       ) {
         let itineraryPrices = [];
         itineraryPrices.push({
@@ -182,58 +210,98 @@ class RndTripPriceingDetailsPage extends Component {
         });
         itineraryPrices.push({ key: "Return: ", details: returnPriceDetails });
 
-        console.log("Air Itinerary, ", itineraryPrices);
-        console.log("Air Traveler, ", travelerQty);
+        console.log("Air Itinerary Before Fare Summery, ", itineraryPrices);
+        // console.log("Air Traveler, ", travelerQty);
 
-        const farePriceSummery = [];
+        //TODO: Summery Option Add...
+        const farePriceSummery = {eachPrices:[], totalPrice:0, taxes:0, equBasePrice:0, currencyType:""};
 
-        travelerQty &&
-          travelerQty.map((traveler, tIdx) => {
-            let combPassengerPrice = {
-              key: traveler.key,
-              basePrice: 0,
-              tax: 0,
-              totalPrice: 0,
-              passengerQty: traveler.value,
-              currency: "",
-            };
-            let basePrice = 0;
-            let taxes = 0;
-            let totalPrice = 0;
-            let currency = "";
+        let sumTotalPrice = 0, sumTaxes = 0, sumBasePrice = 0, currencyType = 0;
+        let  eAdtTotalPrice = 0, eAdtTotalTaxes = 0, eAdtEquBasePrice = 0, adtPassengerQty = 0, adtStatus=false;
+        let  eCnnTotalPrice = 0, eCnnTotalTaxes = 0, eCnnEquBasePrice = 0, cnnPassengerQty = 0, cnnStatus=false;
+        let  eInfTotalPrice = 0, eInfTotalTaxes = 0, eInfEquBasePrice = 0, infPassengerQty = 0, infStatus=false;
 
-            console.log("Traveler Qty Obj: ", traveler);
+        itineraryPrices&&itineraryPrices.map((itineraryPrice, ipIdx)=>{
 
-            itineraryPrices &&
-              itineraryPrices.map((item, itnIx) => {
-                item &&
-                  item.details &&
-                  item.details.prices &&
-                  item.details.prices.map((pricePass, pIdx) => {
-                    if (traveler.key === pricePass.key) {
-                      basePrice += helperGetPriceNumber(pricePass.basePrice);
-                      taxes += helperGetPriceNumber(pricePass.taxes);
-                      totalPrice += helperGetPriceNumber(pricePass.totalPrice);
-                      currency = helperGetCurrency(pricePass.basePrice);
+          console.log("itineraryPrice, ", itineraryPrice);
 
-                      //console.log("Set Summery Obj pricePass.basePrice, Each One, ", pricePass.basePrice);
+          if(!helperIsEmpty(itineraryPrice)){
+
+            if(!helperIsEmpty(itineraryPrice.details.solutionInf.fareSummary)){
+              
+              let {priceSummeries, equivalentBasePrice, totalPrice, taxes } = itineraryPrice.details.solutionInf.fareSummary;
+              currencyType = helperGetCurrency(totalPrice);
+              sumTotalPrice = (Number(sumTotalPrice)+Number(helperGetAmount(totalPrice)));
+              sumTaxes = (Number(sumTaxes)+Number(helperGetAmount(taxes)));
+              sumBasePrice = (Number(sumBasePrice) + Number(helperGetAmount(equivalentBasePrice)));
+
+              if(priceSummeries){
+               
+                priceSummeries.map((eachPrice, epIdx)=>{
+                  if(eachPrice){
+
+                    // console.log("priceSummeries, MAP !!", epIdx)
+
+
+                    let {key, totalPrice, taxes, eqBasePrice, passQty} = eachPrice;
+                    if(key === "ADT"){
+                      // console.log("priceSummeries, ADT !! Total Price: ", eAdtTotalPrice, " Amount Via Api, ", totalPrice)
+
+                      eAdtTotalPrice = (Number(eAdtTotalPrice)+Number(helperGetAmount(totalPrice)));
+                      eAdtTotalTaxes = (Number(eAdtTotalTaxes) + Number(helperGetAmount(taxes)));
+                      eAdtEquBasePrice = (Number(eAdtEquBasePrice) + Number(helperGetAmount(eqBasePrice)));
+                      adtPassengerQty = passQty;
+                      adtStatus = true;
                     }
-                  });
-              });
 
-            combPassengerPrice.basePrice = basePrice;
-            combPassengerPrice.totalPrice = totalPrice;
-            combPassengerPrice.tax = taxes;
-            combPassengerPrice.currency = currency;
+                    if(key === "INF"){
+                      eInfTotalPrice = (Number(eInfTotalPrice) + Number(helperGetAmount(totalPrice)));
+                      eInfTotalTaxes = (Number(eInfTotalTaxes) + Number(helperGetAmount(taxes)));
+                      eInfEquBasePrice = (Number(eInfEquBasePrice) + Number(helperGetAmount(eqBasePrice)));
+                      infPassengerQty = passQty;
+                      infStatus = true;
+                    }
 
-            farePriceSummery.push(combPassengerPrice);
-            combPassengerPrice = null;
-          });
+                    if(key === "CNN"){
+                      eCnnTotalPrice = (Number(eCnnTotalPrice)+Number(helperGetAmount(totalPrice)));
+                      eCnnTotalTaxes = (Number(eCnnTotalTaxes) + Number(helperGetAmount(taxes)));
+                      eCnnEquBasePrice = (Number(eCnnEquBasePrice) + Number(helperGetAmount(eqBasePrice)));
+                      cnnPassengerQty = passQty;
+                      cnnStatus = true;
+                    }
+                  }
+                })
+              }
+            }
+          }
+                    
+        })
+
+        let eachPrices = [];
+        if(adtStatus){
+              eachPrices.push({key:"ADT", totalPrice:eAdtTotalPrice, taxes:eAdtTotalTaxes, eqBasePrice: eAdtEquBasePrice, passengerQty:adtPassengerQty});
+        } 
+
+        if(cnnStatus){
+          eachPrices.push({key:"CNN", totalPrice:eCnnTotalPrice, taxes:eCnnTotalTaxes, eqBasePrice: eCnnEquBasePrice, passengerQty:cnnPassengerQty});
+        }
+
+        if(infStatus){
+          eachPrices.push({key:"INF", totalPrice:eInfTotalPrice, taxes:eInfTotalTaxes, eqBasePrice: eInfEquBasePrice, passengerQty:infPassengerQty});
+        }
+
+        farePriceSummery.eachPrices = eachPrices;
+        farePriceSummery.totalPrice = sumTotalPrice;
+        farePriceSummery.taxes = sumTaxes;
+        farePriceSummery.equBasePrice = sumBasePrice;
+        farePriceSummery.currencyType = currencyType;
+
+        
 
         this.setState({
           retPricingDetails: returnPriceDetails,
           depPricingDetails: deptuerPriceDetails,
-          travelerInf: travelerQty,
+          // travelerInf: travelerQty,
           farePriceSummery: farePriceSummery,
           loadStatus: false,
         });
@@ -264,12 +332,20 @@ class RndTripPriceingDetailsPage extends Component {
     }
   };
 
+  initPriceResult = () => {
+    this.initStateUsingProps();
+  };
+
   render() {
-    if (this.state.loadStatus) {
+
+    let {depPricingDetails, retPricingDetails, farePriceSummery, loadStatus, redirecStatus} = this.state;
+
+
+    if (loadStatus) {
       return <Spinner animation="grow" />;
     }
 
-    if (this.state.redirecStatus) {
+    if (redirecStatus) {
       return <Redirect to="/" />;
     }
 
@@ -286,23 +362,24 @@ class RndTripPriceingDetailsPage extends Component {
                     <AirPricringItinerayTitle
                       title="Depture"
                       changePenalty={
-                        this.state.depPricingDetails.changePenalties
+                        depPricingDetails&&depPricingDetails.solutionInf&&depPricingDetails.solutionInf.changePenaltyList
                       }
                       cancelPenalty={
-                        this.state.depPricingDetails.cancelPenalties
+                        depPricingDetails&&depPricingDetails.solutionInf&&depPricingDetails.solutionInf.cancelPenaltyList
+
                       }
-                      stops={this.state.depPricingDetails.stops}
-                      stoplocs={this.state.depPricingDetails.stopsLocs}
-                      totalFlyTime={this.state.depPricingDetails.totalFlyTime}
-                      cabinClass={this.state.depPricingDetails.cabClass}
-                      origin={this.state.depPricingDetails.fstOrigin}
-                      destination={this.state.depPricingDetails.lastDestination}
-                      departureTime={this.state.depPricingDetails.fstDepTime}
+                      stops={depPricingDetails&&depPricingDetails.segmentInf&&depPricingDetails.segmentInf.stops}
+                      // stoplocs={this.state.depPricingDetails.stopsLocs}
+                      totalFlyTime={depPricingDetails&&depPricingDetails.segmentInf&&depPricingDetails.segmentInf.totalFlyTime}
+                      cabinClass={depPricingDetails&&depPricingDetails.solutionInf&&depPricingDetails.solutionInf.cabinClass}
+                      origin={depPricingDetails&&depPricingDetails.segmentInf&&depPricingDetails.segmentInf.firstOrigin}
+                      destination={depPricingDetails&&depPricingDetails.segmentInf&&depPricingDetails.segmentInf.lastDestination}
+                      departureTime={depPricingDetails&&depPricingDetails.segmentInf&&depPricingDetails.segmentInf.fstDepTime}
                     />
                   </Card.Title>
                   <Card.Body>
-                    {this.state.depPricingDetails &&
-                      this.state.depPricingDetails.segments.map(
+                    {depPricingDetails &&
+                      depPricingDetails.segments&&depPricingDetails.segments.map(
                         (segment, sIdx) => {
                           let deff = null;
                           if (sIdx > 0) {
@@ -328,13 +405,15 @@ class RndTripPriceingDetailsPage extends Component {
                               )}
                               <PriceItineraryCard
                                 segment={segment}
-                                lBrand={this.state.depPricingDetails.brand}
+                                lBrand={depPricingDetails&&depPricingDetails.solutionInf&&depPricingDetails.solutionInf.lBrand}
+                                cabinClass={depPricingDetails&&depPricingDetails.solutionInf&&depPricingDetails.solutionInf.cabinClass}
                               />
 
                               <Row className="baggage-area">
                                 <PricingBaggageCard
                                   baggageAllowance={
-                                    this.state.depPricingDetails.baggages
+                                    depPricingDetails&&depPricingDetails.solutionInf&&depPricingDetails.solutionInf.baggageLists
+
                                   }
                                 />
                               </Row>
@@ -350,25 +429,26 @@ class RndTripPriceingDetailsPage extends Component {
                 <Card>
                   <Card.Title>
                     <AirPricringItinerayTitle
-                      title="Return"
-                      changePenalty={
-                        this.state.retPricingDetails.changePenalties
+                    title="Return"
+                    changePenalty={
+                        retPricingDetails&&retPricingDetails.solutionInf&&retPricingDetails.solutionInf.changePenaltyList
                       }
                       cancelPenalty={
-                        this.state.retPricingDetails.cancelPenalties
+                        retPricingDetails&&retPricingDetails.solutionInf&&retPricingDetails.solutionInf.cancelPenaltyList
+
                       }
-                      stops={this.state.retPricingDetails.stops}
-                      stoplocs={this.state.retPricingDetails.stopsLocs}
-                      totalFlyTime={this.state.retPricingDetails.totalFlyTime}
-                      cabinClass={this.state.retPricingDetails.cabClass}
-                      origin={this.state.retPricingDetails.fstOrigin}
-                      destination={this.state.retPricingDetails.lastDestination}
-                      departureTime={this.state.retPricingDetails.fstDepTime}
+                      stops={retPricingDetails&&retPricingDetails.segmentInf&&retPricingDetails.segmentInf.stops}
+                      // stoplocs={this.state.depPricingDetails.stopsLocs}
+                      totalFlyTime={retPricingDetails&&retPricingDetails.segmentInf&&retPricingDetails.segmentInf.totalFlyTime}
+                      cabinClass={retPricingDetails&&retPricingDetails.solutionInf&&retPricingDetails.solutionInf.cabinClass}
+                      origin={retPricingDetails&&retPricingDetails.segmentInf&&retPricingDetails.segmentInf.firstOrigin}
+                      destination={retPricingDetails&&retPricingDetails.segmentInf&&retPricingDetails.segmentInf.lastDestination}
+                      departureTime={retPricingDetails&&retPricingDetails.segmentInf&&retPricingDetails.segmentInf.fstDepTime}
                     />
                   </Card.Title>
                   <Card.Body>
-                    {this.state.retPricingDetails &&
-                      this.state.retPricingDetails.segments.map(
+                    {retPricingDetails &&
+                      retPricingDetails.segments&&retPricingDetails.segments.map(
                         (segment, sIdx) => {
                           let deff = null;
                           if (sIdx > 0) {
@@ -394,13 +474,14 @@ class RndTripPriceingDetailsPage extends Component {
                               )}
                               <PriceItineraryCard
                                 segment={segment}
-                                lBrand={this.state.retPricingDetails.brand}
+                                lBrand={retPricingDetails.solutionInf&&retPricingDetails.solutionInf.lBrand}
+                                cabinClass={retPricingDetails.solutionInf&&retPricingDetails.solutionInf.cabinClass}
                               />
 
                               <Row className="baggage-area">
                                 <PricingBaggageCard
                                   baggageAllowance={
-                                    this.state.retPricingDetails.baggages
+                                    retPricingDetails&&retPricingDetails.solutionInf&&retPricingDetails.solutionInf.baggageLists
                                   }
                                 />
                               </Row>
@@ -415,7 +496,7 @@ class RndTripPriceingDetailsPage extends Component {
           </Col>
           <Col md={4}>
             <FareSummaryUsingPriceList
-              airPriceList={this.state.farePriceSummery}
+              airPriceList={farePriceSummery}
             />
           </Col>
         </Row>
@@ -438,7 +519,7 @@ const mapStateToProps = (state) => ({
   errors: state.errors,
   airLines: state.airSearch.airLinesList,
   airPorts: state.airSearch.airPortsList,
-  rndPricingDetail: state.airPriceDetails.rndDetailsPrice,
+  rndPricingDetail: state.airPrice.rndSolution,
   searchQury: state.searchQuery.sQuery.searchQuery,
   queryType: state.searchQuery.sQuery.type,
 });

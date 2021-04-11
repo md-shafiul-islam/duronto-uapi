@@ -4,13 +4,8 @@ import { shallowEqual, useSelector } from 'react-redux';
 import IconView from "../../airSearch/iconView";
 
 const PricingAirlinceInfo = (params) => {
-  
-  console.log("Pricing Fly Details: -> Pricing Airlince Info ", params);
 
   const reduxAirLinceList = useSelector((state)=>state.airSearch.airLinesList, shallowEqual);
-
-  console.log("Pricing Fly Details: -> Pricing Airlince Info reduxAirLinceList: ", reduxAirLinceList);
-
 
   const getAirLineName = (cCode) => {
     let rCode = "";
@@ -32,18 +27,14 @@ const PricingAirlinceInfo = (params) => {
   };
 
   const getAirNameAndNo = (flyNums) => {
-    if (flyNums !== undefined) {
+    if (flyNums) {
       return (
         <React.Fragment>
           {flyNums.map((fItem, idx) => {
             return idx > 0 ? (
-              <span>{`, ${getAirLineName(fItem.name)} | ${fItem.name}-${
-                fItem.num
-              }`}</span>
+              <span>{`, ${fItem.cNum}`}</span>
             ) : (
-              <span>{`${getAirLineName(fItem.name)} | ${fItem.name}-${
-                fItem.num
-              }`}</span>
+              <span>{`${fItem.cNum}`}</span>
             );
           })}
         </React.Fragment>
