@@ -4,7 +4,6 @@ import "./App.css";
 import { Provider } from "react-redux";
 import store from "./store";
 
-
 import { Col, Row, Container } from "react-bootstrap";
 import AirSearchForm from "./commponents/searchCompt/AirSearchForm";
 import AirSearchResult from "./commponents/airSearch/SearchResults/AirSearchResult";
@@ -16,6 +15,8 @@ import FlightsPage from "./pages/FlightsPage";
 import EmptyCont from "./commponents/helper/emptyCont";
 import HomePage from "./pages/HomePage";
 import OneWaySearchResult from "./commponents/airSearch/oneWaySearch/oneWaySearchResult";
+import StickyNav from "./commponents/header/nav/stickyNav";
+import BookingPage from "./pages/bookingPage";
 
 const airPort = [
   { name: "Aalborg", code: "AAL" },
@@ -32,6 +33,12 @@ const airPort = [
 ];
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+
+    this.scrollRef = React.createRef();
+  }
+
   state = {
     selectedItemFrom: null,
     adult: null,
@@ -39,7 +46,13 @@ class App extends Component {
     infants: null,
     cabinClass: null,
     selectedItemTo: null,
+    stickyNavStatus: false,
+    topSectionStatus: true,
   };
+
+  componentDidMount() {
+    this.initScrollPositionCount();
+  }
 
   setStartDate = (stDate) => {
     console.log(stDate);
@@ -54,15 +67,41 @@ class App extends Component {
     this.setState({ adult: adt, child: child, infants: infants });
   };
 
+  initScrollPositionCount = () => {
+    window.addEventListener("scroll", (e) => {
+      // console.log("Window scroll Event Fire, ", e.target.documentElement.scrollTop);
+
+      let cPosition = e.target.documentElement.scrollTop;
+
+      if (!this.state.stickyNavStatus) {
+        if (cPosition >= 90) {
+          this.setState({ stickyNavStatus: true, topSectionStatus: false });
+          // console.log("First IF Block !!", this.state.stickyNavStatus, " T ", this.state.topSectionStatus);
+        }
+      }
+
+      if (!this.state.topSectionStatus) {
+        if (90 >= cPosition) {
+          this.setState({ stickyNavStatus: false, topSectionStatus: true });
+          // console.log("2nd IF Block !!", this.state.stickyNavStatus, " T ", this.state.topSectionStatus);
+        }
+      }
+    });
+  };
+
   render() {
+    let { stickyNavStatus, topSectionStatus } = this.state;
+
+    // console.log("STK Status: ", stickyNavStatus, " TSS, ", topSectionStatus);
     return (
       <Provider store={store}>
-        <Container fluid >
-          <EmptyCont height="100px" />
-          
-          <Router>            
+        <Container fluid>
+          {/* <EmptyCont height="10px" />*/}
+          <StickyNav showStatus={stickyNavStatus} />
+          <Router>
             <Route exact path="/" component={HomePage} />
             <Route exact path="/flights" component={FlightsPage} />
+            <Route exact path="/booking" component={BookingPage} />
             <Route exact path="/flights/search" component={AirSearchResult} />
             <Route exact path="/air/search" component={AirSearchForm} />
             <Route
@@ -73,14 +112,16 @@ class App extends Component {
 
             <Route exact path="/pricing" component={PricingDetailsPage} />
 
-            <Route exact path="/air/rndTrippricing" component={RoundTripPricingCard} />
-
+            <Route
+              exact
+              path="/air/rndTrippricing"
+              component={RoundTripPricingCard}
+            />
           </Router>
         </Container>
       </Provider>
     );
   }
 }
-
 
 export default App;

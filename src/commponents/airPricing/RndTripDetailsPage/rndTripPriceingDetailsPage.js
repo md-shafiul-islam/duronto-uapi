@@ -22,6 +22,7 @@ import {
   helperGetTotalFlyTime,
   helperIsEmpty,
 } from "../../helper/helperAction";
+import { localDataStore } from "../../helper/localDataStore";
 
 let prevDate = null;
 
@@ -53,7 +54,8 @@ class RndTripPriceingDetailsPage extends Component {
         stops = [],
         fstDepTime = "",
         lastDestination = "",
-        lastArrivalTime = "";
+        lastArrivalTime = "",
+        carriers = [];
       segment.map((seg, sIdx) => {
         if (sIdx === 0) {
           firstOrigin = seg.origin;
@@ -65,6 +67,9 @@ class RndTripPriceingDetailsPage extends Component {
         }
         lastDestination = seg.destination;
         lastArrivalTime = seg.arrivalTime;
+        if(!carriers.includes(seg.carrier)){
+          carriers.push(seg.carrier);
+        }
       });
       return {
         firstOrigin,
@@ -73,6 +78,7 @@ class RndTripPriceingDetailsPage extends Component {
         fstDepTime,
         totalFlyTime: helperGetTotalFlyTime(fstDepTime, lastArrivalTime),
         lastArrivalTime,
+        carriers
       };
     }
   };
@@ -297,7 +303,7 @@ class RndTripPriceingDetailsPage extends Component {
         farePriceSummery.currencyType = currencyType;
 
         
-
+        localDataStore.setPreSetRndPriceDetails({farePriceSummery, deptuerPriceDetails, returnPriceDetails})
         this.setState({
           retPricingDetails: returnPriceDetails,
           depPricingDetails: deptuerPriceDetails,

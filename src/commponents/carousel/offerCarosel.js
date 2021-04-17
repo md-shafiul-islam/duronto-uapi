@@ -1,18 +1,12 @@
-import React, {useEffect} from "react";
-import { Carousel, Col, Row } from "react-bootstrap";
+import React from "react";
+import { Col} from "react-bootstrap";
 import CarouselContent from "./carouselContent";
 
 const OfferCarosel = (props) => {
 
-  const cstCarouselContentParent = React.createRef();
-
-  useEffect(() => {
-    props.getParentWidth(cstCarouselContentParent)
-  }, [])
-
   return (
     <React.Fragment>
-      <Col md={12} ref={cstCarouselContentParent} className="cst-carousel-paren" id="cstCCP">
+      <Col md={12}  className="cst-carousel-paren" id="cstCCP">
         
         <div className="cst-carousel" style={{marginLeft:`-${props.contPosition}px`}} id="cstCCPContent">
           

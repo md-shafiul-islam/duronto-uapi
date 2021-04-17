@@ -5,19 +5,21 @@ import { connect } from "react-redux";
 import { getAirLines, getAirports, airPortsArray } from "../actions/airSearchAction";
 import TopNavBar from "./header/nav/topNavBar";
 import { Container } from "react-bootstrap";
+import StickyNav from "./header/nav/stickyNav";
 
 class HeaderContent extends Component {
   componentDidMount() {
     this.props.getAirLines();
     this.props.getAirports();
     this.props.airPortsArray();
+
   }
+
 
   render() {
     return (
       <React.Fragment>
-         <Container>
-          
+         <Container>        
           <TopNavBar />          
          </Container>
          

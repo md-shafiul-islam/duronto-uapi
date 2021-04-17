@@ -7,6 +7,7 @@ import { setSelectedPrcingDetailsRoundTrip, setPriceRoundTrip, getPriceSearchAct
 import BookingCardRoundTripOptions from "../FlightCards/BookingCardRoundTripOptions";
 import StickyCard from "../FlightCards/StickyCard";
 import { helperGetPriceReqQuery } from "../../../../actions/helperAction";
+import { localDataStore } from "../../../helper/localDataStore";
 
 class RoundTripFlightResult extends Component {
 
@@ -11782,7 +11783,7 @@ class RoundTripFlightResult extends Component {
   updatePriceSelectedItem = ()=>{
     let {selectedFlights} = this.state;
     const airOptions = Object.fromEntries(selectedFlights);
-    this.props.setPriceRoundTrip(airOptions);
+    this.props.setPriceRoundTrip(airOptions);    
   }
   render() {
     

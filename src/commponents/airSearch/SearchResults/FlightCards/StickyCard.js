@@ -98,23 +98,6 @@ const StickyCard = (params) => {
           params.traceId
         );
         
-        // getPriceSearchAction(searchQuery, 0);
-
-        // console.log("Air Price Ret Query: ", searchQuery);
-        // await Axios.post(url, searchQuery, {
-        //   headers: REQUEST_HEADER,
-        // })
-        //   .then((res) => {
-        //     resReturn = res.data;
-        //     setPriceRetStatus(true);
-        //     setStickyPrice({ depResp: stickyPrice.depResp, retResp: resReturn });
-        //     console.log("0 Air Ret Price Res !!");
-        //   })
-        //   .catch((err) => {
-        //     console.log("Axios Error: ", err);
-        //   });
-        //Return Price Query Prepared End
-
         //Departure Price Query Prepared Start
 
         let depSearchQuery = helperGetPriceReqQuery(
@@ -123,21 +106,6 @@ const StickyCard = (params) => {
           params.traceId
         );
         console.log("Air Price Ret Query: ", depSearchQuery);
-        // getPriceSearchAction(depSearchQuery, 1);
-        // await Axios.post(url, depSearchQuery, {
-        //   headers: REQUEST_HEADER,
-        // })
-        //   .then((res) => {
-        //     resDepReturn = res.data;
-        //     setPriceDepStatus(true);
-        //     setStickyPrice({ depResp: resDepReturn, retResp: stickyPrice.retResp });
-        //     console.log("1 Air Dep Price Res !!");
-        //   })
-        //   .catch((err) => {
-        //     console.log("Axios Error: ", err);
-        //   });
-        // //Departure Price Query Prepared End
-        // setBookActionStatus(true);
 
         setDisplayModal(true);
       }
@@ -428,7 +396,6 @@ const StickyCard = (params) => {
       >
         <Col md={12}>
           <RoundSelectedTab
-            // flyOption={params.flyOption}
             selectedAir={slectedAir}
             fareSummary={fareSummary}
             currencyType={params.currencyType}

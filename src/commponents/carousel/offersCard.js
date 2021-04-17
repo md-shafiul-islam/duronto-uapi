@@ -5,7 +5,7 @@ import OfferCarosel from "./offerCarosel";
 class OffersCard extends Component {
   state = {
     conPos: 0,
-    incriment: 200,
+    incriment: 250,
     contentWidth: 4 * 400,
     nBtnStatus: false,
     prevBtnStatus: true,

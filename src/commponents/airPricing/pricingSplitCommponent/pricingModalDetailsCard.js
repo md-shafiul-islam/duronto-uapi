@@ -5,6 +5,7 @@ import PricingDetailsOptionCard from "./pricingDetailsOptionCard";
 import { connect } from "react-redux";
 import { setPrcingRoundTripSelectedItems } from "../../../actions/priceAction";
 import { Redirect } from "react-router";
+import { localDataStore } from "../../helper/localDataStore";
 
 class PricingModalDetailsCard extends Component {
   state = {
@@ -20,8 +21,9 @@ class PricingModalDetailsCard extends Component {
     //Set Seleced air To Redux Or Local Store
     this.state.airPringSelected.set(key, {airPriceOpt:airSolution,  segment:segments});
     console.log("After Air Price Selected Options: ", this.state.airPringSelected);
-
-    this.props.setPrcingRoundTripSelectedItems(Object.fromEntries(this.state.airPringSelected));
+    let airPriceOptions = Object.fromEntries(this.state.airPringSelected);
+    this.props.setPrcingRoundTripSelectedItems(airPriceOptions);
+    localDataStore.setPriceRoundTripFlights(airPriceOptions);
   }
 
   pricingDetailsAction = () =>{
@@ -30,7 +32,7 @@ class PricingModalDetailsCard extends Component {
     this.setState({redirectStatus:true});
   }
   UNSAFE_componentWillReceiveProps(next_props) {
-    console.log("PMDC UNSAFE_componentWillReceiveProps !!");
+    // console.log("PMDC UNSAFE_componentWillReceiveProps !!");
 
     if (next_props !== undefined && next_props !== null) {
       this.initPropsToState();
@@ -38,7 +40,7 @@ class PricingModalDetailsCard extends Component {
   }
 
   componentDidMount(){
-      console.log("PMDC componentDidMount !!");
+      // console.log("PMDC componentDidMount !!");
     this.initPropsToState();
   }
 
@@ -48,7 +50,7 @@ class PricingModalDetailsCard extends Component {
 
               let {status, orgResponse} = this.props.depPricing;
               let depPricingOpt =  this.initPricingInf(orgResponse);
-              console.log("depPricingOpt, ", depPricingOpt);
+              // console.log("depPricingOpt, ", depPricingOpt);
 
               this.setState({depPricing: { status: status, orgResponse: orgResponse }, depInitOption:depPricingOpt});
           }
@@ -98,7 +100,7 @@ class PricingModalDetailsCard extends Component {
   }
   render() {
       let {retPricing, depPricing, redirectStatus} = this.state;
-      console.log("Air Pricing Modal Details Card, DepPrice, ", depPricing, " Ret Price, ", retPricing);
+      // console.log("Air Pricing Modal Details Card, DepPrice, ", depPricing, " Ret Price, ", retPricing);
 
       if(redirectStatus){
         return <Redirect to="/pricing" />;
@@ -108,8 +110,6 @@ class PricingModalDetailsCard extends Component {
       <React.Fragment>
         <PricingDetailsOptionCard
           airSegment={depPricing&&depPricing.status&&depPricing.orgResponse.airItinerary.airSegment}
-        //   airPorts={params.airPorts}
-        //   airLines={params.airLines}
           airSolutions={depPricing&&depPricing.status&&depPricing.orgResponse.airPriceResult[0]&&depPricing.orgResponse.airPriceResult[0].airPricingSolution}
           title={"Depture"}
           setFlightOption={(airOption) => {
@@ -120,8 +120,6 @@ class PricingModalDetailsCard extends Component {
 
         <PricingDetailsOptionCard
           airSegment={retPricing&&retPricing.status&&retPricing.orgResponse.airItinerary.airSegment}
-        //   airPorts={params.airPorts}
-        //   airLines={params.airLines}
           airSolutions={retPricing&&retPricing.status&&retPricing.orgResponse.airPriceResult[0]&&retPricing.orgResponse.airPriceResult[0].airPricingSolution}
           title={"Return"}
           setFlightOption={(airOption) => {

@@ -1664,7 +1664,7 @@ body {
   margin-top: 250px;
 }
 
-.mt-50{
+.mt-50 {
   margin-top: 50px;
 }
 
@@ -2233,7 +2233,7 @@ body {
   overflow-x: auto;
   display: flex;
   height: 200px;
-  transition: .3s;
+  transition: 0.3s;
 }
 
 .cst-carousel-item {
@@ -2248,7 +2248,7 @@ body {
   display: none;
 }
 
-.cst-carousel-btn-area{
+.cst-carousel-btn-area {
   width: 80px;
   height: 40px;
   position: absolute;
@@ -2266,14 +2266,368 @@ body {
   font-size: 1.25em;
 }
 
-.cst-carousel-btn-area .btn-active{
+.cst-carousel-btn-area .btn-active {
   color: #0059ff;
 }
 
-.cst-carousel-btn-area .btn-disable{
+.cst-carousel-btn-area .btn-disable {
   color: #70bef3;
 }
 
-
-
 /* CST Carousel End */
+
+/* Blog Area Start */
+.blog-carousel {
+  width: auto;
+  overflow-x: auto;
+  display: flex;
+  height: 350px;
+  transition: 0.3s;
+}
+
+.blg-c-paren {
+  overflow: hidden;
+}
+
+.blog-carousel::-webkit-scrollbar {
+  display: none;
+}
+.blog-short-item-parent {
+  flex: 0 0 300px;
+  position: relative;
+  padding-right: 7.5px;
+  padding-left: 7.5px;
+}
+
+.blog-short-item {
+  width: 100%;
+  box-shadow: 0 0 1px rgb(0 0 0 / 13%), 0 1px 3px rgb(0 0 0 / 20%);
+  margin-bottom: 1rem;
+  background-clip: border-box;
+  border: 0 solid rgba(0, 0, 0, 0.125);
+  border-radius: 0.25rem;
+  padding: 10px;
+}
+
+.blog-short-item .bsi-image-area {
+  width: 250px;
+  height: 200px;
+  text-align: center;
+  margin: 0px 15px 15px;
+}
+
+.blog-short-item .bsi-image-area .bsi-img {
+  border-radius: 5px 5px 0px 0px;
+}
+
+.blog-short-item .bsi-title {
+  font-size: 1em;
+  font-weight: normal;
+  padding: 10px 5px;
+}
+
+.blog-carousel-btn-area {
+  width: 80px;
+  height: 40px;
+  position: absolute;
+  top: 40px;
+  right: 20px;
+  box-shadow: 0 0 1px rgb(0 0 0 / 13%), 0 1px 3px rgb(0 0 0 / 20%);
+  border-radius: 50px;
+  padding: 5px 4px;
+}
+
+.blog-carousel-btn-area .prevBtn,
+.blog-carousel-btn-area .nextBtn {
+  padding: 10px;
+  cursor: pointer;
+  font-size: 1.25em;
+}
+
+.blog-carousel-btn-area .btn-active {
+  color: #0059ff;
+}
+
+.blog-carousel-btn-area .btn-disable {
+  color: #70bef3;
+}
+
+.bsi-title {
+  font-size: 2em;
+  padding: 15px;
+  margin: 10px 0px;
+}
+
+/* Blog Area End */
+
+/* Menu Bar Start */
+
+.sticky-menu {
+  visibility: hidden;
+  transition: visibility 0s linear 0s;
+}
+
+.sticky-menu.show {
+  visibility: visible;
+  transition: visibility 0.5s linear 0.5s;
+}
+
+/* Menu Bar End */
+
+/** Booking flight Details Start */
+
+.air-inf {
+  width: 100%;
+}
+
+.air-inf .icon-area {
+  width: 40%;
+}
+
+.air-inf .air-name {
+  width: 60%;
+}
+
+.empty-line-50 {
+  height: 1px;
+  width: 100%;
+  background-color: #333333;
+  margin: 25px 0px;
+}
+
+.book-fly-list{
+  transition-property: display;
+  transition-duration: .4s;
+}
+
+.book-fly-list .book-fly-item {
+  padding: 15px 0;
+  border-bottom: 1px solid #7e7e7e;
+}
+
+.book-fly-list .book-fly-item:nth-last-child(1) {
+  border-bottom: none;
+}
+
+.booking-header .booking-title,
+.booking-header .booking-fly-times,
+.booking-header .booking-content {
+  float: left;
+}
+
+.booking-header .booking-title {
+  font-size: 1.25em;
+  font-weight: 800;
+  width: 100%;
+}
+
+.booking-header .booking-content {
+  width: 65%;
+}
+
+.booking-header .booking-fly-times {
+  font-size: 1em;
+  font-weight: 600;
+  width: 100%;
+}
+
+.booking-header .collaps-action {
+  width: 200px;
+  text-align: right;
+  float: right;
+  font-size: 1.25em;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.spacee-5{
+  padding: 0px 5px;
+  width: 30px;
+  transition-property:transform;
+  transition-duration: .50s;
+}
+
+/** Booking flight Details End */
+
+/** Booking Travelers Start */
+
+.book-travelers-item{
+
+}
+
+.book-travelers-item .passenger-add-btn-area{
+  padding: 10px;
+  border-bottom: 1px solid #b6e8ff;
+
+}
+
+.book-travelers-item .book-traveler-crd{
+  padding: 10px;
+}
+
+.book-travelers-item .bktravelers-title{
+  height: 50px;
+  padding: 10px;
+  font-size: 1.5em;
+  font-weight: 700;
+  width: 100%;
+}
+
+
+.book-travelers-item .bktravelers-title .pass-count {
+ text-align: right;
+ font-size: .65em;
+}
+
+.book-travelers-item .bktravelers-title .pass-count.error {
+  color: #eb2026;
+ }
+
+ .book-travelers-item .bktravelers-title .pass-count.succeed {
+  color: #249995;
+ }
+
+.book-travelers-item .traveler-title {
+  font-size: 1.25em;
+  font-weight: 800;
+
+}
+
+.book-travelers-item .traveler-note-area{
+  border-top: 1px solid #b6e8ff;
+  margin-top: 10px;
+}
+
+.book-travelers-item .traveler-note-area .note-text {
+  width: 100%;
+  height: 40px;
+  padding: 5px;
+  display: block;
+}
+
+.traveler-in-area {
+  padding: 10px 0px 20px 0px;
+}
+
+.bkcontact-area{
+  padding: 0px 0px 20px 0px;
+}
+
+.traveler-contact-title{
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+
+.book-travelers-item .gender-info {
+  border-radius: 5px;
+  border: 1px solid #ced4da;
+  padding: 0px !important;
+}
+
+.book-travelers-item .gender-info input[type=radio]{
+  visibility: hidden;
+  position: absolute;
+}
+
+.book-travelers-item .gender-label {
+  width: 50%;
+  margin: 0px;
+  padding: 0px;  
+}
+
+.book-travelers-item .gender-label:first-child{
+  border-right: 1px solid #ced4da;
+}
+
+.book-travelers-item .gender-label .gen-text{
+  width: 100%;
+  text-align: center;
+  border-bottom: 3px solid transparent;
+  height: 36px;
+  display: block;
+  padding-top: 5px;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+.book-travelers-item .gender-info input[type=radio]:checked~.gen-text{
+  border-bottom: 3px solid #17a2b8;
+  font-weight: 800;
+}
+
+.bktraveler-header{
+  
+}
+
+.bktraveler-header .traveler-title,
+.bktraveler-header .bkt-collaps-action,
+.bktraveler-header .traveler-remove{
+  
+}
+
+.bktraveler-header .traveler-title{
+  
+}
+
+.bktraveler-header .bkt-collaps-action{
+  padding: 5px 10px;
+}
+
+.bktraveler-header .bkt-collaps-action,
+.bktraveler-header .traveler-remove  {
+  text-align: right;
+}
+
+.bktraveler-header .traveler-remove .icon {
+  cursor: pointer;
+  font-size: 2em;
+  color: #dc3545;
+}
+
+.bktraveler-header .btn-area{
+  width: 45px;
+  float: right;
+}
+
+.bktraveler-header .bkt-toggle-btn {
+  border: none;
+  background-color: transparent;
+}
+
+.bktraveler-header .bkt-collaps-action .bkt-status{
+  width: 130px;
+  height: 18px;
+  text-align: center;
+  border-radius: 12px;
+  font-size: 1em;
+  line-height: 18px;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: #FFF;
+  float: right;
+  margin-top: 4px;
+}
+
+.bkt-collaps-action .btn-area .accordion-button{
+  background-color: transparent !important;
+  padding: 0px !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.bkt-collaps-action .btn-area .bkt-toggle-btn.accordion-button:focus{
+  border: none !important;
+  border-color:transparent !important
+}
+
+.bktraveler-header .bkt-collaps-action .bkt-status.complete {
+  background-image: linear-gradient(68deg ,#4ee9b0,#1cb6a9);
+
+}
+
+.bktraveler-header .bkt-collaps-action .bkt-status.incomplete {
+  background-image: linear-gradient(70deg, #ff5c2b, #ec0404);
+
+}
+
+/** Booking Travelers End */

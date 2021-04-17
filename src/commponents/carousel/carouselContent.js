@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Col, Image, Row } from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
 
 /**
  *
@@ -7,8 +7,6 @@ import { Card, Col, Image, Row } from "react-bootstrap";
  * @returns
  */
 const CarouselContent = (props) => {
-
-  
 
   return (
     <React.Fragment>

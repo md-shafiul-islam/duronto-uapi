@@ -2,6 +2,11 @@ import React, {useEffect} from "react";
 
  const slAir = ["UK", "AI", "G8*", "6E*", "H1"]; 
 
+ /**
+  * 
+  * @param {@ String iconSizeClass className: icon-view-area-small, icon-view-area-medium, icon-view-area-big @ [] selectedAirs } params 
+  * @returns 
+  */
 const IconView = (params) => {
   
 
