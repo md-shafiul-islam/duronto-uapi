@@ -2395,9 +2395,9 @@ body {
   margin: 25px 0px;
 }
 
-.book-fly-list{
+.book-fly-list {
   transition-property: display;
-  transition-duration: .4s;
+  transition-duration: 0.4s;
 }
 
 .book-fly-list .book-fly-item {
@@ -2440,32 +2440,30 @@ body {
   cursor: pointer;
 }
 
-.spacee-5{
+.spacee-5 {
   padding: 0px 5px;
   width: 30px;
-  transition-property:transform;
-  transition-duration: .50s;
+  transition-property: transform;
+  transition-duration: 0.5s;
 }
 
 /** Booking flight Details End */
 
 /** Booking Travelers Start */
 
-.book-travelers-item{
-
+.book-travelers-item {
 }
 
-.book-travelers-item .passenger-add-btn-area{
+.book-travelers-item .passenger-add-btn-area {
   padding: 10px;
   border-bottom: 1px solid #b6e8ff;
-
 }
 
-.book-travelers-item .book-traveler-crd{
+.book-travelers-item .book-traveler-crd {
   padding: 10px;
 }
 
-.book-travelers-item .bktravelers-title{
+.book-travelers-item .bktravelers-title {
   height: 50px;
   padding: 10px;
   font-size: 1.5em;
@@ -2473,27 +2471,25 @@ body {
   width: 100%;
 }
 
-
 .book-travelers-item .bktravelers-title .pass-count {
- text-align: right;
- font-size: .65em;
+  text-align: right;
+  font-size: 0.65em;
 }
 
 .book-travelers-item .bktravelers-title .pass-count.error {
   color: #eb2026;
- }
+}
 
- .book-travelers-item .bktravelers-title .pass-count.succeed {
+.book-travelers-item .bktravelers-title .pass-count.succeed {
   color: #249995;
- }
+}
 
 .book-travelers-item .traveler-title {
   font-size: 1.25em;
   font-weight: 800;
-
 }
 
-.book-travelers-item .traveler-note-area{
+.book-travelers-item .traveler-note-area {
   border-top: 1px solid #b6e8ff;
   margin-top: 10px;
 }
@@ -2509,11 +2505,11 @@ body {
   padding: 10px 0px 20px 0px;
 }
 
-.bkcontact-area{
+.bkcontact-area {
   padding: 0px 0px 20px 0px;
 }
 
-.traveler-contact-title{
+.traveler-contact-title {
   font-size: 20px;
   font-weight: 700;
   margin-bottom: 15px;
@@ -2525,7 +2521,7 @@ body {
   padding: 0px !important;
 }
 
-.book-travelers-item .gender-info input[type=radio]{
+.book-travelers-item .gender-info input[type="radio"] {
   visibility: hidden;
   position: absolute;
 }
@@ -2533,14 +2529,14 @@ body {
 .book-travelers-item .gender-label {
   width: 50%;
   margin: 0px;
-  padding: 0px;  
+  padding: 0px;
 }
 
-.book-travelers-item .gender-label:first-child{
+.book-travelers-item .gender-label:first-child {
   border-right: 1px solid #ced4da;
 }
 
-.book-travelers-item .gender-label .gen-text{
+.book-travelers-item .gender-label .gen-text {
   width: 100%;
   text-align: center;
   border-bottom: 3px solid transparent;
@@ -2550,31 +2546,28 @@ body {
   text-transform: uppercase;
   font-weight: 500;
 }
-.book-travelers-item .gender-info input[type=radio]:checked~.gen-text{
+.book-travelers-item .gender-info input[type="radio"]:checked ~ .gen-text {
   border-bottom: 3px solid #17a2b8;
   font-weight: 800;
 }
 
-.bktraveler-header{
-  
+.bktraveler-header {
 }
 
 .bktraveler-header .traveler-title,
 .bktraveler-header .bkt-collaps-action,
-.bktraveler-header .traveler-remove{
-  
+.bktraveler-header .traveler-remove {
 }
 
-.bktraveler-header .traveler-title{
-  
+.bktraveler-header .traveler-title {
 }
 
-.bktraveler-header .bkt-collaps-action{
+.bktraveler-header .bkt-collaps-action {
   padding: 5px 10px;
 }
 
 .bktraveler-header .bkt-collaps-action,
-.bktraveler-header .traveler-remove  {
+.bktraveler-header .traveler-remove {
   text-align: right;
 }
 
@@ -2584,7 +2577,7 @@ body {
   color: #dc3545;
 }
 
-.bktraveler-header .btn-area{
+.bktraveler-header .btn-area {
   width: 45px;
   float: right;
 }
@@ -2594,7 +2587,7 @@ body {
   background-color: transparent;
 }
 
-.bktraveler-header .bkt-collaps-action .bkt-status{
+.bktraveler-header .bkt-collaps-action .bkt-status {
   width: 130px;
   height: 18px;
   text-align: center;
@@ -2603,31 +2596,456 @@ body {
   line-height: 18px;
   text-transform: uppercase;
   font-weight: 600;
-  color: #FFF;
+  color: #fff;
   float: right;
   margin-top: 4px;
 }
 
-.bkt-collaps-action .btn-area .accordion-button{
+.bkt-collaps-action .btn-area .accordion-button {
   background-color: transparent !important;
   padding: 0px !important;
   border: none !important;
   box-shadow: none !important;
 }
 
-.bkt-collaps-action .btn-area .bkt-toggle-btn.accordion-button:focus{
+.bkt-collaps-action .btn-area .bkt-toggle-btn.accordion-button:focus {
   border: none !important;
-  border-color:transparent !important
+  border-color: transparent !important;
 }
 
 .bktraveler-header .bkt-collaps-action .bkt-status.complete {
-  background-image: linear-gradient(68deg ,#4ee9b0,#1cb6a9);
-
+  background-image: linear-gradient(68deg, #4ee9b0, #1cb6a9);
 }
 
 .bktraveler-header .bkt-collaps-action .bkt-status.incomplete {
   background-image: linear-gradient(70deg, #ff5c2b, #ec0404);
-
 }
 
 /** Booking Travelers End */
+
+/* Profile Start  */
+
+.strip-left {
+  content: "";
+  width: 6px;
+  height: 60px;
+  position: absolute;
+  top: 25px;
+  left: -1px;
+}
+
+.profile-container {
+  width: 90%;
+  margin: 0px auto;
+}
+
+.pfl-table-paren tr td {
+  text-transform: capitalize;
+}
+.pfl-table-paren tr th {
+  text-transform: uppercase;
+  font-size: 1em;
+  font-weight: 600;
+}
+
+.pfl-header .title {
+  font-size: 2em;
+}
+
+.pfl-header .heading-area {
+  width: 70%;
+  float: left;
+  display: block;
+}
+
+.pfl-header .edt-btn-area {
+  min-width: 120px;
+  height: 40px;
+  float: right;
+  display: block;
+}
+
+.pfl-header .pfl-basi-tag {
+  width: 100%;
+  display: block;
+}
+
+.prf-add-btn {
+  background: none;
+  border: none;
+  color: #008cff;
+  font-size: 1em;
+  font-weight: 700;
+}
+
+.pfl-table-paren .email-text {
+  font-size: 0.85em;
+  font-weight: 800;
+  text-transform: none;
+}
+
+.psw-area {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.pswd,
+.pswd-change {
+  display: block;
+  float: left;
+}
+
+.pswd {
+  width: 60%;
+  font-size: 0.75em;
+  font-weight: bolder;
+}
+
+.pswd-change {
+  width: 35%;
+}
+
+.pswd-change button {
+  border: none;
+  background: transparent;
+  color: #008cff;
+  font-size: 1em;
+  font-weight: 600;
+}
+
+.edt-btn-area .edt-btn {
+  background: #fff;
+  border: 1px solid #ced4da;
+  border-radius: 17.5px;
+  color: #008cff;
+  display: block;
+  padding: 5px 25px;
+  width: 100px;
+  height: 35px;
+}
+
+.sidbar-image-area {
+  padding-bottom: 10px;
+  position: relative;
+}
+
+.profile-img {
+  width: 160px;
+  height: 160px;
+  display: block;
+  background-color: #0c7eaf;
+  margin: 5px auto;
+  border: 1px solid transparent;
+  border-radius: 5px;
+}
+
+.profile-icon {
+  padding: 5px 10px;
+}
+
+.s-cont {
+  border-radius: 10px;
+}
+
+.status-text {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 16px;
+  padding: 5px;
+}
+
+.sts-icon {
+  font-size: 1.5em;
+  padding: 3px 5px;
+}
+
+.sticky-sidbar.sticky-top {
+  top: 25px !important;
+}
+
+.side-menu .list-group-item {
+  cursor: pointer;
+  border: 1px solid #ced4da;
+}
+
+.side-menu li:hover {
+  background-color: #d4d4d448;
+}
+
+.side-menu li.active {
+  color: #212529;
+}
+
+.prfile-img-editarea {
+  width: 50px;
+  height: 50px;
+  background-color: #ced4da;
+  position: absolute;
+  font-size: 1.65em;
+  right: 20px;
+  bottom: 40px;
+  border-radius: 50%;
+  border: 3px solid #fff;
+  text-align: center;
+  color: #fff;
+  cursor: pointer;
+}
+
+.prof-name-tag {
+  text-align: center;
+  margin: 5px 0px 15px 0px;
+}
+
+.prof-name-tag span {
+  text-transform: uppercase;
+}
+
+.md-change-pass .row {
+  margin: 15px 0px;
+}
+
+.md-change-pass .row label {
+  padding: 5px 0px;
+}
+
+.add-traveller-area {
+  min-width: 200px;
+  height: 40px;
+  float: right;
+  display: block;
+}
+
+.add-traveller-area .add-btn {
+  background: #fff;
+  border: 1px solid #ced4da;
+  border-radius: 17.5px;
+  color: #008cff;
+  display: block;
+  padding: 5px 25px;
+  width: 100%;
+  height: 35px;
+}
+
+/* Profile -> Traveler Modal Start */
+
+.amt_body {
+  padding-right: 0px !important;
+  padding-bottom: 0px !important;
+}
+
+.atm_main_content {
+  width: 100%;
+  height: 450px;
+  overflow-y: auto;
+  display: block;
+  overflow-x: hidden;
+}
+
+.atm_main_title {
+  font-size: 1.75em;
+  font-weight: 500;
+  margin: 10px 0px;
+}
+
+.atm-options {
+  position: sticky;
+  position: -webkit-sticky;
+  top: 0;
+  z-index: 100;
+  background: #fff;
+  border-bottom: 1px solid #ced4da;
+}
+
+.atm-options .atm-nav {
+  height: 50px;
+  padding: 0px
+  
+}
+
+.atm-options .atm-nav .atm-link-item {
+  padding: 10px 0px;
+  margin-right: 15px;
+  margin-left: 15px;
+  border-radius: 0;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+.atm-options .atm-nav .atm-link-item.active {
+  border-bottom: 5px solid #008cff;
+  background: none;
+  color: #008cff;
+}
+
+.atm-options .atm-nav .atm-text-area {
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.atm_container {
+  padding: 10px 25px 10px 15px;
+}
+
+.atm_container .atmin_header {
+  margin-bottom: 10px;
+}
+
+.atm_container .atm_content {
+  border-bottom: 5px solid #ced4da;
+  padding: 10px 0px;
+}
+
+.atm_container .atm_content:last-child {
+  border-bottom: none; /* 5px solid #ced4da  */
+  margin-bottom: 27vh;
+}
+
+.atm_container .atmin_header .atmin_title {
+  width: 100%;
+  font-size: 1.5em;
+  font-weight: 800;
+  display: block;
+}
+
+.atm-action-area{
+  padding: 5px;
+  position: absolute;
+  bottom: 0px;
+}
+
+.atm-action-area button {
+  font-weight: 700;
+  font-size: 1em;
+}
+
+/*Profile Status */
+
+.profile-status-area{
+  display: block;
+  width: 100%;
+  margin: 10px 0px;
+}
+
+.profile-status-area .sts-text{
+  width: 100%;
+  min-height: 30px;
+}
+
+.profile-status-area .sts-text .title,
+.profile-status-area .sts-text .label-area {  
+  display: block;  
+  font-size: 1em;
+  font-weight: 700;
+  float: left;
+
+}
+
+.profile-status-area .sts-text .title {
+  width: 90%;
+}
+
+.profile-status-area .sts-text .label-area{
+  width: 10%;
+}
+
+.profile-status-area .ps-prog,
+.profile-status-area .ps-tag {
+  width: 100%;
+  display: block;
+  margin: 10px 0px;
+}
+
+/*Profile Status */
+
+/* Profile ->  Traveler Modal End*/
+
+/* Profile End  */
+
+/* My trip Start */
+
+.bsp-title {
+  font-size: 1.5em;
+  font-weight: 800;
+  margin: 10px 0px;
+}
+
+.bsp-tagline {
+  font-weight: 600;
+  margin: 10px 0px;
+}
+
+.bsp-action-area button {
+  color: #fff;
+  box-shadow: 0 3px 4px 0 rgb(0 0 0 / 20%);
+  background-image: linear-gradient(94deg, #53b2fe, #065af3);
+  padding: 5px 10px;
+  width: 200px;
+  display: block;
+  font-family: Arial, Helvetica, sans-serif;
+  border: 0;
+  outline: 0;
+  text-align: center;
+  border-radius: 22px;
+  height: 44px;
+  margin: 5px 0px;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.bsp-fix-cont {
+  height: 100px;
+  position: sticky;
+  background-image: linear-gradient(261deg, #7dbfcc, #5ee7cd);
+  top: 20px;
+  padding-top: 40px;
+  z-index: 50;
+}
+
+.bsp-fix-cont .book-sum-options {
+  background-color: transparent;
+  width: 90%;
+  margin: 0px auto;
+}
+
+.bsp-fix-cont .book-sum-options .bsp-menu {
+  border-radius: 5px 5px 0 0;
+  background-color: whitesmoke;
+  height: 60px;
+}
+
+.sticky-main-content {
+  position: -webkit-sticky !important;
+  position: sticky !important;
+  top: 100px;
+  padding: 5px;
+  /* background-color: #cae8ca; */
+  border: 2px solid #4caf50;
+}
+
+.bsp-mh {
+  min-height: 350px;
+  padding-top: 50px;
+}
+
+.book-sum-options .bsp-text-area span {
+  padding: 5px 10px 0px 0px;
+  text-transform: uppercase;
+  font-size: 1em;
+  font-weight: 700;
+  text-align: center;
+}
+
+.book-sum-options .nav-link {
+  margin: 0px 5px;
+  padding: 15px 10px;
+}
+
+.book-sum-options .bsp-link-item {
+  background-color: none !important;
+  background: none !important;
+  color: #6c757d !important;
+}
+.book-sum-options .nav-link.active {
+  border-bottom: 5px solid #008cff !important;
+  border-radius: 0px !important;
+}
+/* My trip End */

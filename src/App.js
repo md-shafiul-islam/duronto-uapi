@@ -17,6 +17,9 @@ import HomePage from "./pages/HomePage";
 import OneWaySearchResult from "./commponents/airSearch/oneWaySearch/oneWaySearchResult";
 import StickyNav from "./commponents/header/nav/stickyNav";
 import BookingPage from "./pages/bookingPage";
+import ProfilePage from "./pages/profilePage";
+import BookingSummeryPage from "./pages/bookingSummeryPage";
+import WalletPage from "./pages/walletPage";
 
 const airPort = [
   { name: "Aalborg", code: "AAL" },
@@ -98,10 +101,14 @@ class App extends Component {
         <Container fluid>
           {/* <EmptyCont height="10px" />*/}
           <StickyNav showStatus={stickyNavStatus} />
+          {/* <HeaderContent /> */}
           <Router>
             <Route exact path="/" component={HomePage} />
             <Route exact path="/flights" component={FlightsPage} />
             <Route exact path="/booking" component={BookingPage} />
+            <Route exact path="/my-profile" component={ProfilePage} />
+            <Route exact path="/my-wallet" component={WalletPage} />
+            <Route exact path="/booking-summary" component={BookingSummeryPage} />
             <Route exact path="/flights/search" component={AirSearchResult} />
             <Route exact path="/air/search" component={AirSearchForm} />
             <Route
