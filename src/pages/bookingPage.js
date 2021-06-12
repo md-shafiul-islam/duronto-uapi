@@ -15,6 +15,7 @@ class BookingPage extends Component {
     farePriceSummery: {},
   };
 
+  /* Start Deploy *********/
   componentDidMount() {
     console.log("Booking Page ...");
 
