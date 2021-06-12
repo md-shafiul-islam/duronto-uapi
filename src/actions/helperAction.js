@@ -239,7 +239,7 @@ export const helperGetTimeOnly = (dateAndTime) => {
 };
 
 export const helperGetPriceReqQuery = (searchItem, traveler, traceId) => {
-  console.log("helperGetPriceReqQuery !!! ", searchItem, traveler, traceId);
+  console.log("helperGetPriceReqQuery !!! Action, ", searchItem, " Traveler, ", traveler, "Trace ID, ", traceId);
 
   let passengers = [{ passCode: "ADT" }];
 
@@ -247,6 +247,9 @@ export const helperGetPriceReqQuery = (searchItem, traveler, traceId) => {
 
     if (traveler.passengers !== undefined && traveler.pushpassengers !== null) {
       passengers = traveler.passengers.map((item, idx) => {
+        if(item.code === "CNN" || item.code === "CHD"){
+          return {passCode: item.code, age:10}
+        }
         return { passCode: item.code };
       });
     } 

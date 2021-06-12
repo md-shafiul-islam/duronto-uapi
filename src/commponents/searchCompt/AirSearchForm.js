@@ -20,6 +20,7 @@ import {
 } from "../../actions/airSearchAction";
 import { Redirect } from "react-router-dom";
 import { helperGetDateFormate } from "../helper/helperAction";
+import { localDataStore } from "../helper/localDataStore";
 
 //Prev Option sample { name: "Aalborg", code: "AAL" }
 
@@ -241,6 +242,7 @@ class AirSearchForm extends Component {
       let queryBoth = {depQuery:searchQueryCstDep, retQuery:searchQueryCstRet}
       let queryType = { searchQuery: queryBoth, type: 2 };
       this.props.setSearchQuery(queryType);
+      localDataStore.setSearchQuery(queryType);
       let queryDep = JSON.stringify(searchQueryCstDep, null, 2);
       let queryRet = JSON.stringify(searchQueryCstRet, null, 2);
       console.log("searchQueryCst, Round Trip, ", queryBoth);

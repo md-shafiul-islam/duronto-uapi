@@ -9,6 +9,10 @@ import MultiCityOptionsCards from "./FlightCards/MultiCityOptionsCards";
 import OneWaySearchResult from "../oneWaySearch/oneWaySearchResult";
 import RoundTripFlightResult from "./GenericCard/roundTripFlightResult";
 import LoaderSpiner from "../../helper/loaderSpiner";
+import PopulerFilter from "./AirFiltersCards/populerFilter";
+import FlightCatelogFilter from "./AirFiltersCards/flightCatelogFilter";
+import AirLinesFilter from "./AirFiltersCards/airLinesFilter";
+import Sidebar from "../../sidebare/sidebar";
 
 class AirSearchResult extends Component {
   state = {
@@ -67,7 +71,6 @@ class AirSearchResult extends Component {
   initPreSelectItem = () => {
 
     if (this.state.responseData === undefined) {
-
       return;
     }
     
@@ -204,26 +207,19 @@ class AirSearchResult extends Component {
     
     return (
       <React.Fragment>
+        
         <Row>
-          <Col md={12}>
-            <SelectedAirDetails />
+          <Col md={3}>
+            <Row>
+              <Sidebar />
+            </Row>
           </Col>
-        </Row>
-
-        <Row>
-          <Col md={3}></Col>
           <Col md={9}>
             {searchType === 1 ? <OneWaySearchResult result={response} /> : ""}
+            {searchType === 2 ? <RoundTripFlightResult type={searchType} /> : ""}
           </Col>
         </Row>
 
-        <Row>
-          <Col md={3}></Col>
-          <Col md={9}>
-            {searchType === 2 ? <RoundTripFlightResult type={searchType} /> : ""}
-            
-          </Col>
-        </Row>
 
         <Row>
           <Col md={3}></Col>

@@ -1,3 +1,4 @@
+import { esHelperGetFilterOption, esHelperGetTime } from "./esFnc";
 import { helperIsEmpty } from "./helperAction";
 
 class FlightModifiers {
@@ -145,8 +146,9 @@ class FlightModifiers {
       !helperIsEmpty(fareInfos)
     ) {
       if (option !== null && option !== undefined) {
-        let departureDateTime,
-          arrivalDateTime = "";
+        let departureDateTime = "",
+          arrivalDateTime = "",
+          filterOpts = {departure:"", arrival:""};
         let carriers = [];
         let flightNums = [];
         let stops = [];
@@ -212,7 +214,9 @@ class FlightModifiers {
               fareInf,
             });
           });
-
+        
+        filterOpts.departure = esHelperGetFilterOption(esHelperGetTime(departureDateTime));
+        filterOpts.arrival = esHelperGetFilterOption(esHelperGetTime(arrivalDateTime));
         return {
           travelTime,
           bookingInfos,
@@ -221,6 +225,7 @@ class FlightModifiers {
           stops,
           departureDateTime,
           arrivalDateTime,
+          filterTimeOpts:filterOpts
         };
       }
     }
@@ -238,7 +243,7 @@ class FlightModifiers {
           group,
           platingCarrier,
           eachPrices,
-        } = flight;
+        } = flight;       
 
         return {
           group,

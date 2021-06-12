@@ -36,10 +36,18 @@ import { helperGetMltyplyTwoNumber } from "../../helper/helperAction";
  * @Array airPriceList All Air Price witth key &  Passenger Qty,
  * @param {airPriceList} params
  */
-const FareSummaryUsingPriceList = (params) => {
+const FareSummaryUsingPriceList = (params = [
+  {
+    key: "",
+    basePrice:0,
+    tax: 0,
+    totalPrice: 0,
+    passengerQty: 2,
+    currency: "BDT"
+  }]) => {
 
   console.log("FareSummaryUsingPriceList, ", params);
-  
+
   const [priceStstus, setPriceStstus] = useState(false);
   const [taxStatus, setTaxStatus] = useState(false);
 
@@ -71,7 +79,7 @@ const FareSummaryUsingPriceList = (params) => {
 
   // ES Functions End
 
-  let {currencyType, eachPrices, equBasePrice, taxes, totalPrice} = params&&params.airPriceList;
+  let { currencyType, eachPrices, equBasePrice, taxes, totalPrice } = params && params.airPriceList;
   return (
     <React.Fragment>
       <Card className="fare-sum-card">
@@ -109,12 +117,10 @@ const FareSummaryUsingPriceList = (params) => {
                         <li key={`fprice-${pIdx}`}>
                           <span className="fare-amount-label">
                             {priceItem.passengerQty > 1
-                              ? `${getPassengerByCode(priceItem.key)}'(s) (${
-                                  priceItem.passengerQty
-                                } X ${priceItem.eqBasePrice}): `
-                              : `${getPassengerByCode(priceItem.key)} (${
-                                  priceItem.passengerQty
-                                } X ${priceItem.eqBasePrice}): `}
+                              ? `${getPassengerByCode(priceItem.key)}'(s) (${priceItem.passengerQty
+                              } X ${priceItem.eqBasePrice}): `
+                              : `${getPassengerByCode(priceItem.key)} (${priceItem.passengerQty
+                              } X ${priceItem.eqBasePrice}): `}
                           </span>
                           <span className="fare-amount">
                             {`${currencyType}: ${helperGetMltyplyTwoNumber(priceItem.passengerQty, priceItem.eqBasePrice)}`}

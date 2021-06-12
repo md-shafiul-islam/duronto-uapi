@@ -1,10 +1,14 @@
 import React, { Component } from "react";
 import { Col, Container, Row } from "react-bootstrap";
+import { connect } from "react-redux";
+import { getRoundTripBookingAction } from "../actions/bookingAction";
 import FareSummaryUsingPriceList from "../commponents/airPricing/pricingSplitCommponent/FareSummaryUsingPriceList";
 import BookingFlightSummary from "../commponents/booking/bookingFlightSummary";
 import BookingTravellerDetailsCard from "../commponents/booking/bookingTravellerDetailsCard";
 import { preSetBookingOption } from "../commponents/helper/esFnc";
+import { helperGetActionDateTime } from "../commponents/helper/helperAction";
 import LoadingComp from "../commponents/helper/LoadingComp";
+import { PropTypes } from "prop-types";
 import { localDataStore } from "../commponents/helper/localDataStore";
 
 class BookingPage extends Component {
@@ -24,6 +28,11 @@ class BookingPage extends Component {
   prePerdPriceToBooking = () => {
     let rndPriceOptions = localDataStore.getPreSetRndPriceDetails();
 
+    let priceOptions = localDataStore.getPriceRoundTripFlightsBook();
+    let rndFareSummery = localDataStore.getRoundTripFareSummery();
+
+    
+
     // console.log("rndPriceOptions Local Store: ", rndPriceOptions);
     if (rndPriceOptions) {
       //   this.setState({ roundPriceOptions: rndPriceOptions, loadStatus: true });
@@ -34,10 +43,13 @@ class BookingPage extends Component {
         farePriceSummery,
       } = rndPriceOptions;
 
+      console.log("Fare Summery: ", farePriceSummery);
+      console.log("Fare Summery LocalStore: ", rndFareSummery);
+
       this.setState({
         deptuerPriceDetails,
         returnPriceDetails,
-        farePriceSummery,
+        farePriceSummery:rndFareSummery,
         loadStatus: true,
       });
     }
@@ -46,7 +58,7 @@ class BookingPage extends Component {
   bookingAction = (passengers) => {
     console.log("Booking Page Passengers, ", passengers);
 
-    const selectedTndTrip = localDataStore.getPriceRoundTripFlights();
+    const selectedTndTrip = localDataStore.getPriceRoundTripFlightsBook();
 
     console.log("Booking Page selectedTndTrip, ", selectedTndTrip);
     
@@ -66,13 +78,18 @@ class BookingPage extends Component {
     }
 
     const bookingQuery = {
-      traceId: "b91418dc-4144-4880-9f13-b906588dece6",
-      actionDateTime: "2021-02-26T23:30:00.000+06:00",
+      traceId: localDataStore.getroundTripTraceID(),
+      actionDateTime: helperGetActionDateTime(),//"2021-02-26T23:30:00.000+06:00", // TODO:set Current Date L
       bookingTravelerReq: passengers,
       bookAirSolution: bookSolution,
     };
 
-    console.log("Booking Query, ", JSON.stringify(bookingQuery, null, 2));
+    console.log("Booking Query Object", bookingQuery);
+
+    // console.log("Booking Query JSON String, ", JSON.stringify(bookingQuery));
+
+    this.props.getRoundTripBookingAction(JSON.stringify(bookingQuery));
+
   };
   render() {
     let {
@@ -121,4 +138,8 @@ class BookingPage extends Component {
   }
 }
 
-export default BookingPage;
+BookingPage.prototypes = {
+  getRoundTripBookingAction: PropTypes.func.isRequired,
+};
+
+export default connect(null, {getRoundTripBookingAction})(BookingPage);

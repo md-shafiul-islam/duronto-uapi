@@ -19,14 +19,14 @@ class PricingModalDetailsCard extends Component {
 
   setFlightOptions = (airSolution, key, segments)=>{
 
-    console.log("Air Price Price Model Details, airSolution, ", airSolution);
+    console.log("Air Price Price Model Details: key, airSolution, ", key, " , ", airSolution);
 
     //Set Seleced air To Redux Or Local Store
     this.state.airPringSelected.set(key, {airPriceOpt:airSolution,  segment:segments});
     // console.log("After Air Price Selected Options: ", this.state.airPringSelected);
     let airPriceOptions = Object.fromEntries(this.state.airPringSelected);
     this.props.setPrcingRoundTripSelectedItems(airPriceOptions);
-    localDataStore.setPriceRoundTripFlights(airPriceOptions);
+    localDataStore.setPriceRoundTripFlightsBook(airPriceOptions);
   }
 
   pricingDetailsAction = () =>{

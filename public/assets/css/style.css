@@ -310,17 +310,17 @@ body {
   box-sizing: border-box;
 }
 
-.air-search .each-content{
+.air-search .each-content {
   border-right: 1px solid rgb(190, 190, 190);
 }
 
-.air-search .dtp-ara{
+.air-search .dtp-ara {
   height: 118px;
   /* padding-left:10px;
   padding-right:10px; */
 }
 
-.air-search .in-area{
+.air-search .in-area {
   height: 118px;
 }
 
@@ -2473,19 +2473,17 @@ body {
   margin: 20px 0px 0px 0px;
 }
 
-
-.form-row.traveler-in-area .infants-date .col-md-4{
+.form-row.traveler-in-area .infants-date .col-md-4 {
   padding-right: 0px;
   padding-left: 0px;
 }
 
-.form-row.traveler-in-area .infants-date .col-md-4:first-child{
+.form-row.traveler-in-area .infants-date .col-md-4:first-child {
   padding-left: 10px !important;
 }
 
-
 .btdc-btn {
-  background-image: linear-gradient(95deg,#53b2fe,#065af3)!important;
+  background-image: linear-gradient(95deg, #53b2fe, #065af3) !important;
   outline: 0px;
   border: none !important;
 }
@@ -2893,8 +2891,7 @@ body {
 
 .atm-options .atm-nav {
   height: 50px;
-  padding: 0px
-  
+  padding: 0px;
 }
 
 .atm-options .atm-nav .atm-link-item {
@@ -2941,7 +2938,7 @@ body {
   display: block;
 }
 
-.atm-action-area{
+.atm-action-area {
   padding: 5px;
   position: absolute;
   bottom: 0px;
@@ -2954,31 +2951,30 @@ body {
 
 /*Profile Status */
 
-.profile-status-area{
+.profile-status-area {
   display: block;
   width: 100%;
   margin: 10px 0px;
 }
 
-.profile-status-area .sts-text{
+.profile-status-area .sts-text {
   width: 100%;
   min-height: 30px;
 }
 
 .profile-status-area .sts-text .title,
-.profile-status-area .sts-text .label-area {  
-  display: block;  
+.profile-status-area .sts-text .label-area {
+  display: block;
   font-size: 1em;
   font-weight: 700;
   float: left;
-
 }
 
 .profile-status-area .sts-text .title {
   width: 90%;
 }
 
-.profile-status-area .sts-text .label-area{
+.profile-status-area .sts-text .label-area {
   width: 10%;
 }
 
@@ -3084,12 +3080,11 @@ body {
   border-radius: 0px !important;
 }
 
-
 /* My trip End */
 
 /*Autosuggestions Start */
 
-.ats-search-container{
+.ats-search-container {
   width: 100%;
   height: 95px;
   position: relative;
@@ -3105,7 +3100,7 @@ body {
   width: 100%;
 }
 
-.ats-search-content .head-title{
+.ats-search-content .head-title {
   font-weight: 600;
   width: 100%;
   height: 15px;
@@ -3116,21 +3111,21 @@ body {
   font-weight: 800;
 }
 
-.ats-search-content .sld-sub-line{
+.ats-search-content .sld-sub-line {
   font-size: 1em;
   font-weight: normal;
   word-wrap: unset;
 }
 
-.search-area{
+.search-area {
   width: 100%;
   height: 335px;
 }
 
-.search-area .suggestions{
+.search-area .suggestions {
   padding-left: 0px !important;
 }
-.search-area .suggestions li ul{
+.search-area .suggestions li ul {
   height: 250px;
   overflow-y: auto;
   margin-top: 35px;
@@ -3149,11 +3144,10 @@ body {
 }
 
 .search-area .suggestions .list-item-parent .input-area label,
-.search-area .suggestions .list-item-parent .input-area input  {
+.search-area .suggestions .list-item-parent .input-area input {
   display: block;
   float: left;
   width: 15%;
-
 }
 
 .search-area .suggestions .list-item-parent .input-area input {
@@ -3162,13 +3156,13 @@ body {
 
 .search-area .suggestions .list-item-parent .input-area .search-icon {
   width: 30px;
-  height: 30px;  
+  height: 30px;
   padding: 5px 0px;
   font-size: 1.3em;
-  cursor: pointer;  
+  cursor: pointer;
 }
 
-.search-area .suggestions li ul li:hover{
+.search-area .suggestions li ul li:hover {
   background-color: #01a1b9;
   cursor: pointer;
 }
@@ -3177,7 +3171,7 @@ body {
   background-color: #01a1b9;
 }
 
-.suggestions .list-group-item{
+.suggestions .list-group-item {
   margin-top: 10px;
 }
 
@@ -3187,11 +3181,11 @@ body {
   float: left;
 }
 
-.suggestions .list-group-item .code{  
-  height: 20px;  
+.suggestions .list-group-item .code {
+  height: 20px;
 }
 
-.suggestions .list-group-item .text{
+.suggestions .list-group-item .text {
   width: 70%;
 }
 
@@ -3199,29 +3193,25 @@ body {
   width: 30%;
 }
 
-.suggestions .list-group-item .text span{
+.suggestions .list-group-item .text span {
   width: 100%;
   display: block;
 }
 
-
-.suggestions .list-group-item .text .port-name{
+.suggestions .list-group-item .text .port-name {
   font-size: 1em;
 }
 
-.suggestions .list-group-item .text .port-location{
-  font-size: .70em;
+.suggestions .list-group-item .text .port-location {
+  font-size: 0.7em;
   font-weight: 600;
 }
 
-.suggestions .list-group-item .code .port-code{
+.suggestions .list-group-item .code .port-code {
   font-size: 1em;
   font-weight: 700;
   width: 100%;
 }
-
-
-
 
 /*Autosuggestions End */
 
@@ -3231,7 +3221,7 @@ body {
   height: 200px;
 }
 
-.req-loader .loading-text{
+.req-loader .loading-text {
   font-size: 1em;
   font-weight: 700;
   margin: 15px 0px;
@@ -3240,3 +3230,108 @@ body {
 
 /*Request Modal loader End */
 
+/* Filter Style Start */
+
+.catelog-filter .stops-area,
+.catelog-filter .catlog-departure-area ,
+.catelog-filter .catelog-arrival-area  {
+  padding: 5px 10px;
+}
+
+.catelog-filter .stops-area ul {
+  list-style: none;
+  margin: 0px;
+  padding-left: 0px !important;
+}
+
+.catelog-filter .stops-area ul li {
+  margin: 5px 0px !important;
+  padding-left: 0px !important;
+  cursor: pointer;
+}
+
+.catelog-filter .filter-icon-area{
+  width: 100%;
+  display: block; 
+  box-sizing: border-box;
+  padding: 5px 4px;
+  cursor: pointer;
+}
+
+.catelog-filter .filter-icon-area.active{
+  background-color: #068eff;
+  color: #FFF;
+}
+
+.catelog-filter .icon-content{
+  margin: 0px !important;
+  padding: 5px;
+}
+
+
+.catelog-filter .filter-icon-area .icon,
+.catelog-filter .filter-icon-area .text,
+.catelog-filter .filter-icon-area .price {
+  width: 100%;
+  display: block;
+  text-align: center;
+}
+.catelog-filter .filter-icon-area .icon {  
+  font-size: 1em;
+  font-weight: 700;
+}
+
+.catelog-filter .filter-icon-area .price{
+  font-size: .60em;
+  font-weight: 600;
+}
+
+.catelog-filter .filter-icon-area .text{
+  font-size: .55em;
+  font-weight: 500;
+}
+
+.catelog-filter .catelog-title {
+  font-size: 1.20em;
+  font-weight: 700;
+  margin:0rem -.5rem;
+  padding-left: 1rem;
+  padding-top: 5px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #cdcdcd;
+}
+
+.stops-area .title,
+.catlog-departure-area .title,
+.catelog-arrival-area .title {
+  display: block;
+  width: 100%;
+  margin-bottom: 5px;
+  margin-top: 5px;
+  font-size: 1em;
+  font-weight: 700;
+}
+.air-filter-title {
+  font-size: 1.15em;
+  font-weight: 700;
+}
+
+.airlinces-area ul {
+  list-style: none;
+  margin-left: 0px !important;
+  padding-left: 0px !important;
+}
+
+.airlinces-area ul li {
+  padding: 5px 0px;
+  cursor: pointer;
+  margin: 5px 0px;
+}
+
+.stops-area .check-bg,
+.airlinces-area ul li .check-bg {
+  background-color: #fff;
+  color: #068eff;
+}
+
+/* Filter Style End */

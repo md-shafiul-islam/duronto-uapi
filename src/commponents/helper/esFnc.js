@@ -121,20 +121,23 @@ export const helperPreSetTravelr = (passenger, phone, email, status) => {
     traveler.bookingTravelerName.first = passenger.firstName;
     traveler.bookingTravelerName.last = passenger.lastName;
     traveler.gender = gender;
+    traveler.passAge = passenger.passAge;
 
     if (passenger.type) {
       if (passenger.type === "INF") {
-        traveler.age = getAgeDetails(
-          passenger.day,
-          passenger.month,
-          passenger.year
-        );
+          let age = traveler.passAge = getAgeDetails(
+            passenger.day,
+            passenger.month,
+            passenger.year
+          );
+          traveler.passAge = age ? age.year : 0;
 
         //Date Formatt yyyy-MM-dd
         let month = passenger.month + 1;
         month = month < 10 ? `0${month}` : month;
-        let dateString = `${passenger.year}-${month}-${passenger.year}`;
-        traveler.dateOfB = dateString;
+        let dateString = `${passenger.year}-${month}-${passenger.day}`;
+        traveler.dateOfB = `${passenger.year}-${month}-${passenger.day}T00:00:00.000`;
+        traveler.dob = `${passenger.year}-${month}-${passenger.day}T00:00:00.000`;
       }
     }
   }
@@ -299,6 +302,10 @@ export const preSetBookingOption = (bookOption) => {
           if (idx === 0) {
             conn = connection;
           }
+        }else{
+          if(segment.length > 1 && idx < segment.length){
+            conn.segmentIndex = idx;
+          }
         }
 
         return {
@@ -357,8 +364,9 @@ export const preSetBookingOption = (bookOption) => {
           eticketability,
           apisrequirementsRef,
         };
-      });
+    });
 
+    console.log("Preperd Booking Solution air Price: , ", airPricingInfo);
     return {
       airSegment: segs,
       bookingInfo: airPricingInfo,
@@ -383,3 +391,82 @@ export const preSetBookingOption = (bookOption) => {
   }
   return null;
 };
+
+/**
+ * 
+ * @param {String} dateStr 
+ * @returns -1, Or 0-23
+ */
+export const esHelperGetTime = (dateStr)=>{
+
+  // console.log("Current Time, ", dateStr);
+
+  if(dateStr){
+    let splitDateTime = dateStr.split("T");
+    // console.log("Date Split Time, ", splitDateTime);
+    let time = splitDateTime[0] ? splitDateTime[1].split(":") : "";
+    time = Number(time[0]);
+    // console.log("Current Hour, ", time);
+    return time;
+  }
+  return -1;
+
+}
+
+export const esHelperGetFilterOption = (hour)=>{
+
+  if(hour >= 0 &&  4 >= hour){
+    return "before6AM";
+  }else if(hour >= 5 && hour <= 11){
+    return "6AM-12PM";
+  }else if(hour > 11 && hour <= 17){
+    return "12PM-6PM";
+  }else if(hour > 17){
+    return "After6PM"
+  }
+
+}
+
+const getPriceAmount = (price)=>{
+  if(price){
+    let amount = price.substring(3);
+
+    return Number(amount);
+  }
+}
+
+const getFilterTravelTimeAndPrice = (travelTime, value, price)=>{
+  console.log("Before Traveler Times, ", travelTime);
+  if(travelTime){
+
+    travelTime.value = value;
+    travelTime.price = (getPriceAmount(travelTime.price) > 0 && getPriceAmount(travelTime.price) > price) ? price : travelTime.price;
+    console.log("Traveler Times, ", travelTime);
+    
+  }else{
+    travelTime = {value, price}
+  }  
+  console.log("Before Return Traveler Times, ", travelTime);
+  return travelTime;
+}
+
+
+export const esHelperAdditemExcPosition = (arr, value, price)=>{
+
+  console.log("esHelperAdditemExcPosition, ", value);
+  if(Array.isArray(arr)){
+
+    if("before6AM" === value){
+      arr[0] = getFilterTravelTimeAndPrice(arr[0], value, price);
+    }else if("6AM-12PM" === value){
+      arr[1] = getFilterTravelTimeAndPrice(arr[1], value, price);
+    }else if("12PM-6PM" === value){
+      arr[2] = getFilterTravelTimeAndPrice(arr[2], value, price);
+    }else if("After6PM" === value){
+      arr[3] = getFilterTravelTimeAndPrice(arr[3], value, price);
+    }
+  } 
+
+  return arr;
+}
+

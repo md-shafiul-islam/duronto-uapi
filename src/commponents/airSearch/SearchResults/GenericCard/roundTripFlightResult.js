@@ -15,6 +15,8 @@ import { helperIsEmpty } from "../../../helper/helperAction";
 import LoaderSpiner from "../../../helper/loaderSpiner";
 import { localDataStore } from "../../../helper/localDataStore";
 import { flightModifiers } from "../../../helper/flightModifiers";
+import { setOnwardFlightFilterOptions, setReturnFlightFilterOptions } from "../../../../actions/filterAction";
+import { esHelperAdditemExcPosition, esHelperGetFilterOption, esHelperGetTime } from "../../../helper/esFnc";
 
 class RoundTripFlightResult extends Component {
   state = {
@@ -119,6 +121,25 @@ class RoundTripFlightResult extends Component {
     );
 
     console.log("depFlight, ", depFlight, " retFlight, ", retFlight);
+    let airLincesList = [],
+      onwardDepartureDateTimeList = [{undefined}, undefined, undefined, undefined],
+      onwardArrivalDateTimeList = [undefined, undefined, undefined, undefined],
+      returnDepartureDateTimeList = [undefined, undefined, undefined, undefined],
+      returnArrivalDateTimeList = [undefined, undefined, undefined, undefined],
+      flightStopsType = [];
+    
+    this.getFilterOptions(depFlight, airLincesList, onwardDepartureDateTimeList, onwardArrivalDateTimeList, flightStopsType);
+    this.getFilterOptions(retFlight, airLincesList, returnDepartureDateTimeList, returnArrivalDateTimeList, flightStopsType);
+    
+    console.log("onwardDepartureDateTimeList, ", onwardDepartureDateTimeList);
+    console.log("onwardArrivalDateTimeList, ", onwardArrivalDateTimeList);
+    console.log("returnDepartureDateTimeList, ", returnDepartureDateTimeList);
+    console.log("returnArrivalDateTimeList, ", returnArrivalDateTimeList);
+    console.log("flightStopsType, ", flightStopsType);
+    console.log("airLincesList, ", airLincesList);
+    
+    this.props.setOnwardFlightFilterOptions(airLincesList, onwardDepartureDateTimeList, onwardArrivalDateTimeList, flightStopsType);
+    this.props.setReturnFlightFilterOptions(airLincesList, onwardDepartureDateTimeList, onwardArrivalDateTimeList, flightStopsType);
 
     let { currencyType, brands, traceId, routeList } =
       this.state.departureFlightsRes && this.state.departureFlightsRes.response;
@@ -149,15 +170,53 @@ class RoundTripFlightResult extends Component {
 
   setSelectedAir = (airOption) => {
     let { selectedIdx, flight, key } = airOption;
+    let locQuery = localDataStore.getSearchQuery();
+    let travelerQry = { passengers: [{ code: "ADT" }] };
+    if (locQuery) {
+      if (locQuery.type === 2) {
+        console.log("Local Store Query, ", locQuery);
+        console.log(
+          "Local Store Query, ",
+          locQuery.searchQuery.depQuery.passengers
+        );
+        // console.log("Local Store Query, ", locQuery);
+        // console.log("Local Store Query, ", locQuery);
+
+        let depPLenght =
+          locQuery.searchQuery &&
+          locQuery.searchQuery.depQuery &&
+          locQuery.searchQuery.depQuery.passengers &&
+          locQuery.searchQuery.depQuery.passengers.length;
+        let retPLenght =
+          locQuery.searchQuery &&
+          locQuery.searchQuery.retQuery &&
+          locQuery.searchQuery.retQuery.passengers &&
+          locQuery.searchQuery.retQuery.passengers.length;
+
+        console.log("Dep Pass, ", depPLenght, " Ret Pass, ", retPLenght);
+        if (
+          depPLenght !== undefined &&
+          retPLenght !== undefined &&
+          retPLenght === depPLenght
+        ) {
+          travelerQry.passengers = locQuery.searchQuery.depQuery.passengers;
+          localDataStore.setRountTripTraceId(this.state.depBaseInf.traceId);
+        }
+      }
+    }
+    console.log("After Query Traveler, ", travelerQry);
     let depQuery = {},
       retQuery = {};
     this.setState({ priceReqStatus: true });
     if (key === "dep") {
       depQuery = helperGetPriceReqQuery(
         flight,
-        this.props.searchQuery,
+        travelerQry,
         this.state.depBaseInf.traceId
       );
+
+      console.log("Dep Air Price Query, ", depQuery);
+
       this.props.getPriceSearchAction(depQuery, 1, this.changeLodingStatus);
       this.state.selectedFlights.set(key, flight);
       this.setState({
@@ -171,9 +230,10 @@ class RoundTripFlightResult extends Component {
     if (key === "ret") {
       retQuery = helperGetPriceReqQuery(
         flight,
-        this.props.searchQuery,
+        travelerQry,
         this.state.retBaseInf.traceId
       );
+      console.log("Ret Air Price Query, ", retQuery);
       this.props.getPriceSearchAction(retQuery, 0, this.changeLodingStatus);
 
       this.state.selectedFlights.set(key, flight);
@@ -193,6 +253,40 @@ class RoundTripFlightResult extends Component {
     const airOptions = Object.fromEntries(selectedFlights);
     this.props.setPriceRoundTrip(airOptions);
   };
+
+  getFilterOptions(flight, airLincesList, departureDateTimeList, arrivalDateTimeList, flightStopsType) {
+    flight &&
+      flight.map((item, idx) => {
+
+        console.log("Flight Filter Options, ", item);
+
+        if (!airLincesList.includes(item.platingCarrier)) {
+          airLincesList.push(item.platingCarrier);
+        }
+
+        if (item.option) {
+
+          console.log("Departure Time Short", esHelperGetFilterOption(esHelperGetTime(item.option.departureDateTime)))
+          if(item.option.filterTimeOpts){
+
+            esHelperAdditemExcPosition(departureDateTimeList, item.option.filterTimeOpts.departure, item.eachPrices&&item.eachPrices.eachTotalPrice);
+
+            esHelperAdditemExcPosition(arrivalDateTimeList, item.option.filterTimeOpts.arrival, item.eachPrices&&item.eachPrices.eachTotalPrice);              
+
+          }
+          
+          console.log("Departure Date Time List, ", departureDateTimeList);
+          console.log("Arrival Date Time List, ", arrivalDateTimeList);
+
+          if (!helperIsEmpty(item.option.stops)) {
+            if (!flightStopsType.includes(item.option.stops.length)) {
+              flightStopsType.push(item.option.stops.length);
+            }
+          }
+        }
+      });
+  }
+
   render() {
     // console.log("RoundTripFlightResult Status, ", prePerdStatus)
     if (this.state.prePerdStatus) {
@@ -300,6 +394,8 @@ RoundTripFlightResult.prototypes = {
   setPriceRoundTrip: PropTypes.func.isRequired,
   departureFlights: PropTypes.object.isRequired,
   returnFlights: PropTypes.object.isRequired,
+  setOnwardFlightFilterOptions:PropTypes.func.isRequired,
+  setReturnFlightFilterOptions:PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -316,4 +412,6 @@ export default connect(mapStateToProps, {
   setSelectedPrcingDetailsRoundTrip,
   setPriceRoundTrip,
   getPriceSearchAction,
+  setOnwardFlightFilterOptions,
+  setReturnFlightFilterOptions
 })(RoundTripFlightResult);

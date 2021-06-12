@@ -34,6 +34,13 @@ export const BASE_URL = `${EXT_BASE_URL}/api`;
 
 export const EXT_PRICE_URL = `http://localhost:8080`;
 
+export const BASE_BOOKING_URL = `http://localhost:9000`;
+export const EX_BOOKING_URL = `${BASE_BOOKING_URL}/cutom-book-request`;
+
+export const GET_ROUND_TRIP_BOOKING = "GET_ROUND_TRIP_BOOKING";
+
+
+
 export const GET_PACK_CATEGORIES = "GET_PACK_CATEGORIES";
 export const GET_PACK_CATEGORY = "GET_PACK_CATEGORY";
 export const PACK_CAT_DELETE = "GET_PACK_DELETE";
@@ -92,3 +99,16 @@ export const GET_MONTHS = [
   "November",
   "December",
 ];
+
+
+//Air Filter related Constant
+
+export const GET_ONWARD_FLIGHT_FILTER = "GET_ONWARD_FLIGHT_FILTER";
+export const GET_RETURN_FLIGHT_FILTER = "GET_RETURN_FLIGHT_FILTER";
+export const GET_SEL_AIR_FLIGHT_FILTER = "GET_SEL_AIR_FLIGHT_FILTER";
+
+export const GET_FILTER_DEP_TIME = "GET_FILTER_DEP_TIME";
+export const GET_FILTER_RET_TIME = "GET_FILTER_RET_TIME";
+
+export const GET_FILTER_DEP_STOPS = "GET_FILTER_DEP_STOPS";
+export const GET_FILTER_RET_STOPS = "GET_FILTER_RET_STOPS";

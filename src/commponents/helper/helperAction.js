@@ -2,6 +2,25 @@ import Axios from "axios";
 import React from "react";
 import { EXT_PRICE_URL, REQUEST_HEADER } from "../../actions/types";
 
+
+//2021-02-26T23:30:00.000+06:00
+/**
+ * 
+ * @param {Date} date 
+ * @returns @actionDate like: 2021-02-26T23:30:00.000+06:00
+ */
+export const helperGetActionDateTime = (date=new Date())=>{
+
+  let dateStr = date.getDate();
+  let month = date.getMonth()+1;
+  let year = date.getFullYear();
+
+  dateStr = dateStr < 10 ? `0${dateStr}` : dateStr;
+  month = (month) < 10 ? `0${month}` : month; 
+
+  // console.log("Current Action Date, ", `${year}-${month}-${dateStr}T23:30:00.000+06:00`);
+  return `${year}-${month}-${dateStr}T23:30:00.000+06:00`;
+}
 /**
  * 
  * @param {amountString like BDT89247897} amountSting 

@@ -192,7 +192,7 @@ class RndTripPriceingDetailsPage extends Component {
 
   initStateUsingProps = () => {
     // let travelerQty = this.initQuery();
-    let priceDrtails = localDataStore.getPriceRoundTripFlights();
+    let priceDrtails = localDataStore.getPriceRoundTripFlightsBook();
     
     if(helperIsEmpty(priceDrtails)){
       return;
@@ -514,7 +514,8 @@ class RndTripPriceingDetailsPage extends Component {
         <Row>
           <Col md={3}>
             <button type="button" onClick={()=>{
-              this.setState({redirecStatus:true})
+              localDataStore.setRoundTripFarePriceSummery(this.state.farePriceSummery);
+              this.setState({redirecStatus:true});
             }} className="btdc-btn rounded-pill btn btn-primary btn-block">Continue</button>
           </Col>
         </Row>

@@ -4,7 +4,7 @@ import Select from "react-select";
 import { Button, Card, Col, Row } from "react-bootstrap";
 import * as Yup from "yup";
 import { helperIsEmpty } from "../helper/helperAction";
-import {getNmsOptions, helperPreSetTravelr } from "../helper/esFnc";
+import { getNmsOptions, helperPreSetTravelr } from "../helper/esFnc";
 
 class BookingTravellerDetailsCard extends Component {
   state = {
@@ -241,19 +241,32 @@ class BookingTravellerDetailsCard extends Component {
 
     const passengers = [];
 
-    if(values){
-      values.adults&&values.adults.map((adt, idx)=>{
-        passengers.push(helperPreSetTravelr(adt, {countryCode:values.country_code, number:values.phone_no}, values.email, idx === 0 ? true : false));
-      });
+    if (values) {
+      values.adults &&
+        values.adults.map((adt, idx) => {
+          passengers.push(
+            helperPreSetTravelr(
+              adt,
+              { countryCode: values.country_code, number: values.phone_no },
+              values.email,
+              idx === 0 ? true : false
+            )
+          );
+        });
 
-      values.childs &&values.childs.map((chd, idx)=>{
-        passengers.push(helperPreSetTravelr(chd, undefined, undefined, false));
-      });
+      values.childs &&
+        values.childs.map((chd, idx) => {
+          passengers.push(
+            helperPreSetTravelr(chd, undefined, undefined, false)
+          );
+        });
 
-      values.infants&&values.infants.map((inf, idx)=>{
-        passengers.push(helperPreSetTravelr(inf, undefined, undefined, false));
-
-      })
+      values.infants &&
+        values.infants.map((inf, idx) => {
+          passengers.push(
+            helperPreSetTravelr(inf, undefined, undefined, false)
+          );
+        });
     }
 
     console.log("Passengers, ", JSON.stringify(passengers, null, 2));
@@ -665,7 +678,7 @@ class BookingTravellerDetailsCard extends Component {
                                             </div>
                                           </Col>
 
-                                          <Col md={4}>
+                                          <Col md={3}>
                                             <Field
                                               className="form-control"
                                               type="text"
@@ -673,7 +686,17 @@ class BookingTravellerDetailsCard extends Component {
                                               placeholder="Last Name..."
                                             />
                                           </Col>
-                                          <Col md={4}>
+
+                                          <Col md={2}>
+                                            <Field
+                                              className="form-control"
+                                              type="text"
+                                              name={`childs[${idx}].passAge`}
+                                              placeholder="Age. 2-12"
+                                            />
+                                          </Col>
+
+                                          <Col md={3}>
                                             <div
                                               className={`gender-info ${
                                                 this.isError(
@@ -741,6 +764,7 @@ class BookingTravellerDetailsCard extends Component {
                                       lastName: "",
                                       gender: "",
                                       type: "CNN",
+                                      passAge: "",
                                     });
                                   }
                                 }}
@@ -970,7 +994,11 @@ class BookingTravellerDetailsCard extends Component {
                                                   }}
                                                   onBlur={props.handleBlur}
                                                   id={`infants[${idx}].day`}
-                                                  options={getNmsOptions(31, 1, 0)}
+                                                  options={getNmsOptions(
+                                                    31,
+                                                    1,
+                                                    0
+                                                  )}
                                                 />
                                               </Col>
 
@@ -986,7 +1014,11 @@ class BookingTravellerDetailsCard extends Component {
                                                   }}
                                                   onBlur={props.handleBlur}
                                                   id={`infants[${idx}].month`}
-                                                  options={getNmsOptions(12, 0, 0)}
+                                                  options={getNmsOptions(
+                                                    12,
+                                                    0,
+                                                    0
+                                                  )}
                                                 />
                                               </Col>
 
@@ -1002,8 +1034,11 @@ class BookingTravellerDetailsCard extends Component {
                                                   }}
                                                   onBlur={props.handleBlur}
                                                   id={`infants[${idx}].year`}
-                                                  options={getNmsOptions(3, 0, 1)}
-
+                                                  options={getNmsOptions(
+                                                    3,
+                                                    0,
+                                                    1
+                                                  )}
                                                 />
                                               </Col>
                                             </Row>
@@ -1026,7 +1061,7 @@ class BookingTravellerDetailsCard extends Component {
                                       firstName: "",
                                       lastName: "",
                                       gender: "",
-                                      type: "ADT",
+                                      type: "INF",
                                       day: 1,
                                       month: 1,
                                       year: new Date().getFullYear() - 2,
@@ -1177,7 +1212,13 @@ class BookingTravellerDetailsCard extends Component {
                           </span>
                         </Col>
                         <Col md={{ span: 3 }} className="mt-2">
-                          <Button block={true} type="submit" className="btdc-btn rounded-pill">Continue</Button>
+                          <Button
+                            block={true}
+                            type="submit"
+                            className="btdc-btn rounded-pill"
+                          >
+                            Continue
+                          </Button>
                         </Col>
                       </Row>
                     </Card.Body>
