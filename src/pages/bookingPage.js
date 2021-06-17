@@ -71,7 +71,7 @@ class BookingPage extends Component {
     if(deptureOpt){
       bookSolution.push(deptureOpt);
     }
-    
+    console.log("Booking Page Depture Option, ", deptureOpt);
     if(retOpt){
       bookSolution.push(retOpt);
 

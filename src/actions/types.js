@@ -29,12 +29,12 @@ export const SET_TOKEN = "SET_TOKEN";
 
 console.log(process.env.REACT_APP_API_URL);
 
-export const EXT_BASE_URL = `http://localhost:8050`; // `http://dto.durontotour.com`; //
+export const EXT_BASE_URL = `http://3.23.17.164:8050`; // `http://dto.durontotour.com`; //
 export const BASE_URL = `${EXT_BASE_URL}/api`;
 
-export const EXT_PRICE_URL = `http://localhost:8080`;
+export const EXT_PRICE_URL = `http://3.23.17.164:8080`;
 
-export const BASE_BOOKING_URL = `http://localhost:9000`;
+export const BASE_BOOKING_URL = `http://3.23.17.164:9000`;
 export const EX_BOOKING_URL = `${BASE_BOOKING_URL}/cutom-book-request`;
 
 export const GET_ROUND_TRIP_BOOKING = "GET_ROUND_TRIP_BOOKING";
